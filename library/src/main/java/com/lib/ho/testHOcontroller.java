@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class testHOcontroller {
 	@GetMapping("/ho")
 	public String ho() {
+		System.out.println("ho");
 		return "home";
 	}
+	
 }
