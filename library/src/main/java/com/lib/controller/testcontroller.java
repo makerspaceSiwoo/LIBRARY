@@ -13,4 +13,9 @@ public class testcontroller {
 		return "home";
 	}
 	
+	@GetMapping("/test2")
+	public String B() {
+		return "hello";
+	}
+	
 }
