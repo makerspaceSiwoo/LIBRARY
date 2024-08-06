@@ -11,4 +11,6 @@ public interface BoardDao {
 	@Insert("insert into board (boardno, type, title, contents, write_date, view, userno) values(#{id}, #{type}, #{title}, #{contents}, #{write_date}, #{view}, #{userno})")
 	int insert(BoardDto dto);
 	
+	
+	
 }
