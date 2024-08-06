@@ -5,7 +5,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	home page
+	admin home page
 	test
 </body>
 </html>
