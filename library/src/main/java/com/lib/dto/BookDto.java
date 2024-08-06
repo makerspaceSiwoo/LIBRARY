@@ -1,4 +1,4 @@
-package com.lib.siwoo;
+package com.lib.dto;
 
 import lombok.Data;
 
