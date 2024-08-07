@@ -168,7 +168,7 @@ function listSubmit() { // 전송
     }
 
     $.ajax({
-        url: "/book/add/list",
+        url: "/book/add",
         method: "post",
         data: JSON.stringify(datalist),
         contentType: 'application/json; charset=utf-8'
