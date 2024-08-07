@@ -27,18 +27,6 @@ public class BookManageController {
 	}
 	
 	@PostMapping("/book/add")
-	public String addBook(@ModelAttribute BookDto dto) {
-		System.out.println(dto);
-		int chk = bservice.insertBook(dto);
-		if(chk == 1) {
-			System.out.println("성공");
-		}else {
-			System.out.println("실패");
-		}
-		return "redirect:/book/add";
-	}
-	
-	@PostMapping("/book/add/list")
 	@ResponseBody
 	public List<BookDto> addBooklist(@RequestBody List<BookDto> blist) {
 		List<BookDto> failed = new ArrayList<>();
