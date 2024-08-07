@@ -9,20 +9,17 @@
 </style>
 </head>
 <body>
-<form method="post" id="writeform" action="/home3/test">
+<form method="post" id="writeform" action="/home5/test">
 	<table border="1">
-		<tr>
-			<td class="orange">제목</td>
-			<td><input name="title"/></td>
+			<tr>
+			<td class="orange">글번호</td>
+			<td><input name="boardno"></td>
 		</tr>
 		<tr>
 			<td class="orange">작성자</td>
 			<td><input name="userno"></td>
 		</tr>
-		<tr>
-			<td class="orange">type</td>
-			<td><input name="type"></td>
-		</tr>
+		
 		<tr>
 			<td class="orange">내용</td>
 			<td><div id="smarteditor">
