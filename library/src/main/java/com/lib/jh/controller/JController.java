@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.lib.dto.BoardDto;
-import com.lib.dto.userDto;
+import com.lib.dto.UserDto;
 import com.lib.jh.service.BoardService;
 
 @SessionAttributes("user")
@@ -22,9 +22,9 @@ public class JController {
 	
 	// 로긘 기능 생기면 변환하기 
 	@ModelAttribute("user")
-	   public userDto getDto() {
+	   public UserDto getDto() {
 	    //  return new userDto();
-		userDto user = new userDto();
+		UserDto user = new UserDto();
 		user.setUserno(2);
 		return user;
 	   }
