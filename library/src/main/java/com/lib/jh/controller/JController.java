@@ -88,7 +88,7 @@ public class JController {
 	}
 	
 	
-	//게시글 삭제 기능
+	//게시글 삭제 기능 ! 
 	
 	@GetMapping("/home5/test/{boardno}")
 	public String boardDeleteS(@PathVariable("boardno")int boardno,Model m) {
