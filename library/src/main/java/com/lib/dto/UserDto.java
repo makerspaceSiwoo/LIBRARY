@@ -14,7 +14,7 @@ public class UserDto {
    private String gender;
    private String name;
    private Date birth;
-   private int phone;
+   private String phone;
    private String email;
    private String address;
    private int ban;
