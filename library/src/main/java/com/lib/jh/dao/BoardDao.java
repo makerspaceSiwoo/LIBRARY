@@ -40,7 +40,9 @@ public interface BoardDao {
     @Select("select count(*) from board")
     int selectTotalCount();
     
-    
+    //게시글 검색기능
+    @Select("select * from board where title = #{title}")
+    BoardDto BoardSearch();
     
 	
 }
