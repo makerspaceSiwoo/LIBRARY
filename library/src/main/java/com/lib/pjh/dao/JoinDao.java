@@ -15,4 +15,6 @@ public interface JoinDao {
     @Insert("INSERT INTO user (userno, admin, userID, userPW, gender, name, birth, phone, email, address, ban, penalty, state) " +
             "VALUES (#{userno}, #{admin}, #{userID}, #{userPW}, #{gender}, #{name}, #{birth}, #{phone}, #{email}, #{address}, #{ban}, #{penalty}, #{state})")
     void insertUser(UserDto user);
+    
+    
 }
