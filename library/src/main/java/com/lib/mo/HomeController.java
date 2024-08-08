@@ -18,6 +18,5 @@ public class HomeController {
 		m.addAttribute("allbook", service.allbook());
 		return "/user/home";
 	}
-	
-	
+
 }

@@ -119,7 +119,7 @@
 <body>
     <div>
         <a href="/home">도서관 홈</a>
-        <a href="/search/title">도서 검색</a>
+        <a href="/search">도서 검색</a>
         <a href="/recomm/filter">인기도서</a>
         <a href="/my">마이 페이지</a>
         <a href="/board/list">나눔마당</a>
@@ -131,6 +131,9 @@
         <a href="#schedule">도서관 일정</a>
         <a href="#notice">공지사항</a>
         <a href="#quantity">소장자료 현황</a>
+    </div>
+    <div>
+
     </div>
     <div>
         <h2 id = "locate">Soldesk 도서관</h2>
