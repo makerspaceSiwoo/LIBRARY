@@ -36,9 +36,10 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+$(document).ready(function() {
     function checkDuplicate() {
         // 아이디 입력 필드의 값을 가져옵니다.
-        var userId = document.querySelector('input[name="id"]').value;
+        var userId = document.querySelector('input[name="userId"]').value;
 
         if (userId === "") {
             alert("아이디를 입력하세요.");
@@ -49,7 +50,7 @@
         $.ajax({
             url: '/checkId', // 서버의 중복 체크 엔드포인트 URL
             type: 'POST',
-            data: { userID: userId },
+            data: { userID: userId }, // userId 변수 전달
             success: function(response) {
                 if (response.status === "duplicate") {
                     alert("아이디가 중복되었습니다.");
@@ -63,6 +64,9 @@
         });
     }
 
+    // 이벤트 핸들러 등록
+    $('button[onclick="checkDuplicate()"]').on('click', checkDuplicate);
+});
     function searchAddress() {
         new daum.Postcode({
             oncomplete: function(data) {
@@ -102,31 +106,31 @@
         return true; // 폼 제출 허용
     }
     function requestVerificationCode() {
-        var emailUser = document.querySelector('input[name="email_user"]').value;
-        var emailDomain = document.querySelector('select[name="email_domain"]').value;
-        var email = emailUser + "@" + emailDomain;
+        var email = document.querySelector('input[name="email_user"]').value + "@" +
+                    document.querySelector('select[name="email_domain"]').value;
 
-        if (emailUser === "" || emailDomain === "") {
-            alert("이메일을 입력하세요.");
-            return;
-        }
-
-        // AJAX를 사용하여 서버에 인증 코드 요청을 보냅니다.
         $.ajax({
-            url: '${pageContext.request.contextPath}/sendVerificationCode', // 서버의 인증 코드 요청 엔드포인트 URL
+            url: '/send',
             type: 'POST',
-            data: { email: email },
+            data: { "emailAddress": email },
             success: function(response) {
-                alert(response.message);
-                // 서버로부터 받은 인증 코드를 저장하거나 세션에 저장할 수 있음
-                var verificationCode = response.verificationCode;
-                // TODO: verificationCode를 저장하고 사용자가 입력한 코드와 비교하는 로직 추가
+            	num = response[0];
+                alert("인증 코드가 발송되었습니다.");
             },
             error: function() {
-                alert("인증 코드 요청 중 오류가 발생했습니다.");
+                alert("인증 코드 발송에 실패했습니다.");
             }
         });
     }
+    function memcheck(){
+    	let numnum = document.querySelector("#numnum").value;
+    	if(num==numnum){
+    		alert("인증 코드가 일치합니다.");
+    	}else {
+    		alert("인증코드를 다시 확인해 주세요");
+    	}
+    }
+  
 </script>
 </head>
 <body>
@@ -149,30 +153,15 @@
             <td><input type="text" name="name" required></td>
             <td>생년월일</td>
             <td>
-                <select name="year" required>
-                    <option value="">연도</option>
-                    <% for (int i = 1900; i <= 2024; i++) { %>
-                        <option value="<%= i %>"><%= i %></option>
-                    <% } %>
-                </select>
-                <select name="month" required>
-                    <option value="">월</option>
-                    <% for (int i = 1; i <= 12; i++) { %>
-                        <option value="<%= i %>"><%= i %></option>
-                    <% } %>
-                </select>
-                <select name="day" required>
-                    <option value="">일</option>
-                    <% for (int i = 1; i <= 31; i++) { %>
-                        <option value="<%= i %>"><%= i %></option>
-                    <% } %>
-                </select>
+                 <input type="text" name="year" placeholder="연도 (예: 1990)" required pattern="\d{4}" title="4자리 연도를 입력하세요">
+       			 <input type="text" name="month" placeholder="월 (예: 07)" required pattern="[0-1]?[0-9]" title="1에서 12 사이의 월을 입력하세요">
+        		 <input type="text" name="day" placeholder="일 (예: 15)" required pattern="[0-3]?[0-9]" title="1에서 31 사이의 일을 입력하세요">
             </td>
         </tr>
         <tr>
             <td>아이디</td>
             <td colspan="3">
-                <input type="text" name="userID" required> 
+                <input type="text" name="userId" required> 
                 <button type="button" onclick="checkDuplicate()">중복확인</button>
             </td>
         </tr>
@@ -210,8 +199,8 @@
         </tr>
         <tr>
         	<td>인증번호</td>
-        	<td><input type="text" name="email_check" required>
-        	<button type="button" onclick="">확인</button></td>
+        	<td><input type="text" name="email_check" required id = "numnum">
+        	<button type="button" onclick="memcheck()">확인</button></td>
         </tr>
         <tr>
             <td>주소</td>
@@ -231,7 +220,7 @@
         </tr>
         <tr>
             <td colspan="4">
-                <button type="submit">가입완료</button>
+                <button type="submit" class="btn btn-primary">가입완료</button>
                 <button type="reset">초기화</button>
             </td>
         </tr>
