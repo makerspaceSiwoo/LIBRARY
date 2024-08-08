@@ -2,9 +2,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Insert title here</title>
+<title>사서 홈 페이지</title>
+
 </head>
 <body>
-	admin home
+	
 </body>
 </html>
