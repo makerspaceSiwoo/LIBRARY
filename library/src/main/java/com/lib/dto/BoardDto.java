@@ -13,7 +13,7 @@ public class BoardDto {
 	private String type;
 	private int userno;
 	private int view;
-	private Date datetime;
+	private Date write_date;
 	
 	
 	
