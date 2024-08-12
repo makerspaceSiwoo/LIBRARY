@@ -20,8 +20,8 @@ public interface UserDao {
 	
 	@Update("UPDATE user SET userID = #{userID}, userPW = #{userPW}, email = #{email}, name = #{name}, gender = #{gender}, birth = #{birth}, phone = #{phone}, address = #{address} WHERE userno = #{userno}")
     void updateUser(UserDto user);
-
-	@Select("SELECT * FROM user WHERE userID = #{userID}")
-    UserDto findByUserID(String userID);
+	
+	@Select("SELECT userID FROM user WHERE email = #{email}")
+    String findUserIdByEmail(String email);
 	
 }

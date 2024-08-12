@@ -17,21 +17,21 @@
         <button type="submit">Login</button>
     </form>
     
-    <form action="/find/id" method="get">
+    <form action="/find/search/id" method="get">
     
     <button>아이디 찾기</button>
     
     </form>
     
-    <form action="/find/pw" method="post">
+    <form action="/find/search/pw" method="get">
     
     <button>비밀번호 찾기</button>
     
     </form>
     
-    <form action="/admin/mod/info" method="get">
+    <form action="/admin/mod" method="get">
     
-    <button>사서 정보 수정(임시) </button>
+    <button>정보 수정(임시) </button>
     
     </form>
     
