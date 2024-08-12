@@ -21,6 +21,12 @@ public class BookManageController {
 	@Autowired
 	BookManageService bservice;
 	
+	@Autowired
+	AddBookImgService imgservice;
+	
+	@Autowired
+	AddBookMetaService metaservice;
+	
 	@GetMapping("/book/add")
 	public String addBookform() {
 		return "admin/manage/book";
@@ -29,10 +35,12 @@ public class BookManageController {
 	@PostMapping("/book/add")
 	@ResponseBody
 	public List<BookDto> addBooklist(@RequestBody List<BookDto> blist) {
-		List<BookDto> failed = new ArrayList<>();
+		int imgdone, locdone, categorydone = 0;
+		List<BookDto> failed = new ArrayList<>(); // 실패한 책 리스트를 리턴
 		System.out.println(blist);
 		for(BookDto b : blist) {
 			int chk = bservice.insertBook(b); // blist에 있는 book을 하나씩 db에 넣는 작업
+				
 			if(chk == 1) {
 				System.out.println("성공");
 			}else { // db에 이미 있거나 다른 이유로 insert에 실패 했을 때 (not null위반 등)
@@ -40,8 +48,14 @@ public class BookManageController {
 				System.out.println(b.getBooktitle() + " " + b.getCallno());
 				failed.add(b);
 			}
-		}
-		return failed;
+		}// 책 입력 완료
+		// 비어있는 칼럼 채우기
+		imgdone = imgservice.addBookImg(); // 300개까지만 가능
+		locdone = metaservice.addBookLoc();
+		categorydone = metaservice.addBookCategory();
+		
+		System.out.printf("이미지 삽입 성공 권수 : %d,  서가위치 삽입 성공 권수 : %d, 분류 삽입 성공권수 : %d\n",imgdone,locdone,categorydone);
+		return failed; // 책 삽입에 실패한 책들
 		
 	}
 	
