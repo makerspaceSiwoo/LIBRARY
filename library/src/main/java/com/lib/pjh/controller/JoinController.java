@@ -23,12 +23,12 @@ public class JoinController {
 		this.joinService = joinService;
 	}
 
-	@GetMapping("/join/form")
+	@GetMapping("/join")
 	public String joinform() {
 		return "parkjae/join";
 	}
 
-	@PostMapping("/checkId")
+	@PostMapping("/join/id_check")
 	@ResponseBody
 	public Map<String, String> checkId(@RequestParam("userID") String userID) {
 		boolean isDuplicate = joinService.checkUserIdDuplicate(userID);
@@ -70,6 +70,7 @@ public class JoinController {
 	}
 
 	@RequestMapping("/send")
+	@ResponseBody
 	public String[] sendMail(@RequestParam("emailAddress") String emailAddress) throws Exception {
 		EmailVo email = new EmailVo();
 		String receiver = emailAddress;

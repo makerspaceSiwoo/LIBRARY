@@ -33,22 +33,117 @@
         border: 1px solid black;
     }
 </style>
+
+</head>
+<body>
+<div>
+    <h2>(사진)솔데스크 도서관</h2>
+    <h2>도서관 HOME</h2>
+    <h2>도서 검색</h2>
+    <h2>인기 도서</h2>
+    <h2>MY 페이지</h2>
+    <h2>나눔 마당</h2>
+    <button class="button" onclick="">로그인</button>
+    <button class="button" onclick="">회원가입</button>
+</div>
+<h1>회원가입</h1>
+<h5>회원정보입력</h5>
+<form action="/user/register" method="post" onsubmit="return submitForm()">
+    <table>
+        <tr>
+            <td>성 명</td>
+            <td><input type="text" name="name" required></td>
+            <td>생년월일</td>
+            <td>
+                 <input type="text" name="year" placeholder="연도 (예: 1990)" required pattern="\d{4}" title="4자리 연도를 입력하세요">
+       			 <input type="text" name="month" placeholder="월 (예: 07)" required pattern="[0-1]?[0-9]" title="1에서 12 사이의 월을 입력하세요">
+        		 <input type="text" name="day" placeholder="일 (예: 15)" required pattern="[0-3]?[0-9]" title="1에서 31 사이의 일을 입력하세요">
+            </td>
+        </tr>
+        <tr>
+            <td>아이디</td>
+            <td colspan="3">
+                <input type="text" name="userID" required> 
+                <button type="button" onclick="checkDuplicate()">중복확인</button>
+            </td>
+        </tr>
+        <tr>
+            <td>비밀번호</td>
+            <td colspan="3"><input type="password" name="userPW" required></td>
+        </tr>
+        <tr>
+            <td>비밀번호 확인</td>
+            <td colspan="3"><input type="password" name="confirm_password" required></td>
+        </tr>
+        <tr>
+            <td>휴대폰</td>
+            <td colspan="3"><input type="text" name="phone" required></td>
+        </tr>
+        <tr>
+            <td>이메일</td>
+            <td colspan="3">
+                <input type="text" name="email_user" required>
+                <select name="email_domain" required>
+                    <option value="">선택</option>
+                    <option value="naver.com">naver.com</option>
+                    <option value="gmail.com">gmail.com</option>
+                    <option value="daum.net">daum.net</option>
+                    <option value="hanmail.net">hanmail.net</option>
+                    <option value="nate.com">nate.com</option>
+                    <option value="kakao.com">kakao.com</option>
+                    <option value="yahoo.com">yahoo.com</option>
+                    <option value="hotmail.com">hotmail.com</option>
+                    <option value="outlook.com">outlook.com</option>
+                    <option value="icloud.com">icloud.com</option>
+                </select>
+                <button type="button" onclick="requestVerificationCode()">인증요청</button>
+            </td>
+        </tr>
+        <tr>
+        	<td>인증번호</td>
+        	<td><input type="text" name="email_check" required id = "numnum">
+        	<button type="button" onclick="memcheck()">확인</button></td>
+        </tr>
+        <tr>
+            <td>주소</td>
+            <td colspan="3">
+                <input type="text" name="address" required> <button type="button" onclick="searchAddress()">주소찾기</button>
+             
+            </td>
+        </tr>
+        <tr>
+            <td>성별</td>
+            <td colspan="3">
+                <select name="gender" required>
+                    <option value="M">남성</option>
+                    <option value="F">여성</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <button type="submit" class="btn btn-primary">가입완료</button>
+                <button type="reset">초기화</button>
+            </td>
+        </tr>
+    </table>
+</form>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 $(document).ready(function() {
     function checkDuplicate() {
         // 아이디 입력 필드의 값을 가져옵니다.
-        var userId = document.querySelector('input[name="userId"]').value;
+        var userId = document.querySelector('input[name="userID"]').value;
 
-        if (userId === "") {
+        if (userID === "") {
             alert("아이디를 입력하세요.");
             return;
         }
 
         // AJAX를 사용하여 서버에 중복 체크 요청을 보냅니다.
         $.ajax({
-            url: '/checkId', // 서버의 중복 체크 엔드포인트 URL
+            url: '/join/id_check', // 서버의 중복 체크 엔드포인트 URL
             type: 'POST',
             data: { userID: userId }, // userId 변수 전달
             success: function(response) {
@@ -132,100 +227,6 @@ $(document).ready(function() {
     }
   
 </script>
-</head>
-<body>
-<div>
-    <h2>(사진)솔데스크 도서관</h2>
-    <h2>도서관 HOME</h2>
-    <h2>도서 검색</h2>
-    <h2>인기 도서</h2>
-    <h2>MY 페이지</h2>
-    <h2>나눔 마당</h2>
-    <button class="button" onclick="">로그인</button>
-    <button class="button" onclick="">회원가입</button>
-</div>
-<h1>회원가입</h1>
-<h5>회원정보입력</h5>
-<form action="/user/register" method="post" onsubmit="return submitForm()">
-    <table>
-        <tr>
-            <td>성 명</td>
-            <td><input type="text" name="name" required></td>
-            <td>생년월일</td>
-            <td>
-                 <input type="text" name="year" placeholder="연도 (예: 1990)" required pattern="\d{4}" title="4자리 연도를 입력하세요">
-       			 <input type="text" name="month" placeholder="월 (예: 07)" required pattern="[0-1]?[0-9]" title="1에서 12 사이의 월을 입력하세요">
-        		 <input type="text" name="day" placeholder="일 (예: 15)" required pattern="[0-3]?[0-9]" title="1에서 31 사이의 일을 입력하세요">
-            </td>
-        </tr>
-        <tr>
-            <td>아이디</td>
-            <td colspan="3">
-                <input type="text" name="userId" required> 
-                <button type="button" onclick="checkDuplicate()">중복확인</button>
-            </td>
-        </tr>
-        <tr>
-            <td>비밀번호</td>
-            <td colspan="3"><input type="password" name="userPW" required></td>
-        </tr>
-        <tr>
-            <td>비밀번호 확인</td>
-            <td colspan="3"><input type="password" name="confirm_password" required></td>
-        </tr>
-        <tr>
-            <td>휴대폰</td>
-            <td colspan="3"><input type="text" name="phone" required></td>
-        </tr>
-        <tr>
-            <td>이메일</td>
-            <td colspan="3">
-                <input type="text" name="email_user" required>
-                <select name="email_domain" required>
-                    <option value="">선택</option>
-                    <option value="naver.com">naver.com</option>
-                    <option value="gmail.com">gmail.com</option>
-                    <option value="daum.net">daum.net</option>
-                    <option value="hanmail.net">hanmail.net</option>
-                    <option value="nate.com">nate.com</option>
-                    <option value="kakao.com">kakao.com</option>
-                    <option value="yahoo.com">yahoo.com</option>
-                    <option value="hotmail.com">hotmail.com</option>
-                    <option value="outlook.com">outlook.com</option>
-                    <option value="icloud.com">icloud.com</option>
-                </select>
-                <button type="button" onclick="requestVerificationCode()">인증요청</button>
-            </td>
-        </tr>
-        <tr>
-        	<td>인증번호</td>
-        	<td><input type="text" name="email_check" required id = "numnum">
-        	<button type="button" onclick="memcheck()">확인</button></td>
-        </tr>
-        <tr>
-            <td>주소</td>
-            <td colspan="3">
-                <input type="text" name="address" required> <button type="button" onclick="searchAddress()">주소찾기</button>
-             
-            </td>
-        </tr>
-        <tr>
-            <td>성별</td>
-            <td colspan="3">
-                <select name="gender" required>
-                    <option value="M">남성</option>
-                    <option value="F">여성</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="4">
-                <button type="submit" class="btn btn-primary">가입완료</button>
-                <button type="reset">초기화</button>
-            </td>
-        </tr>
-    </table>
-</form>
 </body>
 </html>
 
