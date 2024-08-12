@@ -27,33 +27,23 @@ public class AdminModController {
 	 @Autowired
 	 private UserService userService;
 	 
-	 @GetMapping("/rerere44")
-	 public String reda() {
-		 return "/test12345/test2930194";
+	 @GetMapping("/mypage")
+	 public String mypage() {
+		 return "/ho_find/mypage";
 	 }
 	 
 	 // 수정 페이지로 이동
-	 @GetMapping("/admin/mod/info")
+	 @GetMapping("/admin/mod")
 	    public String editProfile(@ModelAttribute("user") UserDto user, Model model) {
 		 
 	        model.addAttribute("user", user);
 	        return "/ho_mod/adminmodinfo";
 	    } 
 	 
-	 // 정보 변경한걸 ID체크해서 업데이트
-	 @PostMapping("/admin/id_check")
+	// 정보 업데이트
+	 @PostMapping("/admin/mod/info")
 	 public String updateProfile(@ModelAttribute("user") UserDto user, Model model) {
-	     // ID가 중복되는 경우
-	     UserDto existingUser = userService.findByUserID(user.getUserID());
-
-	     // ID가 중복되는 경우
-	     if (existingUser != null && existingUser.getUserno() != user.getUserno()) {
-	         model.addAttribute("errorMessage", "User ID가 이미 존재합니다. 다른 User ID를 선택해 주세요.");
-	         model.addAttribute("user", user);
-	         return "forward:/admin/mod/info"; // 수정 페이지로 포워드하여 다시 입력받도록 합니다.
-	     }
-	     
-	     // 중복되지 않으면 업데이트
+		 
 	     userService.updateUser(user);
 	     return "redirect:/login";
 	 }

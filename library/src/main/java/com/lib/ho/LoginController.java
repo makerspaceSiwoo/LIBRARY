@@ -2,6 +2,8 @@ package com.lib.ho;
 
 
 import java.security.SecureRandom;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
@@ -67,7 +70,7 @@ public class LoginController {
             	
                 boolean admin = user.getAdmin().equals("1");
                 if (admin) {
-                    return new ModelAndView("redirect:/home"); // admin/home uri 생기면 그걸로 변경해야함
+                    return new ModelAndView("redirect:/admin/home"); // admin/home uri 생기면 그걸로 변경해야함
                 } else {
                     return new ModelAndView("redirect:/home");
                 }
@@ -80,7 +83,7 @@ public class LoginController {
 	@PostMapping("/logout")
 	public String logout(SessionStatus sessionStatus) {
 	    sessionStatus.setComplete();
-	    return "redirect:/home"; // 로그인 페이지로 리다이렉트 - HomeController에 있음
+	    return "redirect:/home";
 	}
 	// 랜덤 문자 생성
     private String Random(int length) {
@@ -90,7 +93,7 @@ public class LoginController {
         return Base64.getUrlEncoder().withoutPadding().encodeToString(randomBytes).substring(0, length);
     }
     
-    // 랜덤값 만들어서 DB에 저장
+    // 랜덤값 만들어서 사서 아이디 비밀번호 발송
     
     @PostMapping("/admin/new")
     public ModelAndView generateCredentials(@RequestParam("email") String email) {
@@ -103,7 +106,19 @@ public class LoginController {
         user.setEmail(email);
         user.setName("");
         user.setGender("");
-        user.setBirth(null);
+        
+        // 문자열을 Date로 변환
+        String birthStr = "1970-01-01"; // 기본값
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date birthDate = null;
+        try {
+            birthDate = formatter.parse(birthStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            // 오류 처리
+        }
+        user.setBirth(birthDate); // 변환된 Date 객체 설정
+        
         user.setPhone("");
         user.setAddress("");
         user.setBan(0);
@@ -113,12 +128,34 @@ public class LoginController {
 
         userDao.insertUser(user);
 
-        // 이메일 발송
+        // 사서 아이디 이메일 발송
         String subject = "새로운 아이디";
         String text = "당신의 아이디 " + userID + "\n당신의 비밀번호 " + userPW;
         emailService.sendSimpleMessage(email, subject, text); 
 
-        return new ModelAndView("/admin/home");
+        return new ModelAndView("/home");
+    }
+    
+ // 인증 코드 생성
+    private String generateVerificationCode() {
+        SecureRandom random = new SecureRandom();
+        byte[] randomBytes = new byte[6];
+        random.nextBytes(randomBytes);
+        return Base64.getUrlEncoder().withoutPadding().encodeToString(randomBytes);
+    }
+
+    @PostMapping("/send/code")
+    @ResponseBody
+    public String sendVerificationCode(@RequestParam("email") String email) {
+        String verificationCode = generateVerificationCode();
+        
+        // 이메일 발송
+        String subject = "인증 코드";
+        String text = "인증 코드는 " + verificationCode + "입니다.";
+        emailService.sendSimpleMessage(email, subject, text);
+
+        // 인증 코드를 클라이언트 측에서 사용할 수 있도록 반환
+        return verificationCode;
     }
     
 }
