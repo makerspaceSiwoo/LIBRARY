@@ -1,5 +1,7 @@
 package com.lib.siwoo;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +29,7 @@ public class BookManageService {
 		try {
 			if(dao.checkDuplicate(dto.getCallno()) == 0) { // 청구 기호로 검색해서 이미 존재하는지 확인
 				success = dao.insertBook(dto);
-				imgdone = imgservice.addBookImgone(dto); // 새로 추가하는 책에 대해서만
+				imgdone = imgservice.addBookImgone(dto); // 새로 추가하는 책에 대해서만 - 중간에 실패 -> noimg
 				locdone = metaservice.addBookLocOne(dto); // 해당 책의 서가 위치 입력
 				categorydone = metaservice.addBookCategoryOne(dto); // 해당 책의 카테고리 입력
 				
@@ -38,6 +40,28 @@ public class BookManageService {
 			e.printStackTrace();
 		}	
 		return -1; // 이미 존재하는 책이면 db에 추가하지 않고, -1 리턴
+	}
+	
+	
+	public int targetcount(String callno) {
+		return dao.targetcount(callno);
+	}
+	
+	public List<BookDto> targetbook(String callno, int startRow, int perPage){ // 청구기호로 책 검색
+		return dao.targetbook(callno, startRow, perPage);
+		
+	}
+	
+	public BookDto selectBook(int bookno) {
+		return dao.selectBook(bookno);
+	}
+	
+	public int modBook(BookDto dto) {
+		return dao.modBook(dto);
+	}
+	
+	public int delBook(int bookno) {
+		return dao.delBook(bookno);
 	}
 
 }

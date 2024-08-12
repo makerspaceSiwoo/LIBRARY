@@ -5,6 +5,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<div>
+		<h1>도서 추가</h1>
+	</div>
 	<form action="#" method="post" id="bookform">
 	<div>
 		<input id="booktitle" name="booktitle" placeholder="책 이름을 입력하세요">
@@ -35,7 +38,7 @@
 		<button type="button" onclick="return listSubmit();">등록</button>
 	</div>
 	</form>
-    <div id="failedbox" style="display: none;">
+    <div id="failedbox">
 		<table id="failedlist" border="1" >
 			<tr>
 				<td colspan="6" align="center">전송 실패한 도서 목록</td>
@@ -49,14 +52,14 @@
 			</tr>
 		</table>
 		<button type="button" onclick="return cancel();">전송 취소</button>
-        <button type="button" onclick="">목록 엑셀 다운로드</button>
-	</div>
 
+	</div>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
 let datalist = []; // 입력한 데이터를 저장할 리스트
 let failedlist = []; // 전송 실패한 데이터를 저장할 리스트
 let currentIndex = 0; // 현재 인덱스를 추적
+
 
 function cancel() { // 전송 취소
     location.href = "/book/add";
@@ -196,9 +199,6 @@ function listSubmit() { // 전송
             for (let i = r - 1; i > 1; i--) {
                 table.deleteRow(i);
             }
-
-            // 실패한 목록이 있을 때 보여주기
-            $("#failedbox").show();
             // 실패 목록을 테이블에 추가
             failedlist.forEach((element) => {
                 const title = element.booktitle;
