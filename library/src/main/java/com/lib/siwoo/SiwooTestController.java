@@ -27,18 +27,18 @@ public class SiwooTestController {
 		return "/admin/manage/siwootest/addimg";
 	}
 	
-	@GetMapping("/test/loc")
-	public String addmetatest() {
-		int done = metaservice.addBookLoc();
-		System.out.println(done);
-		return "admin/manage/siwootest/addimg";
-	}
+//	@GetMapping("/test/loc")
+//	public String addmetatest() {
+//		int done = metaservice.addBookLoc();
+//		System.out.println(done);
+//		return "admin/manage/siwootest/addimg";
+//	}
 	
-	@GetMapping("/test/category")
-	public String addcategory() {
-		int done = metaservice.addBookCategory();
-		System.out.println(done);
-		return "admin/manage/siwootest/addimg";
-	}
-	
+//	@GetMapping("/test/category")
+//	public String addcategory() {
+//		int done = metaservice.addBookCategory();
+//		System.out.println(done);
+//		return "admin/manage/siwootest/addimg";
+//	}
+//	
 }

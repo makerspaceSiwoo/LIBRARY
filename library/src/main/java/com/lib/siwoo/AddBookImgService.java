@@ -18,11 +18,11 @@ public class AddBookImgService {
 	NaverApiService naver;
 	
 	public boolean check(BookDto b, Item i) {
-		String title = b.getBooktitle();
-		String author = b.getAuthor();
+		String title = b.getBooktitle().replaceAll(" ", "").replaceAll(";", "");
+		String author = b.getAuthor().replaceAll(" ", "").replaceAll(";", "").replaceAll("지음", "");
 		String publisher = b.getPublisher();
-		String title2 = i.getTitle();
-		String author2 = i.getAuthor();
+		String title2 = i.getTitle().replaceAll(" ", "").replaceAll(";", "");
+		String author2 = i.getAuthor().replaceAll(" ", "").replaceAll(";", "").replaceAll("지음", "");
 		String publisher2 = i.getPublisher();
 		if((title.contains(title2) || title2.contains(title)) // 제목,저자는 둘 중 하나가 다른 하나를 포함하는 것으로 확인
 				&& (author.contains(author2) || author2.contains(author))
@@ -38,7 +38,6 @@ public class AddBookImgService {
 	public int addBookImg() {
 		int success=0;
 		int limit = 300; // 업데이트할 도서의 수 - 이미지가 비어있는 도서 중 n 권
-		int block = 10; // 10개마다 sleep
 		int rest = 1000; // sleep 하는 시간
 		List<BookDto> blist = new ArrayList<>(); 
 		blist = dao.findNoImg(limit); // 이미지 비어있는 책 리스트 dto
@@ -46,13 +45,8 @@ public class AddBookImgService {
 			// naver api에 도서 검색
 			NaverBookDto n = new NaverBookDto();
 			
-			try {
-				if(block <= 0) {
-					block = 10;
-					Thread.sleep(rest); // 10번에 한 번씩 휴식 - naver api 속도제한
-				}else {
-					block --;
-				}
+			try {					
+				Thread.sleep(rest); //naver api 속도제한
 				n = naver.bookinfo(b.getBooktitle()); // 해당 제목으로 검색된 10권의 책 - items
 			}catch (Exception e) {
 				e.printStackTrace();
@@ -75,6 +69,42 @@ public class AddBookImgService {
 			dao.updateImg(b.getImg(), b.getBookno());
 //			System.out.println(b); 확인용
 		} // for blist end
+		return success; // img 찾는데 성공한 책 수
+	}
+	
+	public int addBookImgone(BookDto dto) {
+		int success=0;
+		int rest = 1000; // sleep 하는 시간
+			// naver api에 도서 검색
+			NaverBookDto n = new NaverBookDto();
+			dto.setImg(""); // 초기화
+			try {					
+				Thread.sleep(rest); //naver api 속도제한
+				n = naver.bookinfo(dto.getBooktitle()); // 해당 제목으로 검색된 10권의 책 - items
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+//			System.out.println(n);
+			for(Item item : n.getItems()) {
+//				System.out.println(item); //확인용
+				if(check(dto,item)) {
+					
+					dto.setImg(item.getImage()); // 맞는 책을 검색한 후, dto 업데이트
+					break;
+				}
+			} // for itemlist end
+			if(dto.getImg().equals("")) { // 네이버 검색 후에도 img 없는 경우
+				dto.setImg("/bookImg/noIMG.png");
+			}
+			else {
+				success ++;
+			}
+//			System.out.println(dto.getImg()); //확인용
+			// dto 변경 완료 -> db update
+//			System.out.println(dto.getImg()+"  "+ dto.getBookno()); //확인용
+			dao.updateImg(dto.getImg(), dto.getBookno());
+//			System.out.println(b); 확인용
 		return success; // img 찾는데 성공한 책 수
 	}
 

@@ -12,7 +12,6 @@
 		<input id="callno" name="callno" placeholder="청구기호">
 		<input id="publisher" name="publisher" placeholder="출판사">
 		<input id="pubyear" type="number" name="pubyear" placeholder="출판연도">
-		<input id="loc" name="loc" placeholder="서가 위치">
 	</div>
 	<div>
 		<button type="button" onclick="return addToList();">추가</button>
@@ -23,13 +22,14 @@
 	<div>
 		<table id="booklist" border="1">
 			<tr>
-				<td colspan="5" align="center">새로 추가할 도서 목록</td>
+				<td colspan="6" align="center">새로 추가할 도서 목록</td>
 			</tr>
 			<tr>
 				<td>책 이름</td>
 				<td>저자</td>
 				<td>청구기호</td>
 				<td>출판사</td>
+				<td>출판연도</td>
 			</tr>
 		</table>
 		<button type="button" onclick="return listSubmit();">등록</button>
@@ -38,13 +38,14 @@
     <div id="failedbox" style="display: none;">
 		<table id="failedlist" border="1" >
 			<tr>
-				<td colspan="5" align="center">전송 실패한 도서 목록</td>
+				<td colspan="6" align="center">전송 실패한 도서 목록</td>
 			</tr>
 			<tr>
 				<td>책 이름</td>
 				<td>저자</td>
 				<td>청구기호</td>
 				<td>출판사</td>
+				<td>출판연도</td>
 			</tr>
 		</table>
 		<button type="button" onclick="return cancel();">전송 취소</button>
@@ -111,7 +112,6 @@ function modify(obj, index, listType) { // 수정
     $("#callno").val(book.callno);
     $("#publisher").val(book.publisher);
     $("#pubyear").val(book.pubyear);
-    $("#loc").val(book.loc);
 
     // 행을 삭제합니다
     del(obj, listType);
@@ -124,9 +124,8 @@ function addToList() {
     const callno = $("#callno").val();
     const publisher = $("#publisher").val();
     const pubyear = $("#pubyear").val();
-    const loc = $("#loc").val();
 
-    if (!title || !author || !callno || !publisher || !pubyear || !loc) {
+    if (!title || !author || !callno || !publisher || !pubyear) {
         alert("책 정보를 빠짐없이 입력해주세요.");
         return false;
     }
@@ -139,7 +138,6 @@ function addToList() {
         'callno': callno,
         'publisher': publisher,
         'pubyear': pubyear,
-        'loc': loc
     };
 
     // 데이터 리스트에 추가
@@ -154,6 +152,7 @@ function addToList() {
         <td>\${author}</td>
         <td>\${callno}</td>
         <td>\${publisher}</td>
+        <td>\${pubyear}</td>
         <td><button type="button" onclick="return modify(this, \${book.index}, 'datalist');">수정</button></td>
         <td><button type="button" onclick="del(this, 'datalist');">삭제</button></td>
         </tr>`;
@@ -207,7 +206,6 @@ function listSubmit() { // 전송
                 const callno = element.callno;
                 const publisher = element.publisher;
                 const pubyear = element.pubyear;
-                const loc = element.loc;
                 const index = element.index;
 
                 let tag = `<tr data-index="\${index}">
@@ -215,6 +213,7 @@ function listSubmit() { // 전송
                     <td>\${author}</td>
                     <td>\${callno}</td>
                     <td>\${publisher}</td>
+                    <td>\${pubyear}</td>
                     <td><button type="button" onclick="return modify(this, \${index}, 'failedlist');">수정</button></td>
                     <td><button type="button" onclick="del(this, 'failedlist');">삭제</button></td>
                     </tr>`;
