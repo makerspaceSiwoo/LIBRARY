@@ -14,7 +14,7 @@ import jakarta.mail.internet.MimeMessage.RecipientType;
 import com.lib.dto.EmailVo;
 import com.lib.dto.UserDto;
 
-@Service("emailService")
+@Service()
 public class JoinService {
 
     private final JoinDao joinDao;

@@ -38,15 +38,23 @@ public class AddBookImgService {
 	public int addBookImg() {
 		int success=0;
 		int limit = 300; // 업데이트할 도서의 수 - 이미지가 비어있는 도서 중 n 권
+		int block = 10; // 10개마다 sleep
+		int rest = 1000; // sleep 하는 시간
 		List<BookDto> blist = new ArrayList<>(); 
 		blist = dao.findNoImg(limit); // 이미지 비어있는 책 리스트 dto
 		for(BookDto b : blist) {
 			// naver api에 도서 검색
 			NaverBookDto n = new NaverBookDto();
+			
 			try {
-				Thread.sleep(1000);
+				if(block <= 0) {
+					block = 10;
+					Thread.sleep(rest); // 10번에 한 번씩 휴식 - naver api 속도제한
+				}else {
+					block --;
+				}
 				n = naver.bookinfo(b.getBooktitle()); // 해당 제목으로 검색된 10권의 책 - items
-			} catch (InterruptedException e) {
+			}catch (Exception e) {
 				e.printStackTrace();
 			}
 			
@@ -56,7 +64,7 @@ public class AddBookImgService {
 					b.setImg(item.getImage()); // 맞는 책을 검색한 후, dto 업데이트
 					break;
 				}
-			}
+			} // for itemlist end
 			if(b.getImg().equals("")) { // 네이버 검색 후에도 img 없는 경우
 				b.setImg("/bookImg/noIMG.png");
 			}
@@ -66,7 +74,7 @@ public class AddBookImgService {
 			// dto 변경 완료 -> db update
 			dao.updateImg(b.getImg(), b.getBookno());
 //			System.out.println(b); 확인용
-		}
+		} // for blist end
 		return success; // img 찾는데 성공한 책 수
 	}
 
