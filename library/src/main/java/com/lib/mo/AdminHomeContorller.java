@@ -1,30 +1,20 @@
 package com.lib.mo;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.lib.dto.BoardDto;
 import com.lib.mo.service.HomeService;
 
 @Controller
-public class HomeController {
-	
+public class AdminHomeContorller {
+
 	@Autowired
 	HomeService service;
 	
-	@GetMapping("/home")
-	public String homepage(Model m) {
-		m.addAttribute("allbook", service.allbook());
-		return "/user/home";
-	}
-	
-		List<BoardDto> notice = service.notice();
-		m.addAttribute("notice",notice);
-		
+	@GetMapping("/admin/home")
+	public String adhome(Model m) {
 		m.addAttribute("allbook", service.allbook());
 		m.addAttribute("chongbook", service.chongbook());
 		m.addAttribute("chulbook", service.chulbook());
@@ -36,7 +26,6 @@ public class HomeController {
 		m.addAttribute("unbook", service.unbook());
 		m.addAttribute("munbook", service.munbook());
 		m.addAttribute("yeokbook", service.yeokbook());
-		return "/user/home";
+		return "/admin/home";
 	}
-
 }
