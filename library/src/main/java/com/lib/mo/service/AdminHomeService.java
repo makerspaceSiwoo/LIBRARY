@@ -1,16 +1,12 @@
 package com.lib.mo.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lib.dto.BoardDto;
 import com.lib.mo.dao.HomeDao;
 
 @Service
-public class HomeService {
-
+public class AdminHomeService {
 	@Autowired
 	HomeDao dao;
 	
@@ -38,7 +34,7 @@ public class HomeService {
 		return dao.gicount();
 	}
 	
-	public int yeabook() {
+	public int artbook() {
 		return dao.yeacount();
 	}
 	
@@ -56,10 +52,5 @@ public class HomeService {
 	
 	public int allbook() {
 		return dao.allcount();
-	}
-	
-	public List<BoardDto>notice(){
-
-		return dao.notice();
 	}
 }
