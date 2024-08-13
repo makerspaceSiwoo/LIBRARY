@@ -81,20 +81,19 @@ public class AddBookImgService {
 			try {					
 				Thread.sleep(rest); //naver api 속도제한
 				n = naver.bookinfo(dto.getBooktitle()); // 해당 제목으로 검색된 10권의 책 - items
+//				System.out.println(n);
+				for(Item item : n.getItems()) {
+//					System.out.println(item); //확인용
+					if(check(dto,item)) {
+						
+						dto.setImg(item.getImage()); // 맞는 책을 검색한 후, dto 업데이트
+						break;
+					}
+				} // for itemlist end
 			}catch (Exception e) {
 				e.printStackTrace();
 			}
-			
-//			System.out.println(n);
-			for(Item item : n.getItems()) {
-//				System.out.println(item); //확인용
-				if(check(dto,item)) {
-					
-					dto.setImg(item.getImage()); // 맞는 책을 검색한 후, dto 업데이트
-					break;
-				}
-			} // for itemlist end
-			if(dto.getImg().equals("")) { // 네이버 검색 후에도 img 없는 경우
+			if(dto.getImg().equals("")) { // 네이버 검색 후에도 img 없는 경우 or api 에러로 못 가져온 경우-n.getItems에서null point exception
 				dto.setImg("/bookImg/noIMG.png");
 			}
 			else {

@@ -52,13 +52,31 @@
 			</tr>
 		</table>
 		<button type="button" onclick="return cancel();">전송 취소</button>
-
 	</div>
+	<hr>
+	<div id="excel">
+    	<button type="button" onclick="return location.href='/book/add/downform';" >엑셀 양식 다운로드</button>
+		<button type="button">도서목록 엑셀 업로드</button>
+	</div>
+	
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
 let datalist = []; // 입력한 데이터를 저장할 리스트
 let failedlist = []; // 전송 실패한 데이터를 저장할 리스트
 let currentIndex = 0; // 현재 인덱스를 추적
+
+function exceldownload(){
+    $.ajax({
+        url: "/book/add/downform",
+        method: "get",
+    }).done(function () {
+		alert("다운로드 완료");
+    });
+}
+
+
+
+
 
 
 function cancel() { // 전송 취소

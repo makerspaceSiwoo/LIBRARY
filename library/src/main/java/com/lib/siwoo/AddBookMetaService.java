@@ -39,17 +39,7 @@ public class AddBookMetaService {
 			{"역사","아시아(아세아)","유럽(구라파)","아프리카","북아메리카(북미)", "남아메리카(남미)",
 				"오세아니아(대양주)","양극지방","지리","전기"}
 			};
-	
-//	public int addBookLoc() { // loc 가 비어있는 book을 찾아 입력 - 책 추가 시 행해야 함
-//		int done=0;
-//		done += dao.addBookLoc("디지털 자료실", "디");
-//		done += dao.addBookLoc("외국어 자료실", "외");
-//		done += dao.addBookLoc("아동/청소년 자료실", "아");
-//		done += dao.addBookLoc("아동/청소년 자료실", "유");
-//		done += dao.addBookLoc("종합자료실", "[0-9]");
-//		return done;
-//	}
-	
+		
 	public int addBookLocOne(BookDto dto) { // loc 가 비어있는 book을 찾아 입력 - 책 추가 시 행해야 함
 		int done=0;
 		String callno = dto.getCallno();
@@ -80,9 +70,40 @@ public class AddBookMetaService {
 		done = dao.addBookLocOne(dto);
 		return done;
 	}
-	
+		
+	public int addBookCategoryOne(BookDto dto) { // category가 비어있는 도서 분류를 추가
+		int done=0;
+		String category = "";
+		String callno = dto.getCallno();
+		int sub = 0;
+		try {
+			if(Character.isDigit(callno.charAt(0))) { // 시작이 숫자
+				sub = Integer.parseInt(callno.substring(0,3)); // 청구기호 세자리 추출
+			}else {
+				sub = Integer.parseInt(callno.substring(1,4));
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		int a = sub/100; // 대분류 _xx
+		int b = (sub%100)/10; // 소분류 x_x
+		category = allcategory[a][0]+"/"+allcategory[a][b];
+		dto.setCategory(category);
+		done = dao.addCategoryOne(dto);
+		return done;
+	}
+
+//	public int addBookLoc() { // loc 가 비어있는 book을 찾아 입력 - 책 추가 시 행해야 함
+//	int done=0;
+//	done += dao.addBookLoc("디지털 자료실", "디");
+//	done += dao.addBookLoc("외국어 자료실", "외");
+//	done += dao.addBookLoc("아동/청소년 자료실", "아");
+//	done += dao.addBookLoc("아동/청소년 자료실", "유");
+//	done += dao.addBookLoc("종합자료실", "[0-9]");
+//	return done;
+//}	
 //	
-//	public int addBookCategory() { // category가 비어있는 도서 분류를 추가
+//	public int addBookCategory() { // category가 비어있는 도서분류를 추가
 //		int done=0;
 //		String[][] all = {
 //				// 000
@@ -135,29 +156,5 @@ public class AddBookMetaService {
 //			}
 //		return done;
 //	}
-	
-	
-	public int addBookCategoryOne(BookDto dto) { // category가 비어있는 도서 분류를 추가
-		int done=0;
-		String category = "";
-		String callno = dto.getCallno();
-		int sub = 0;
-		try {
-			if(Character.isDigit(callno.charAt(0))) { // 시작이 숫자
-				sub = Integer.parseInt(callno.substring(0,3)); // 청구기호 세자리 추출
-			}else {
-				sub = Integer.parseInt(callno.substring(1,4));
-			}
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		int a = sub/100; // 대분류 _xx
-		int b = (sub%100)/10; // 소분류 x_x
-		category = allcategory[a][0]+"/"+allcategory[a][b];
-		dto.setCategory(category);
-		done = dao.addCategoryOne(dto);
-		return done;
-	}
-	
 
 }
