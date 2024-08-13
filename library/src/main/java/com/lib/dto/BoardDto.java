@@ -14,7 +14,7 @@ public class BoardDto {
 	private int userno;
 	private int view;
 	private Date write_date;
-	
+	private String state;
 	
 	
 }

@@ -18,6 +18,10 @@ public class HomeController {
 	
 	@GetMapping("/home")
 	public String homepage(Model m) {
+		m.addAttribute("allbook", service.allbook());
+		return "/user/home";
+	}
+	
 		List<BoardDto> notice = service.notice();
 		m.addAttribute("notice",notice);
 		
