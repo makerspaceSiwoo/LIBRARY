@@ -6,14 +6,19 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lib.dto.BookDto;
+import com.lib.mo.service.SearchService;
+
 
 @Controller
 public class BookManageController {
@@ -27,6 +32,7 @@ public class BookManageController {
 	@Autowired
 	AddBookMetaService metaservice;
 	
+	
 	@GetMapping("/book/add")
 	public String addBookform() {
 		return "admin/manage/book";
@@ -35,11 +41,10 @@ public class BookManageController {
 	@PostMapping("/book/add")
 	@ResponseBody
 	public List<BookDto> addBooklist(@RequestBody List<BookDto> blist) {
-		int imgdone, locdone, categorydone = 0;
 		List<BookDto> failed = new ArrayList<>(); // 실패한 책 리스트를 리턴
-		System.out.println(blist);
+//		System.out.println(blist);
 		for(BookDto b : blist) {
-			int chk = bservice.insertBook(b); // blist에 있는 book을 하나씩 db에 넣는 작업
+			int chk = bservice.insertBook(b); // blist에 있는 book을 하나씩 db에 넣는 작업 + img + meta
 				
 			if(chk == 1) {
 				System.out.println("성공");
@@ -49,16 +54,70 @@ public class BookManageController {
 				failed.add(b);
 			}
 		}// 책 입력 완료
-		// 비어있는 칼럼 채우기
-		imgdone = imgservice.addBookImg(); // 300개까지만 가능
-		locdone = metaservice.addBookLoc();
-		categorydone = metaservice.addBookCategory();
-		
-		System.out.printf("이미지 삽입 성공 권수 : %d,  서가위치 삽입 성공 권수 : %d, 분류 삽입 성공권수 : %d\n",imgdone,locdone,categorydone);
+		// 비어있는 칼럼 채우기		
 		return failed; // 책 삽입에 실패한 책들
-		
 	}
 	
+	
+	// 수정, 삭제 페이지
+	
+	// 수정/삭제할 책 검색 - 청구 기호로
+	@GetMapping("/book/manage")
+	public String targetBookList(@RequestParam(required = false,defaultValue = "", name="callno") String callno,
+			@RequestParam(name = "p", defaultValue = "1") int page,
+			Model m) {
+		if(callno != null && !callno.isBlank()) { // 청구기호를 입력하지 않으면 리스트를 가져오지 않음
+			int count = bservice.targetcount(callno);
+			if (count > 0) {
+				int perPage = 10; // 한 페이지에 보일 글의 갯수
+				int startRow = (page - 1) * perPage;
+				int endRow = page * perPage;
+
+				List<BookDto> bookList = bservice.targetbook(callno, startRow, perPage);
+				m.addAttribute("blist", bookList);
+
+				int pageNum = 5;
+				int totalPages = count / perPage + (count % perPage > 0 ? 1 : 0); // 전체 페이지 수
+
+				int begin = (page - 1) / pageNum * pageNum + 1;
+				int end = begin + pageNum - 1;
+				if (end > totalPages) {
+					end = totalPages;
+				}
+				m.addAttribute("begin", begin);
+				m.addAttribute("pageNum", pageNum);
+				m.addAttribute("totalPages", totalPages);
+				m.addAttribute("end", end);
+			}
+			m.addAttribute("count", count);
+			m.addAttribute("callno", callno);
+		}
+		return "admin/manage/book2";
+	}
+	
+
+	@GetMapping("/book/mod")
+	public String targetBook(@RequestParam(required = true, name="bookno") int bookno,Model m) {
+		BookDto book = bservice.selectBook(bookno);
+		m.addAttribute("book",book);
+		return "admin/manage/book3";
+	}
+	
+	@PostMapping("/book/mod")
+	@ResponseBody
+	public int modBook(BookDto dto, Model m) {
+		int done = bservice.modBook(dto);
+		System.out.println(done);
+		return done;
+	}
+	
+	@DeleteMapping("/book/del")
+	@ResponseBody
+	public int delBook(@RequestParam("bookno") int bookno) {
+		int done = bservice.delBook(bookno);
+		System.out.println(done);
+		return done;
+	}
 	
 
 }
