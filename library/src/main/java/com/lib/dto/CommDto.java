@@ -11,7 +11,7 @@ public class CommDto {
 	private int commno;
 	private String contents;
 	private int userno;
-	private Date datetime;
-	
+	private Date write_date;
+	private String state;
 	
 }

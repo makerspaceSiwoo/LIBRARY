@@ -9,19 +9,24 @@
 </style>
 </head>
 <body>
-<form method="post" id="writeform" action="/home3/test">
+<form method="post" id="writeform" action="/board/write">
 	<table border="1">
 		<tr>
 			<td class="orange">제목</td>
 			<td><input name="title"/></td>
 		</tr>
 		<tr>
-			<td class="orange">작성자</td>
-			<td><input name="userno"></td>
+			<td><input type="hidden" name="userno" value=${user.userno }></td>
 		</tr>
 		<tr>
+		
 			<td class="orange">type</td>
-			<td><input name="type"></td>
+			<td><select name="type" id="type">
+        	<option value="announcement">공지사항</option>
+        	<option value="free">자유</option>
+        	<option value="recommend">추천</option>
+        	<option value="review">리뷰</option>
+    		</select></td>
 		</tr>
 		<tr>
 			<td class="orange">내용</td>

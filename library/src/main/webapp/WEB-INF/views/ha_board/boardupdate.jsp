@@ -11,15 +11,25 @@
 </style>
 </head>
 <body>
-<form method="post" id="writeform" action="/home4/test">
+<form method="post" id="writeform" action="/board/mod/complete">
 	<table border="1">
 			<tr>
-			<td class="orange">글번호</td>
-			<td><input name="boardno" value=${boardno}></td>
+			
+			<td><input type="hidden" name="boardno" value=${boardcontent.boardno}></td>
 		</tr>
 		<tr>
-			<td class="orange">작성자</td>
-			<td><input name="userno" value=${boardcontent.userno} > </td>
+			
+			<td><input type="hidden" name="userno" value=${boardcontent.userno} > </td>
+		</tr>
+		
+				
+		<tr>
+			<td class="orange">제목</td>
+			<td><div id="smarteditor">
+        	<textarea name="title" id="editorTxt" 
+                  rows="1" cols="1" 
+                  style="width: 745px">${boardcontent.title}</textarea>
+      </div></td>
 		</tr>
 		
 		<tr>

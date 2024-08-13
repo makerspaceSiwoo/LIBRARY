@@ -59,7 +59,7 @@ public class JoinController {
 
 		// 추가 정보 설정 (예: admin, ban, penalty, state)
 		user.setAdmin("0"); // 기본값
-		user.setBan(0);
+		user.setBan(null);
 		user.setPenalty(0);
 		user.setState("active"); // 기본 상태
 
