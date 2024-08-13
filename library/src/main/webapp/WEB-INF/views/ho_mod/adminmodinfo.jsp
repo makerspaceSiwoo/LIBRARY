@@ -1,129 +1,154 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Edit Profile</title>
+    <meta charset="UTF-8">
+    <title>회원 정보 수정</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h2>회원 정보 수정</h2>
+
+    <!-- 에러 메시지 표시 -->
+    <c:if test="${not empty error}">
+        <div style="color: red;">${error}</div>
+    </c:if>
+    
+    <!-- <c:if test="${not empty successMessage}">
+        <script>
+            $(document).ready(function() {
+                alert("${successMessage}");
+            });
+        </script>
+    </c:if> -->
+	
+    <form id="editForm" action="${pageContext.request.contextPath}/admin/mod/info" method="post">
+        <table>
+            <tr>
+                <td>아이디:</td>
+                <td>
+                    <input type="text" name="userID" id="userID" value="${user.userID}" required>
+                    <button type="button" id="checkUserID">중복 체크</button>
+                    <span id="userIDCheckResult"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>비밀번호:</td>
+                <td><input type="password" name="userPW" value="" required></td>
+            </tr>
+            <tr>
+                <td>이름:</td>
+                <td><input type="text" name="name" value="${user.name}" required></td>
+            </tr>
+            <tr>
+                <td>생년월일:</td>
+                <td><input type="date" name="birth" value="${user.birth}" required></td>
+            </tr>
+            <tr>
+                <td>전화번호:</td>
+                <td><input type="text" name="phone" value="${user.phone}" required></td>
+            </tr>
+            <tr>
+                <td>이메일:</td>
+                <td>
+                    <input type="email" name="email" id="email" value="${user.email}" required>
+                    <button type="button" id="sendCode">인증 코드 발송</button>
+                    <span id="emailVerificationResult"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>주소:</td>
+                <td><input type="text" name="address" value="${user.address}" required></td>
+            </tr>
+            <tr>
+                <td>인증 코드:</td>
+                <td><input type="text" name="verificationCode" id="verificationCode" required></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit" id="submitBtn">수정</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+
     <script>
+        let isUserIDChecked = false;
+        let isEmailVerified = false;
+
         $(document).ready(function() {
-            let idAvailable = false; // ID 중복 여부를 저장할 변수
-            let verificationCode = ""; // 인증 코드 저장 변수
-            let isCodeVerified = false; // 인증 코드 확인 여부
-            const isAdmin = '${user.admin}' === '1'; // 세션의 admin 값 확인
+            // 아이디 중복 체크
+            $("#checkUserID").click(function() {
+                let userID = $("#userID").val();
 
-            function showAlert(message) {
-                alert(message);
-            }
-
-            function validateForm() {
-                const requiredFields = ["#userID", "#userPW", "#email", "#name", "#gender", "#birth", "#phone", "#address"];
-                const datePattern = /^\d{4}-\d{2}-\d{2}$/;
-
-                if (requiredFields.some(id => $(id).val() === "")) {
-                    showAlert("모든 정보를 입력해 주세요.");
-                    return false;
+                if (userID === "") {
+                    alert("아이디를 입력하세요.");
+                    return;
                 }
 
-                if (!datePattern.test($("#birth").val())) {
-                    showAlert("Birth 필드는 yyyy-MM-dd 형식이어야 합니다.");
-                    return false;
-                }
-
-                if (!idAvailable) {
-                    showAlert("ID가 중복되었습니다. 다른 ID를 입력해 주세요.");
-                    return false;
-                }
-
-                if (!isAdmin && !isCodeVerified) {
-                    showAlert("인증 코드를 확인해 주세요.");
-                    return false;
-                }
-
-                return true;
-            }
-
-            function ajaxPost(url, data, onSuccess, onError) {
-                $.ajax({ url, type: 'POST', data, success: onSuccess, error: onError });
-            }
-
-            $('#checkIdButton').click(function(e) {
-                e.preventDefault();
-                const userId = $("#userID").val();
-                if (!userId) return showAlert("아이디를 입력하세요.");
-
-                ajaxPost('${pageContext.request.contextPath}/checkId', { userID: userId }, function(response) {
-                    idAvailable = response.status !== "duplicate";
-                    showAlert(idAvailable ? "사용 가능한 아이디입니다." : "아이디가 중복되었습니다.");
-                }, function() {
-                    showAlert("중복 확인 중 오류가 발생했습니다.");
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/checkUserID",
+                    type: "POST",
+                    data: { userID: userID },
+                    success: function(data) {
+                        if (data === "사용 가능") {
+                            $("#userIDCheckResult").text("사용 가능한 아이디입니다.").css("color", "green");
+                            isUserIDChecked = true;
+                        } else {
+                            $("#userIDCheckResult").text("이미 사용 중인 아이디입니다.").css("color", "red");
+                            isUserIDChecked = false;
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        alert("아이디 중복 체크에 실패했습니다.");
+                        console.error("Error:", error);
+                        console.error("Status:", status);
+                        console.error("XHR:", xhr);
+                    }
                 });
             });
 
-            $('#requestCodeForm').submit(function(e) {
-                e.preventDefault();
-                ajaxPost('${pageContext.request.contextPath}/send/code', { email: $('#email').val() }, function(response) {
-                    verificationCode = response;
-                    showAlert("인증 코드가 발송되었습니다.");
-                }, function() {
-                    showAlert("인증 코드 발송에 실패했습니다.");
+            // 이메일 인증 코드 발송
+            $("#sendCode").click(function() {
+                let email = $("#email").val();
+
+                if (email === "") {
+                    alert("이메일을 입력하세요.");
+                    return;
+                }
+
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/send/code2",
+                    type: "POST",
+                    data: { email: email },
+                    success: function(data) {
+                        alert("인증 코드가 발송되었습니다.");
+                        $("#emailVerificationResult").text("인증 코드가 발송되었습니다.").css("color", "green");
+                        isEmailVerified = true;
+                    },
+                    error: function(xhr, status, error) {
+                        alert("인증 코드 발송에 실패했습니다.");
+                        console.error("Error:", error);
+                        console.error("Status:", status);
+                        console.error("XHR:", xhr);
+                    }
                 });
             });
 
-            $('#verifyCodeForm').submit(function(e) {
-                e.preventDefault();
-                isCodeVerified = $('#verificationCode').val() === verificationCode;
-                showAlert(isCodeVerified ? "인증이 완료되었습니다." : "인증 코드가 잘못되었습니다.");
-            });
+            // 폼 제출 시 유효성 검사
+            $("#editForm").submit(function(event) {
+                if (!isUserIDChecked) {
+                    alert("아이디 중복 체크를 완료해주세요.");
+                    event.preventDefault(); // 폼 제출 방지
+                }
 
-            $('form').submit(function(e) {
-                if (!validateForm()) e.preventDefault();
+                if (!isEmailVerified) {
+                    alert("이메일 인증을 완료해주세요.");
+                    event.preventDefault(); // 폼 제출 방지
+                }
             });
         });
     </script>
-</head>
-<body>
-    <h1><font color="blueviolet">정보 변경</font></h1>
-
-    <c:if test="${user.admin == 0}">
-        <form id="requestCodeForm">
-            <label for="email">이메일:</label>
-            <input type="email" id="email" name="email" required />
-            <button type="submit">인증 코드 요청</button>
-        </form>
-
-        <form id="verifyCodeForm" style="margin-top: 20px;">
-            <label for="verificationCode">인증 코드:</label>
-            <input type="text" id="verificationCode" name="verificationCode" required />
-            <button type="submit">확인</button>
-        </form>
-    </c:if>
-
-    <form action="${pageContext.request.contextPath}/admin/mod/info" method="post">
-        <input type="hidden" name="userno" value="${user.userno}" />
-        <label for="userID">아이디:</label>
-        <input type="text" id="userID" name="userID" value="" required />
-        <button type="button" id="checkIdButton">ID 중복 확인</button><br />
-        
-        <label for="userPW">비밀번호:</label>
-        <input type="password" id="userPW" name="userPW" value="" /><br />
-        
-        <label for="name">닉네임:</label>
-        <input type="text" id="name" name="name" value="" /><br />
-        
-        <label for="gender">성별 (남/여):</label>
-        <input type="text" id="gender" name="gender" value="" /><br />
-        
-        <label for="birth">생년월일 (yyyy-MM-dd):</label>
-        <input type="text" id="birth" name="birth" value="반드시 형식에 맞춰주세요." required /><br />
-        
-        <label for="phone">번호:</label>
-        <input type="text" id="phone" name="phone" value="" /><br />
-        
-        <label for="address">주소:</label>
-        <input type="text" id="address" name="address" value="" /><br />
-        
-        <button type="submit">정보 변경</button>
-    </form>
 </body>
 </html>

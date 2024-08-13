@@ -21,6 +21,14 @@ public class UserService {
 	public void updateUser(UserDto user) {
         dao.updateUser(user);
     }
+
+    public boolean existsByUserID(String userID) {
+        return dao.existsByUserID(userID);
+    }
+
+    public UserDto findByUserID(String userID) {
+        return dao.findByUserID(userID);
+    }
 	
 	public String findUserIdByEmail(String email) {
         String userId = dao.findUserIdByEmail(email);
