@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Update;
 import com.lib.dto.UserDto;
 
 @Mapper
-public interface UserDao {
+public interface UserDao2 {
 
     @Select("SELECT * FROM user WHERE userno = #{userno}")
     UserDto findByUserno(int userno);

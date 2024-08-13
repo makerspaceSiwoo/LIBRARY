@@ -13,7 +13,7 @@ import com.lib.dto.CommDto;
 import com.lib.jh.dao.BlackListDao;
 import com.lib.jh.dao.BoardDao;
 import com.lib.jh.dao.CommDao;
-import com.lib.jh.dao.UserDao;
+import com.lib.jh.dao.UserDao2;
 
 @Service
 public class BlackListService {
@@ -28,7 +28,7 @@ public class BlackListService {
 	BlackListDao blackDao;
 	
 	@Autowired
-    private UserDao userDao;
+    private UserDao2 userDao;
 	
 	// 게시글 신고 처리
     public int reportBoard(BlackListDto dto) {

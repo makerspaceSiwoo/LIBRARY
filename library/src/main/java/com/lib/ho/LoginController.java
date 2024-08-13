@@ -10,7 +10,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lib.dto.UserDto;
 import com.lib.ho.dao.UserDao;
@@ -59,25 +59,28 @@ public class LoginController {
 	//로그인 , admin 1일시 사서 홈, 0일시 유저 홈으로.
 	
 	@PostMapping("/login")
-    public ModelAndView login(@RequestParam("userID") String userID, @RequestParam("userPW") String userPW,Model m) {
+	public ModelAndView login(@RequestParam("userID") String userID, @RequestParam("userPW") String userPW, RedirectAttributes redirectAttributes) {
 
-        List<UserDto> users = userService.getAllUsers();
+	    List<UserDto> users = userService.getAllUsers();
 
-        for (UserDto user : users) {
-            if (user.getUserID().equals(userID) && user.getUserPW().equals(userPW)) {
-            	
-            	m.addAttribute("user",user);
-            	
-                boolean admin = user.getAdmin().equals("1");
-                if (admin) {
-                    return new ModelAndView("redirect:/admin/home"); // admin/home uri 생기면 그걸로 변경해야함
-                } else {
-                    return new ModelAndView("redirect:/home");
-                }
-            }
-        }
-        return new ModelAndView("redirect:/login"); 
-    }
+	    for (UserDto user : users) {
+	        if (user.getUserID().equals(userID) && user.getUserPW().equals(userPW)) {
+	        	
+	        	String state = user.getState();
+	        	
+	        	if ("탈퇴".equals(state)) {
+	                redirectAttributes.addFlashAttribute("errorMessage", "탈퇴된 계정입니다.");
+	                return new ModelAndView("redirect:/login");
+	            }
+
+	            // 정상적인 로그인 처리
+	            return new ModelAndView("redirect:/home");
+	        }
+	    }
+
+	    redirectAttributes.addFlashAttribute("errorMessage", "아이디 또는 비밀번호가 잘못되었습니다.");
+	    return new ModelAndView("redirect:/login");
+	}
 	
 	// 로그아웃
 	@PostMapping("/logout")
@@ -121,7 +124,7 @@ public class LoginController {
         
         user.setPhone("");
         user.setAddress("");
-        user.setBan(0);
+        user.setBan(null);
         user.setPenalty(0);
         user.setState("");
         user.setAdmin("1");
