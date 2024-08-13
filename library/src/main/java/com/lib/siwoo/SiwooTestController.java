@@ -19,14 +19,14 @@ public class SiwooTestController {
 		return "admin/manage/siwootest/addimg";
 	}
 	
-	@GetMapping("/test/naver")
-	public String apitest(Model m) {
-		int success = imgservice.addBookImg();
-		System.out.println(success);
-		m.addAttribute("success",success);
-		return "/admin/manage/siwootest/addimg";
-	}
-	
+//	@GetMapping("/test/naver")
+//	public String apitest(Model m) {
+//		int success = imgservice.addBookImg();
+//		System.out.println(success);
+//		m.addAttribute("success",success);
+//		return "/admin/manage/siwootest/addimg";
+//	}
+//	
 //	@GetMapping("/test/loc")
 //	public String addmetatest() {
 //		int done = metaservice.addBookLoc();
