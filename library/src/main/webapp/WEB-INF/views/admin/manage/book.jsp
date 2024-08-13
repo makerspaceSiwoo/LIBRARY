@@ -8,36 +8,37 @@
 	<div>
 		<h1>도서 추가</h1>
 	</div>
+	<div>
+		<h3>직접 입력</h3>
+	</div>
 	<form action="#" method="post" id="bookform">
-	<div>
-		<input id="booktitle" name="booktitle" placeholder="책 이름을 입력하세요">
-		<input id="author" name="author" placeholder="저자">
-		<input id="callno" name="callno" placeholder="청구기호">
-		<input id="publisher" name="publisher" placeholder="출판사">
-		<input id="pubyear" type="number" name="pubyear" placeholder="출판연도">
-	</div>
-	<div>
-		<button type="button" onclick="return addToList();">추가</button>
-		<input type="reset" value="초기화">
-	</div>
-
-	<hr>
-	<div>
-		<table id="booklist" border="1">
-			<tr>
-				<td colspan="6" align="center">새로 추가할 도서 목록</td>
-			</tr>
-			<tr>
-				<td>책 이름</td>
-				<td>저자</td>
-				<td>청구기호</td>
-				<td>출판사</td>
-				<td>출판연도</td>
-			</tr>
-		</table>
-		<button type="button" onclick="return listSubmit();">등록</button>
-	</div>
+		<div>
+			<input id="booktitle" name="booktitle" placeholder="책 이름을 입력하세요">
+			<input id="author" name="author" placeholder="저자">
+			<input id="callno" name="callno" placeholder="청구기호">
+			<input id="publisher" name="publisher" placeholder="출판사">
+			<input id="pubyear" type="number" name="pubyear" placeholder="출판연도">
+			<button type="button" onclick="return addToList();">추가</button>
+			<input type="reset" value="초기화">
+		</div>
+		<hr>
+		<div>
+			<table id="booklist" border="1">
+				<tr>
+					<td colspan="6" align="center">새로 추가할 도서 목록</td>
+				</tr>
+				<tr>
+					<td>책 이름</td>
+					<td>저자</td>
+					<td>청구기호</td>
+					<td>출판사</td>
+					<td>출판연도</td>
+				</tr>
+			</table>
+			<button type="button" onclick="return listSubmit();">등록</button>
+		</div>
 	</form>
+	
     <div id="failedbox">
 		<table id="failedlist" border="1" >
 			<tr>
@@ -54,9 +55,18 @@
 		<button type="button" onclick="return cancel();">전송 취소</button>
 	</div>
 	<hr>
+	
+	<div>
+		<h3>엑셀 업로드</h3>
+	</div>
 	<div id="excel">
+	<p>엑셀 업로드는 한 번에 1000권까지 가능합니다.</p>
     	<button type="button" onclick="return location.href='/book/add/downform';" >엑셀 양식 다운로드</button>
-		<button type="button">도서목록 엑셀 업로드</button>
+    	
+		<form action="/book/add/excel" method="post" enctype="multipart/form-data">
+			<input type="file" name="booklistexcel" required>
+			<button type="submit">도서목록 업로드</button>
+		</form>
 	</div>
 	
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -65,6 +75,30 @@ let datalist = []; // 입력한 데이터를 저장할 리스트
 let failedlist = []; // 전송 실패한 데이터를 저장할 리스트
 let currentIndex = 0; // 현재 인덱스를 추적
 
+/* 파일용량 제한*/
+$("input[name=booklistexcel").on("change", function(){
+  let maxSize = 5 * 1024 * 1024; //* 5MB 사이즈 제한
+	let fileSize = this.files[0].size; //업로드한 파일용량
+
+  if(fileSize > maxSize){
+		alert("파일첨부 사이즈는 5MB 이내로 가능합니다.");
+		$(this).val(''); //업로드한 파일 제거
+		return; 
+	}
+});
+출처: https://ttowa.tistory.com/entry/JS-inputtypefile-용량-제한#google_vignette [Front-end 개발:티스토리]
+
+
+//let uploaded = ${uploaded};
+
+/*
+$(function() { // ready function
+console.log(uploaded);
+    if(uploaded){
+		alert("업로드 성공한 권수 : "+uploaded);
+    }
+});
+*/
 function exceldownload(){
     $.ajax({
         url: "/book/add/downform",

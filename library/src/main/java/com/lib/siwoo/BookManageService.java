@@ -39,7 +39,7 @@ public class BookManageService {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}	
-		return -1; // 이미 존재하는 책이면 db에 추가하지 않고, -1 리턴
+		return 0; // 이미 존재하는 책이면 db에 추가하지 않고, 0 리턴
 	}
 	
 	
