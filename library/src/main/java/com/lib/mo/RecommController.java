@@ -6,35 +6,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.lib.dto.UserDto;
 import com.lib.mo.dto.RecommDto;
 import com.lib.mo.service.RecommService;
 
+@SessionAttributes("user")
 @Controller
 public class RecommController {
 
 	@Autowired
 	RecommService service;
-	
+
 	@GetMapping("/recomm")
-	public String recomm(@RequestParam(value="gen", defaultValue = "M", required = false) String gen,
-			@RequestParam(value = "cate", defaultValue = "", required = false) String cate,
-			@RequestParam(value= "mon", defaultValue = "6", required = false) int mon,
-			@RequestParam(value = "start", defaultValue = "", required = false) int start,
-			@RequestParam(value = "start", defaultValue = "", required = false) int end, Model m) {
+	public String recomm(Model m, @ModelAttribute("user") UserDto user) {
 		
-		int count = service.recommcount(gen, cate, mon, start, end);
+		List<RecommDto> allrcbook = service.allrcbook();
+		m.addAttribute("allrcbook", allrcbook);
 		
-		if(count>0) {
-		List<RecommDto> recommbook = service.recommbook(gen, cate, mon, start, end);
-		m.addAttribute("recommbook", recommbook);
-		}
-		m.addAttribute("gen", gen);
-		m.addAttribute("cate", cate);
-		m.addAttribute("mon", mon);
-		m.addAttribute("start", start);
-		m.addAttribute("end", end);
-		return "user/recomm";
+		List<RecommDto> catercbook = service.catercbook(user.getUserno());
+		m.addAttribute("catercbook", catercbook);
+		
+		List<RecommDto> genrcbook = service.genrcbook(user.getGender());
+		m.addAttribute("genrcbook", genrcbook);
+		
+		List<RecommDto> agercbook = service.agercbook(user.getBirth());
+		m.addAttribute("agercbook", agercbook);
+		
+		return "/user/recomm";
 	}
 }
