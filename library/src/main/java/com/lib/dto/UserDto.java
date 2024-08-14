@@ -17,7 +17,7 @@ public class UserDto {
    private String phone;
    private String email;
    private String address;
-   private int ban;
+   private Date ban;
    private int penalty;
    private String state;
    

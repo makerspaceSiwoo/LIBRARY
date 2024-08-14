@@ -28,8 +28,8 @@ public class BoardService {
 	}
 	
 	//게시글 삭제
-	public void delete(BoardDto dto) {
-		dao.delete(dto);
+	public void delete(int userno,int boardno) {
+		dao.delete(userno,boardno);
 	}
 	
 	// 게시글 1개 불러오기 (게시글 상세보기 기능)
@@ -45,5 +45,16 @@ public class BoardService {
 	public int selectTotalCount() {
 	    return dao.selectTotalCount();
 	}
+	
+	//게시글 검색
+	public List<BoardDto> BoardSearch(String type, String title) {
+		 return dao.BoardSearch(type, title);
+	}
+	
+	//게시글 조회수 증가 카운팅
+	public void incrementViewCount(int boardno) {
+	    dao.incrementViewCount(boardno);
+	}
+	
 	
 }
