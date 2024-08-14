@@ -9,6 +9,7 @@ public class RecommDto {
 	String author;
 	String publisher;
 	String img;
-	String group;
+	String agegroup;
+	String callno;
 	int ct;
 }
