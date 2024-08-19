@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <title>Login</title>
 </head>
@@ -17,7 +17,27 @@
         <button type="submit">Login</button>
     </form>
     
-    <h3>이메일 발송</h3>
+    <form action="/find/search/id" method="get">
+    
+    <button>아이디 찾기</button>
+    
+    </form>
+    
+    <form action="/find/search/pw" method="get">
+    
+    <button>비밀번호 찾기</button>
+    
+    </form>
+    
+    <form action="/admin/mod" method="get">
+    
+    <button>정보 수정(임시) </button>
+    
+    </form>
+    
+    <!--  my페이지 아직 안만들어서 임시로 넣어놓음, -->
+    
+    <h3>이메일 발송(임시)</h3>
     <form action="/admin/new" method="post">
         <label for="email">이메일을 입력하세요</label>
         <input type="email" id="email" name="email" required>

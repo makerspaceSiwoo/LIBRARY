@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.lib.dto.UserDto;
 
@@ -17,5 +18,12 @@ public interface UserDao {
 	@Insert("INSERT INTO user (userID, userPW, email, name, gender, birth, phone, address, ban, penalty, state, admin) VALUES (#{userID}, #{userPW}, #{email}, #{name}, #{gender}, #{birth}, #{phone}, #{address}, #{ban}, #{penalty}, #{state}, #{admin})")
     void insertUser(UserDto user);
 	
+
+	@Update("UPDATE user SET userID = #{userID}, userPW = #{userPW}, email = #{email}, name = #{name}, gender = #{gender}, birth = #{birth}, phone = #{phone}, address = #{address} WHERE userno = #{userno}")
+    void updateUser(UserDto user);
+	
+	@Select("SELECT userID FROM user WHERE email = #{email}")
+    String findUserIdByEmail(String email);
+
 	
 }

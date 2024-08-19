@@ -10,12 +10,25 @@ import com.lib.ho.dao.UserDao;
 
 @Service
 public class UserService {
-	
+
 	@Autowired
-	UserDao dao;
+	private UserDao dao;
 
 	public List<UserDto> getAllUsers() {
 		return dao.getAllUsers();
 	}
+	
+	public void updateUser(UserDto user) {
+        dao.updateUser(user);
+    }
+	
+	public String findUserIdByEmail(String email) {
+        String userId = dao.findUserIdByEmail(email);
+        if (userId != null) {
+            return userId;
+        } else {
+            throw new IllegalArgumentException("일치하는 이메일이 없습니다.");
+        }
+    }
 
 }
