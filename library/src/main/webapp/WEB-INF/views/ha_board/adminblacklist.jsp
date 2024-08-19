@@ -45,7 +45,7 @@
 	<form id="banForm_${black.boardno}_${black.commno}" action="/admin/ban" method="post" onsubmit="return confirmBan()">
     	<input type="hidden" name="boardno" value="${black.boardno }"/>
     	<input type="hidden" name="commno" value="${black.commno }"/>
-   	 	<button type="submit">이놈 벤 수고비</button> 
+   	 	<button type="submit">블라인드처리</button> 
 	</form>
     
     <form action="/board/no/${black.boardno}">
@@ -57,8 +57,12 @@
     </form>
     <form action="/admin/ban/forbid_end" method="post" onsubmit="return confirmForbid()">
     	<input type="hidden" name="blacklistno" value="${black.blacklistno }"/>
+    	<input type="hidden" name="userno" value="${black.userno }"/>
+    	<input type="hidden" name="boardno" value="${black.boardno }"/>
     	<button type="submit">forbid_end(3일추가)</button>
     </form>
+    
+    
 </c:forEach>
 
 </body>

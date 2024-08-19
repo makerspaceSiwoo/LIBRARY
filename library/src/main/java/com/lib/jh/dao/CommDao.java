@@ -15,7 +15,7 @@ import com.lib.dto.CommDto;
 public interface CommDao {
 
 	// 게시글 마다 모든 댓글 가져오기
-	@Select("select * from comm where boardno = #{boardno} order by write_date desc")
+	@Select("select * from comm inner join user on comm.userno = user.userno where boardno=#{boardno} order by write_date desc")
     List<CommDto> selectComm(int boardno);
 	// 댓글 작성 기능
 	@Insert("insert into comm(contents, write_date, userno, boardno) values(#{contents},now(),#{userno},#{boardno})")

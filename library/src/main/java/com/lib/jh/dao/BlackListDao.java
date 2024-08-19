@@ -21,7 +21,7 @@ public interface BlackListDao {
 	
 	// 게시글 신고 삽입
 	@Insert("INSERT INTO blacklist (boardno, forbid_end, reason, userno, contents) VALUES (#{boardno}, null, #{reason}, #{userno}, #{contents})")
-    int insertBoardReport(BlackListDto dto);
+    int insertBlacklistBoardReport(BlackListDto dto);
 	
 	// 댓글 신고 삽입
     @Insert("INSERT INTO blacklist (boardno,commno, forbid_end, reason, userno, contents) VALUES (#{boardno},#{commno}, null, #{reason}, #{userno}, #{contents})")
@@ -43,12 +43,25 @@ public interface BlackListDao {
     @Update("UPDATE blacklist SET forbid_end = #{forbid_end} WHERE blacklistno=#{blacklistno}")
     int updateBlacklistForbit_end(@Param("forbid_end")Date forbid_end ,@Param("blacklistno")int blacklistno);
     
-    
-    // Blacklist 테이블에서 blacklistno를 기준으로 전부다 뽑아옴
-    @Select("SELECT * FROM blacklist WHERE blacklistno = #{blacklistno}")
-    BlackListDto findByBlacklistno(int blacklistno);
+    //count가 0일떄 boardno가 없는것.
+    @Select("SELECT COUNT(*) FROM blacklist WHERE boardno = #{boardno}")
+    int countByBoardno(@Param("boardno") int boardno);
 
+    // 
+    default int insertBoardReportIfNotExists(BlackListDto dto) {
+        // boardno가 존재하지 않을 때만 삽입
+        if (countByBoardno(dto.getBoardno()) == 0) {
+            return insertBlacklistBoardReport(dto);//게시글 신고 삽입
+        }
+        return 0; // 이미 존재하여 삽입이 되지 않은 경우 0 반환	
+    }
     
-    
+    // 특정 사용자와 게시글에 대한 블랙리스트 정보를 조회
+    @Select("SELECT * FROM blacklist WHERE userno = #{userno} AND boardno = #{boardno}")
+    BlackListDto getBlackListByUserAndBoard(@Param("userno")int userno, @Param("boardno")int boardno);
+
+    // 블랙리스트 번호로 블랙리스트 정보를 조회 
+    @Select("SELECT * FROM blacklist WHERE blacklistno = #{blacklistno}")
+    BlackListDto getBlackListById(int blacklistno);
 	
 }
