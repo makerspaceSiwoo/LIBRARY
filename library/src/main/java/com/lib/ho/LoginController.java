@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -59,10 +60,10 @@ public class LoginController {
 	//로그인 , admin 1일시 사서 홈, 0일시 유저 홈으로.
 	
 	@PostMapping("/login")
-	public ModelAndView login(@RequestParam("userID") String userID, @RequestParam("userPW") String userPW, RedirectAttributes redirectAttributes) {
-
+	public ModelAndView login(@RequestParam("userID") String userID, @RequestParam("userPW") String userPW, RedirectAttributes redirectAttributes, Model m) {
+		ModelAndView mav = null;
 	    List<UserDto> users = userService.getAllUsers();
-
+	    int i = 0;
 	    for (UserDto user : users) {
 	        if (user.getUserID().equals(userID) && user.getUserPW().equals(userPW)) {
 	        	
@@ -70,16 +71,22 @@ public class LoginController {
 	        	
 	        	if ("탈퇴".equals(state)) {
 	                redirectAttributes.addFlashAttribute("errorMessage", "탈퇴된 계정입니다.");
-	                return new ModelAndView("redirect:/login");
+	                mav = new ModelAndView("redirect:/login");
 	            }
-
+	        	//System.out.println(user);
 	            // 정상적인 로그인 처리
-	            return new ModelAndView("redirect:/home");
+	        	mav = new ModelAndView("redirect:/home");
+	        	m.addAttribute("user", user);
+	        	i = 1;
+	           break;
 	        }
+	        
 	    }
-
-	    redirectAttributes.addFlashAttribute("errorMessage", "아이디 또는 비밀번호가 잘못되었습니다.");
-	    return new ModelAndView("redirect:/login");
+	    if(i == 0) {
+	    	redirectAttributes.addFlashAttribute("errorMessage", "아이디 또는 비밀번호가 잘못되었습니다.");
+	    	mav = new ModelAndView("redirect:/login");
+	    }
+	    return mav;  
 	}
 	
 	// 로그아웃

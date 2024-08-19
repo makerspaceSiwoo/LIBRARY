@@ -21,16 +21,19 @@ public class RecommService {
 	
 //	카테고리
 	public List<RecommDto> catercbook(int userno){
+		System.out.println(userno);
 		return dao.catercbook(userno);
 	}
 	
 //	성별
 	public List<RecommDto> genrcbook(String gender){
+		System.out.println(gender);
 		return dao.genrcbook(gender);
 	}
 	
 //	연령대
 	public List<RecommDto> agercbook(Date birth){
+		System.out.println(birth);
 		return dao.agercbook(birth);
 	}
 	
