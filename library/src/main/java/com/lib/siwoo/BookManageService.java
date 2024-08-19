@@ -35,6 +35,8 @@ public class BookManageService {
 				
 				System.out.printf("이미지 삽입 성공 : %d,  서가위치 삽입 성공 : %d, 분류 삽입 성공 : %d\n",imgdone,locdone,categorydone);
 				return success;
+			}else {
+//				System.out.println("이미 존재하는 도서 입니다.");
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

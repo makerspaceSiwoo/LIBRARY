@@ -1,0 +1,233 @@
+/* General Layout */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #FFFFFF;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+    margin: 0 1.5%;
+    font-size: 1.2vw;
+}
+
+a:hover {
+    color: #6FBA82;
+}
+
+div {
+    margin: 2%;
+}
+
+h1 {
+    font-size: 2.5vw;
+    color: #3D3D3D;
+    margin-bottom: 1%;
+}
+
+h3 {
+    font-size: 1.8vw;
+    color: #555555;
+}
+
+/* Form Layout */
+#bookform div {
+    display: flex;
+    gap: 1%;
+    margin-bottom: 2%;
+}
+
+#bookform input[type="text"],
+#bookform input[type="number"] {
+    width: 15%;
+    padding: 1%;
+    border: 0.1vw solid #ddd;
+    border-radius: 0.5vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#bookform button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 1% 2%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.2vw;
+    border-radius: 0.5vw;
+    cursor: pointer;
+}
+
+#bookform button:hover {
+    background-color: #45a049;
+}
+
+#bookform input[type="reset"] {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 1% 2%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.2vw;
+    border-radius: 0.5vw;
+    cursor: pointer;
+}
+
+#bookform input[type="reset"]:hover {
+    background-color: #e53935;
+}
+
+/* Table Styles */
+#booklist, #failedlist {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2%;
+}
+
+#booklist th, #failedlist th {
+    padding: 1%;
+    text-align: center;
+    background-color: #4CAF50;
+    color: white;
+    white-space: nowrap;
+    overflow: visible;
+    font-size: 1.2vw;
+}
+
+#booklist td, #failedlist td {
+    border: 0.1vw solid #ddd;
+    padding: 0.8%;
+    text-align: center;
+    width: 15%; /* 기본적으로 각 칼럼의 너비를 더 좁게 설정 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+}
+
+#booklist tr:first-child td, #failedlist tr:first-child td {
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
+    font-size: 1.1vw;
+}
+
+/* 버튼이 포함된 마지막 두 칼럼에 대한 스타일 조정 */
+#booklist td:last-child, #booklist td:nth-last-child(2),
+#failedlist td:last-child, #failedlist td:nth-last-child(2) {
+    width: 10%;
+    white-space: nowrap;
+    overflow: visible;
+}
+
+#booklist td button, #failedlist td button {
+    padding: 0.5vw;
+    font-size: 1vw;
+    border-radius: 0.3vw;
+}
+
+#booklist td:hover::after, #failedlist td:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    padding: 0.5vw;
+    border-radius: 0.5vw;
+    white-space: normal;
+    max-width: 20vw;
+    z-index: 1000;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    font-size: 0.9vw;
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+
+#booklist tr:nth-child(even), #failedlist tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#booklist tr:hover, #failedlist tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Failed List and Excel Section */
+#failedbox {
+    margin-top: 2%;
+}
+
+#failedbox button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 1% 2%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.2vw;
+    border-radius: 0.5vw;
+    cursor: pointer;
+}
+
+#failedbox button:hover {
+    background-color: #e53935;
+}
+
+#excel p {
+    margin: 0;
+    font-size: 1.2vw;
+    color: #333333;
+    margin-bottom: 1%;
+}
+
+#excel button {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    padding: 1% 2%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.2vw;
+    border-radius: 0.5vw;
+    cursor: pointer;
+    margin-top: 1%; /* 위쪽에 약간의 간격 추가 */
+}
+
+#excel button:hover {
+    background-color: #0b7dda;
+}
+
+/* 기본 파일 입력 요소를 숨깁니다 */
+#excel input[type="file"] {
+    display: none;
+}
+
+/* 커스텀 버튼 스타일링 */
+.custom-file-upload {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    padding: 1% 2%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.2vw;
+    border-radius: 0.5vw;
+    cursor: pointer;
+    margin-top: 1%; /* 위쪽에 약간의 간격 추가 */
+}
+
+.custom-file-upload:hover {
+    background-color: #0b7dda;
+}
