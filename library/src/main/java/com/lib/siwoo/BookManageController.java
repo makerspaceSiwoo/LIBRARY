@@ -15,13 +15,16 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.lib.dto.BookDto;
+import com.lib.dto.UserDto;
 import com.lib.mo.service.SearchService;
 
 
 @Controller
 public class BookManageController {
+	
 	
 	@Autowired
 	BookManageService bservice;
@@ -63,10 +66,10 @@ public class BookManageController {
 	
 	// 수정/삭제할 책 검색 - 청구 기호로
 	@GetMapping("/book/manage")
-	public String targetBookList(@RequestParam(required = false,defaultValue = "", name="callno") String callno,
+	public String targetBookList(@RequestParam(required = true, defaultValue = "", name="callno") String callno,
 			@RequestParam(name = "p", defaultValue = "1") int page,
 			Model m) {
-		if(callno != null && !callno.isBlank()) { // 청구기호를 입력하지 않으면 리스트를 가져오지 않음
+		if(callno != null) { // 청구기호를 입력하지 않으면 리스트를 가져오지 않음
 			int count = bservice.targetcount(callno);
 			if (count > 0) {
 				int perPage = 10; // 한 페이지에 보일 글의 갯수

@@ -1,3 +1,37 @@
+/* Header Styling */
+#header {
+    background-color: #f8f8f8; /* 헤더 배경색 */
+    padding: 1% 2%; /* 헤더 내부 패딩 */
+    display: flex; /* 플렉스 박스 레이아웃 사용 */
+    align-items: center; /* 아이템을 수직으로 중앙 정렬 */
+    justify-content: space-between; /* 아이템 간격 조정 */
+}
+
+#header img {
+    max-height: 3vw; /* 이미지의 최대 높이 설정 */
+    width: auto; /* 너비는 자동으로 설정 */
+    margin-right: 2%; /* 로고와 링크 사이의 간격 */
+    object-fit: contain; /* 이미지 비율을 유지하며, 셀 안에 맞춤 */
+}
+
+#header a {
+    text-decoration: none;
+    color: #333;
+    margin: 0 1.5%;
+    font-size: 1.2vw;
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+}
+
+#header a:hover {
+    color: #6FBA82; /* 링크에 마우스를 올렸을 때 색상 */
+}
+
+#header div {
+    display: flex;
+    align-items: center;
+}
+
+
 /* General Layout */
 body {
     font-family: Arial, sans-serif;
@@ -10,7 +44,7 @@ a {
     text-decoration: none;
     color: #333;
     margin: 0 1.5%;
-    font-size: 1.2vw;
+    font-size: 1.5vw;
 }
 
 a:hover {
@@ -21,10 +55,19 @@ div {
     margin: 2%;
 }
 
+/* 이미지 크기 조정 */
+div img {
+    width: auto; /* 너비를 자동으로 설정 */
+    height: 4vw; /* a 태그의 폰트 크기와 동일하게 높이 설정 */
+    vertical-align: middle; /* 텍스트와 이미지의 수직 정렬을 맞춤 */
+}
+
 h1 {
     font-size: 2.5vw;
     color: #3D3D3D;
     margin-bottom: 1%;
+    border-bottom: 0.4vw solid #A084CA;
+    padding-bottom: 1%;
 }
 
 h3 {
@@ -39,8 +82,7 @@ h3 {
     margin-bottom: 2%;
 }
 
-#bookform input[type="text"],
-#bookform input[type="number"] {
+#bookform input {
     width: 15%;
     padding: 1%;
     border: 0.1vw solid #ddd;
@@ -49,6 +91,7 @@ h3 {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 
 #bookform button {
     background-color: #4CAF50;
@@ -61,6 +104,7 @@ h3 {
     font-size: 1.2vw;
     border-radius: 0.5vw;
     cursor: pointer;
+    width: 10%; /* 동일한 너비 설정 */
 }
 
 #bookform button:hover {
@@ -78,6 +122,7 @@ h3 {
     font-size: 1.2vw;
     border-radius: 0.5vw;
     cursor: pointer;
+    width: 10%; /* 동일한 너비 설정 */
 }
 
 #bookform input[type="reset"]:hover {
@@ -112,54 +157,55 @@ h3 {
     position: relative;
 }
 
-#booklist tr:first-child td, #failedlist tr:first-child td {
-    white-space: nowrap;
-    overflow: visible;
-    text-overflow: clip;
-    font-size: 1.1vw;
-}
+
 
 /* 버튼이 포함된 마지막 두 칼럼에 대한 스타일 조정 */
 #booklist td:last-child, #booklist td:nth-last-child(2),
 #failedlist td:last-child, #failedlist td:nth-last-child(2) {
-    width: 10%;
+    width: auto;
     white-space: nowrap;
-    overflow: visible;
 }
 
 #booklist td button, #failedlist td button {
     padding: 0.5vw;
     font-size: 1vw;
     border-radius: 0.3vw;
+     width: auto;
 }
 
-#booklist td:hover::after, #failedlist td:hover::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    background-color: #333;
-    color: #fff;
-    padding: 0.5vw;
-    border-radius: 0.5vw;
-    white-space: normal;
-    max-width: 20vw;
-    z-index: 1000;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-    font-size: 0.9vw;
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 0.3s;
+/* 수정 버튼 스타일 (회색) */
+.modify-button {
+    background-color: #808080 !important; /* 회색 */
+    color: white;
+    border: none;
 }
 
-#booklist tr:nth-child(even), #failedlist tr:nth-child(even) {
-    background-color: #f9f9f9;
+.modify-button:hover {
+    background-color: #696969 !important; /* 어두운 회색으로 변경 */
 }
 
-#booklist tr:hover, #failedlist tr:hover {
-    background-color: #f1f1f1;
+/* 삭제 버튼 스타일 (빨간색) */
+.delete-button {
+    background-color: #f44336 !important; /* 빨간색 */
+    color: white;
+    border: none;
 }
+
+.delete-button:hover {
+    background-color: #e53935 !important; /* 어두운 빨간색으로 변경 */
+}
+
+
+#booklist tr:first-child, #failedlist tr:first-child {
+    background-color: #f9f9f9; /* 첫 번째 줄의 배경색을 회색으로 설정 */
+}
+#booklist tr:nth-child(2), #failedlist tr:nth-child(2) {
+    background-color: #f9f9f9; /* 두 번째 줄의 배경색을 회색으로 설정 */
+}
+#booklist tr, #failedlist tr {
+    background-color: #ffffff; /* 모든 줄의 배경색을 하얀색으로 설정 */
+}
+
 
 /* Failed List and Excel Section */
 #failedbox {
@@ -208,26 +254,25 @@ h3 {
     background-color: #0b7dda;
 }
 
-/* 기본 파일 입력 요소를 숨깁니다 */
-#excel input[type="file"] {
-    display: none;
-}
+ /* 기본 파일 입력 요소를 숨깁니다 */
+    #file-upload {
+        display: none;
+    }
 
-/* 커스텀 버튼 스타일링 */
-.custom-file-upload {
-    background-color: #2196F3;
-    color: white;
-    border: none;
-    padding: 1% 2%;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 1.2vw;
-    border-radius: 0.5vw;
-    cursor: pointer;
-    margin-top: 1%; /* 위쪽에 약간의 간격 추가 */
-}
+    /* 커스텀 버튼 스타일링 */
+    .custom-file-upload {
+        background-color: #2196F3;
+        color: white;
+        border: none;
+        padding: 1% 2%;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 1.2vw;
+        border-radius: 0.5vw;
+        cursor: pointer;
+    }
 
-.custom-file-upload:hover {
-    background-color: #0b7dda;
-}
+    .custom-file-upload:hover {
+        background-color: #0b7dda;
+    }

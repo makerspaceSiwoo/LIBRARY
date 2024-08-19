@@ -1,0 +1,189 @@
+/* Header Styling */
+#header {
+    background-color: #f8f8f8; /* 헤더 배경색 */
+    padding: 1% 2%; /* 헤더 내부 패딩 */
+    display: flex; /* 플렉스 박스 레이아웃 사용 */
+    align-items: center; /* 아이템을 수직으로 중앙 정렬 */
+    justify-content: space-between; /* 아이템 간격 조정 */
+}
+
+#header img {
+    max-height: 3vw; /* 이미지의 최대 높이 설정 */
+    width: auto; /* 너비는 자동으로 설정 */
+    margin-right: 2%; /* 로고와 링크 사이의 간격 */
+    object-fit: contain; /* 이미지 비율을 유지하며, 셀 안에 맞춤 */
+}
+
+#header a {
+    text-decoration: none;
+    color: #333;
+    margin: 0 1.5%;
+    font-size: 1.2vw;
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+}
+
+#header a:hover {
+    color: #6FBA82; /* 링크에 마우스를 올렸을 때 색상 */
+}
+
+#header div {
+    display: flex;
+    align-items: center;
+}
+
+
+
+
+/* General Layout */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #FFFFFF;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+    margin: 0 1.5%;
+    font-size: 1.5vw;
+}
+
+a:hover {
+    color: #6FBA82;
+}
+
+div {
+    margin: 2%;
+}
+
+/* 이미지 크기 조정 */
+div img {
+    width: auto; /* 너비를 자동으로 설정 */
+    height: 4vw; /* a 태그의 폰트 크기와 동일하게 높이 설정 */
+    vertical-align: middle; /* 텍스트와 이미지의 수직 정렬을 맞춤 */
+}
+
+h1 {
+    font-size: 2.5vw;
+    color: #3D3D3D;
+    margin-bottom: 1%;
+    border-bottom: 0.4vw solid #A084CA;
+    padding-bottom: 1%;
+}
+
+h3 {
+    font-size: 1.8vw;
+    color: #555555;
+}
+
+
+
+form {
+    margin: 2% 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form input[type="text"] {
+    width: 50%;
+    padding: 1%;
+    border-radius: 0.5vw;
+    border: 0.1vw solid #ddd;
+    font-size: 1.1vw;
+}
+
+form button {
+    background-color: #5E5DF0;
+    color: white;
+    border: none;
+    padding: 1% 2%;
+    font-size: 1.2vw;
+    border-radius: 0.5vw;
+    cursor: pointer;
+    margin-left: 1%;
+}
+
+form button:hover {
+    background-color: #3B3B98;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2%;
+    table-layout: fixed; /* 테이블 레이아웃을 고정하여 모든 셀이 동일한 너비를 가지도록 설정 */
+}
+
+table th, table td {
+    padding: 1%;
+    text-align: center;
+    border: 0.1vw solid #ddd;
+    vertical-align: middle;
+    overflow: hidden; /* 내용이 넘칠 경우 숨김 */
+    text-overflow: ellipsis; /* 넘치는 내용은 말줄임 표시 (...) */
+    white-space: nowrap; /* 줄바꿈을 방지 */
+}
+
+table th {
+    background-color: #E6E6E6;
+    font-size: 1.1vw;
+    color: #333;
+}
+
+table td {
+    font-size: 1vw;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+table td button {
+    background-color: #5E5DF0;
+    color: white;
+    border: none;
+    padding: 0.5vw 1vw;
+    font-size: 1vw;
+    border-radius: 0.5vw;
+    cursor: pointer;
+    width: 100%; /* 버튼이 셀의 전체 너비를 차지하도록 설정 */
+    box-sizing: border-box; /* 패딩과 테두리를 포함한 전체 너비 계산 */
+    overflow: hidden; /* 버튼 내부 텍스트가 넘칠 경우 숨김 */
+    text-overflow: ellipsis; /* 버튼 텍스트 넘침 시 말줄임 표시 (...) */
+    white-space: nowrap; /* 버튼 텍스트 줄바꿈 방지 */
+}
+
+table td button:hover {
+    background-color: #3B3B98;
+}
+
+/* Pagination */
+#page {
+    text-align: center;
+    margin: 2% 0;
+}
+
+#page a {
+    color: #5E5DF0;
+    padding: 0.8% 1.6%;
+    text-decoration: none;
+    border: 0.1vw solid #ddd;
+    margin: 0 0.4%;
+    border-radius: 0.5vw;
+    font-size: 1vw;
+}
+
+#page a:hover {
+    background-color: #f1f1f1;
+    border-color: #3B3B98;
+}
+
+#page a.page.prv, #page a.page.next {
+    font-weight: bold;
+}

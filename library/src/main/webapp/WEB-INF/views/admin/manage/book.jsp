@@ -4,11 +4,11 @@
 <html>
 <head>
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="/css/admin/book/style.css">
+<link rel="stylesheet" type="text/css" href="/css/admin/book/add.css">
 </head>
 <body>
-	<div>
-		<img src="#">
+	<div id="header">
+		<img src="/logo/logo.png">
 		<a href="/admin/home">도서관 Home</a>
 		<a href="/book/borrow">대출관리</a>
 		<a href="/book/add">도서추가</a>
@@ -35,7 +35,7 @@
 			<button type="button" onclick="return addToList();">추가</button>
 			<input type="reset" value="초기화">
 		</div>
-		<hr>
+
 		<div>
 			<table id="booklist" border="1">
 				<tr>
@@ -72,7 +72,7 @@
 		</table>
 		<button type="button" onclick="return cancel();">전송 취소</button>
 	</div>
-	<hr>
+
 	
 	<div>
 		<h3>엑셀 업로드 (.xlsx)</h3>
@@ -82,11 +82,11 @@
 	<p>엑셀 업로드 중 창을 닫을 경우, 작업이 중단 될 수 있습니다. 전송 후, 결과 파일 다운로드까지 기다리십시오.</p>
     	<button type="button" onclick="return location.href='/book/add/downform';" >엑셀 양식 다운로드</button>
     	<br>
-		<form id="excelupload" action="/book/add/excel" method="post" enctype="multipart/form-data">
+		<form id="excelupload" action="/book/add/excel" method="post" enctype="multipart/form-data" onsubmit="return validateAndSubmit();">
 			<label for="file-upload" class="custom-file-upload">
 	    		업로드 버튼
 			</label>
-			<input id="file-upload" type="file" name="booklistexcel" required accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+			<input id="file-upload" type="file" name="booklistexcel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
 			<button type="submit">도서목록 업로드</button>
 		</form>
 	</div>
@@ -110,6 +110,16 @@ $("input[name=booklistexcel").on("change", function(){
 	}
 });
 
+function validateAndSubmit() {
+    var fileInput = document.getElementById('file-upload');
+    
+    if (!fileInput.value) {
+        alert('파일을 선택해야 합니다.'); // 파일이 없으면 경고 메시지 출력
+        return false; // 폼 제출 중단
+    }
+    
+    return true; // 파일이 선택되었으면 폼 제출 진행
+}s
 
 function exceldownload(){ // 양식 다운로드
     $.ajax({
@@ -217,8 +227,8 @@ function addToList() {
         <td data-tooltip='\${callno}'>\${callno}</td>
         <td data-tooltip='\${publisher}'>\${publisher}</td>
         <td data-tooltip='\${pubyear}'>\${pubyear}</td>
-        <td><button type="button" onclick="return modify(this, \${book.index}, 'datalist');">수정</button></td>
-        <td><button type="button" onclick="del(this, 'datalist');">삭제</button></td>
+        <td><button type="button" class="modify-button" onclick="return modify(this, \${book.index}, 'datalist');">수정</button></td>
+        <td><button type="button" class="delete-button" onclick="del(this, 'datalist');">삭제</button></td>
         </tr>`;
 
     $("#booklist").append(tag);
@@ -275,8 +285,8 @@ function listSubmit() { // 전송
                     <td data-tooltip='\${callno}'>\${callno}</td>
                     <td data-tooltip='\${publisher}'>\${publisher}</td>
                     <td data-tooltip='\${pubyear}'>\${pubyear}</td>
-                    <td><button type="button" onclick="return modify(this, \${index}, 'failedlist');">수정</button></td>
-                    <td><button type="button" onclick="del(this, 'failedlist');">삭제</button></td>
+                    <td><button type="button" class="modify-button" onclick="return modify(this, \${index}, 'failedlist');">수정</button></td>
+                    <td><button type="button" class="delete-button" onclick="del(this, 'failedlist');">삭제</button></td>
                     </tr>`;
                 $("#failedlist").append(tag);
             });
