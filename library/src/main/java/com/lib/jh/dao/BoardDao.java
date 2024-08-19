@@ -20,6 +20,7 @@ public interface BoardDao {
 	// 게시판 리스트 불러오기
 	@Select("select * from board")
 	List<BoardDto> selectAll();
+
 	
 	// 게시글 수정
 	@Update("update board set contents = #{contents}, title= #{title} where boardno = ${boardno} and #{userno}")
@@ -48,5 +49,10 @@ public interface BoardDao {
     //게시글 조회수
     @Update("UPDATE board SET view = view + 1 WHERE boardno = #{boardno}")
     int incrementViewCount(@Param("boardno") int boardno);
+    
+    
+	// 게시판 리스트 userID가져오기
+	@Select("select userID from user where userno = #{userno} ")
+	String userID(int userno);
 	
 }

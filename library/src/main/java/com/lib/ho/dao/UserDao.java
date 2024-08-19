@@ -17,4 +17,5 @@ public interface UserDao {
 	@Insert("INSERT INTO user (userID, userPW, email, name, gender, birth, phone, address, ban, penalty, state, admin) VALUES (#{userID}, #{userPW}, #{email}, #{name}, #{gender}, #{birth}, #{phone}, #{address}, #{ban}, #{penalty}, #{state}, #{admin})")
     void insertUser(UserDto user);
 	
+	
 }

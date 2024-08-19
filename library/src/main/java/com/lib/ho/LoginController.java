@@ -79,7 +79,7 @@ public class LoginController {
         user.setBirth(new Date());
         user.setPhone("");
         user.setAddress("");
-        user.setBan(0);
+        user.setBan(null);
         user.setPenalty(0);
         user.setState("");
         user.setAdmin("1");

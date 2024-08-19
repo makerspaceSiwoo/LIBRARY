@@ -1,5 +1,8 @@
 package com.lib.jh.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +38,18 @@ public class JController {
 		UserDto user = new UserDto();
 		user.setUserno(1);
 		user.setAdmin("1");
-		return user;
+		// 임시로 세션 user에ban값 넣음
+	    // "2024-08-13" 문자열을 Date로 변환
+	    String dateString = "2024-08-16";
+	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+	    try {
+	        Date banDate = formatter.parse(dateString);
+	        user.setBan(banDate); // 변환된 Date 객체를 setBan에 설정
+	    } catch (ParseException e) {
+	        e.printStackTrace(); // 예외 처리
+	    }
+
+	    return user;
 	   }
 	
 	//BoardService 주입
@@ -106,6 +120,13 @@ public class JController {
 		List<CommDto> result3= commservice.selectComm(boardno); //게시글별 댓글 리스트 가져오기
 		m.addAttribute("commList",result3);
 		
+		//게시글 유저 아이디 가져오기
+		String BoardUserId = boardservice.userIdGet(result2.getUserno());
+		m.addAttribute("userId",BoardUserId);
+		
+		
+	
+		
 		return "ha_board/boardcontent";
 	}
 	
@@ -114,9 +135,20 @@ public class JController {
 	
 	//( 게시글작성 페이지가기 ) 
 	@GetMapping("board/write")
-	public String boardWrite() {
+	public String boardWrite(@ModelAttribute("user") UserDto user, Model m) {
+		  // user.ban값 있으면 게시글작성 접근금지 
+		if(user.getBan()==null) {
+        	return "ha_board/boardwrite";
+        }
+		else if (user.getBan().after(new Date())) { // BAN날짜가 오늘 날짜보다 값이 많으면 벤당한것
+            // 권한이 없는 경우, 접근 불가 메시지와 함께 다른 페이지로 리다이렉트
+            m.addAttribute("errorMessage", "너 벤당함");
+            return "ha_board/errorpage"; // 403 접근 금지 페이지로 리다이렉트
+        }
+        else {
+        	return "ha_board/boardwrite";
+        }
 		
-		return "ha_board/boardwrite";
 	}
 	
 	//( 게시글작성 후 실제업로드 )
@@ -136,6 +168,7 @@ public class JController {
 		BoardDto result3 = boardservice.selectOne(boardno);
 		m.addAttribute("boardcontent",result3);
 		return "ha_board/boardupdate";
+		
 	}
 	
 	//( 게시글 수정후 실제 업로드 ) 
@@ -161,15 +194,28 @@ public class JController {
 	                          Model m) {
 	    List<BoardDto> searchResults = boardservice.BoardSearch(type, title); // 검색 로직 구현
 	    m.addAttribute("searchResults", searchResults);
+	    m.addAttribute("type", type); // 선택된 분류    m.addAttribute("title", title); // 입력된 제목
 	    return "ha_board/boardsearch"; // JSP 파일로 이동
 	}
 	
 	// 댓글 작성 기능
-	
 	@PostMapping("/comm/write")
-	public String commWrite(CommDto dto) {
-		commservice.insertComm(dto);
-		return "redirect:/board/no/" + dto.getBoardno();
+	public String commWrite(CommDto dto,@ModelAttribute("user") UserDto user, Model m) {
+		 // user.ban값 있으면 댓글 작성 금지
+		if(user.getBan()==null) {
+			commservice.insertComm(dto);
+			return "redirect:/board/no/" + dto.getBoardno();
+        }
+		else if (user.getBan().after(new Date())) {
+            // 권한이 없는 경우, 접근 불가 메시지와 함께 다른 페이지로 리다이렉트
+            m.addAttribute("errorMessage", "너 벤당함");
+            return "ha_board/errorpage"; // 403 접근 금지 페이지로 리다이렉트
+        }
+        else {
+        	commservice.insertComm(dto);
+        	return "redirect:/board/no/" + dto.getBoardno();
+        }
+		
 	}
 	
 	//댓글 삭제
@@ -213,5 +259,9 @@ public class JController {
         return "redirect:/board/no/" + boardno; // 신고 후 해당 게시글로 리다이렉트
     }
 	
+    @GetMapping("/comm/test123")
+    public void asd() {
+    	blacklistService.updateBlacklistUserBanNull();
+    }
 	
 }
