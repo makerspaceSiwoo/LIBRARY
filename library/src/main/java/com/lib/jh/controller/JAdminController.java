@@ -102,6 +102,7 @@ public class JAdminController {
 	        
 	        // 변경된 날짜를 Date 객체로 가져옴
 	        Date forbid_end = calendar.getTime();
+	        System.out.println(forbid_end);
 	        penaltyService.updateUserBanStatus(userno, boardno, forbid_end,blacklistno); // 블랙리스트 테이블의 forbid_end 업데이트 함과 동시에 user.Ban업데이트
 	    	
 

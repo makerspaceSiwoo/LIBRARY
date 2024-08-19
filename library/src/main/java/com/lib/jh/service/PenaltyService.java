@@ -55,6 +55,8 @@ public class PenaltyService {
 
         // 사용자의 현재 Ban상태
         Date currentBanEnd = user.getBan();
+        
+        
       
         blacklistService.updateBlacklistForbid_end(blacklistno); //
         if (currentBanEnd == null) {  //기존 벤이 없는경우 
