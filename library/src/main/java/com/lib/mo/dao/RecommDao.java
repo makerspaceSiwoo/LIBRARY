@@ -21,13 +21,13 @@ public interface RecommDao {
 	List<RecommDto> allrcbook();
 
 //	카테고리
-	@Select({"select b.booktitle, b.author, b.category, b.img, b.callno, count(r.bookno) as ct "
-			+ "from book b join record r on b.bookno = r.bookno "
-			+ "join (select distinct SUBSTRING_INDEX(category, '/', 1) as category "
-			+ "from book where bookno in (select bookno from record where userno = #{userno})limit 1) "
-			+ "as cat on SUBSTRING_INDEX(b.category, '/', 1) = cat. category "
-			+ "where r.type = '대출' "
-			+ "AND r.start BETWEEN DATE_SUB(NOW(), INTERVAL 6 MONTH) AND NOW() "
+	@Select({"select b.booktitle, b.author, b.category, b.img, b.callno, count(r.bookno) AS ct "
+			+ "from book b join record r ON b.bookno = r.bookno "
+			+ "join (select SUBSTRING_INDEX(b.category, '/', 1) AS category, count(r.bookno) as cnt "
+			+ "from book b join (select * from record where userno = #{userno} and type='대출') r on b.bookno = r.bookno "
+			+ "group by category order by cnt desc) as cat "
+			+ "on SUBSTRING_INDEX(b.category, '/', 1) = cat.category "
+			+ "where  r.type = '대출' and r.start BETWEEN DATE_SUB(NOW(), INTERVAL 6 MONTH) and NOW()"
 			+ "group by b.bookno order by ct desc limit 10"})
 	List<RecommDto> catercbook(@Param("userno") int userno);
 	
@@ -53,7 +53,8 @@ public interface RecommDao {
 			+ "from  book b join  record r on b.bookno = r.bookno "
 			+ "join  user u on r.userno = u.userno "
 			+ "where r.type = '대출' "
-			+ "group by  agegroup, b.bookno order by agegroup, ct desc"})
+			+ "AND r.start BETWEEN DATE_SUB(NOW(), INTERVAL 6 MONTH) AND NOW() "
+			+ "group by  agegroup, b.bookno order by agegroup, ct desc limit 10"})
 	List<RecommDto> agercbook(@Param("birth") Date birth);
 	
 }

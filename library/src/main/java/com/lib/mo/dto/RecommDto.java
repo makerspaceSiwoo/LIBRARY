@@ -11,5 +11,6 @@ public class RecommDto {
 	String img;
 	String agegroup;
 	String callno;
+	int userno;
 	int ct;
 }

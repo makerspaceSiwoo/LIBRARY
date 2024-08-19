@@ -9,7 +9,7 @@
 	<h2>추천을 해보까용??</h2>
 	<div>
 	<h4>전체 대여량</h4>
-		<c:forEach var="all" items="${allrcbook}">
+		<c:forEach var="all" items="${allrc}">
 		<div onclick="location.href='/search/no=${all.callno}'" style="cursor:pointer;">
 			<hr>
 			<img alt="표지사진" src="${all.img}" width="80">
@@ -22,7 +22,7 @@
 	</div>
 	<div>
 		<h4>분야별 대여량</h4>
-		<c:forEach var="cate" items="${catercbook}">
+		<c:forEach var="cate" items="${caterc}">
 		<div onclick="location.href='/search/no=${cate.callno}'" style="cursor:pointer;">
 		<hr>
 		<img alt="표지사진" src="${cate.img}" width="80">
@@ -35,7 +35,7 @@
 	</div>
 	<div>
 	<h4>성별 대여량</h4>
-		<c:forEach var="gen" items="${genrcbook}">
+		<c:forEach var="gen" items="${genrc}">
 		<div onclick="location.href='/search/no=${gen.callno}'" style="cursor:pointer;">
 		<hr>
 		<img alt="표지사진" src="${gen.img}" width="80">
@@ -48,7 +48,7 @@
 	</div>
 	<div>
 	<h4>연령별 대여량</h4>
-		<c:forEach var="age" items="${agercbook}">
+		<c:forEach var="age" items="${agerc}">
 		<div onclick="location.href='/search/no=${age.callno}'" style="cursor:pointer;">
 		<hr>
 		<img alt="표지사진" src="${age.img}" width="80">
