@@ -20,25 +20,39 @@
 	<tr>
 		<td>"제목"검색결과</td><br>
 	</tr>
-	<tr>
-		<c:forEach items="${borrowbook}" var="borrow">
+	<tr> 
+		<c:forEach items="${unreturned}" var="borrow">
 			<tr><td>${fn:substring(borrow.booktitle, 0, 10)}</td>
             <td>${fn:substring(borrow.author, 0, 10)}</td>
             <td>${fn:substring(borrow.callno, 0, 10)}</td>
-			<c:if test="${borrow.type != null }">
-				<td>${fn:substring(borrow.userno, 0, 10)}</td>
-				<td><fmt:formatDate value="${borrow.start}" pattern="yy/MM/dd"/></td>
-				<td><fmt:formatDate value="${borrow.end}" pattern="yy/MM/dd"/></td>
-				<td><button type="button" onclick="location.href='/book/return?recodeno=${borrow.recordno}'">
+			<c:if test="${borrow.userno != 0 }">
+				<c:if test="${borrow.u_end.time <= now.time}">	
+					<c:set var="formattedDate">
+					<fmt:formatDate value="${borrow.u_end}" pattern="yyyy-MM-dd"/>
+					</c:set>
+					<td style="color: red;">${formattedDate}</td>
+					<td><button type="button" style="color: red;" onclick="location.href='/book/latereturn?userno=${borrow.userno}&formattedDate=${formattedDate}&bookno=${borrow.bookno}'">
 					반납
 					</button>
 				</td>
+				</c:if>
+				<c:if test="${borrow.u_end.time > now.time}">		
+					<td><fmt:formatDate value="${borrow.u_end}" pattern="yyyy-MM-dd"/></td>
+					<td><button type="button" onclick="location.href='/book/return?userno=${borrow.userno}&bookno=${borrow.bookno}'">
+					반납
+					</button>
+				</td>
+				</c:if>
+				
 			</c:if>
-			<c:if test="${borrow.type == null }">
+			
+			
+			<c:if test="${borrow.userno == 0 }">
 				<td><button type="button" onclick="location.href='/book/lent?bookno=${borrow.bookno}'">대출</button></td>
 			</c:if>
-	</tr>
+		</tr>
 		</c:forEach>
+		</tr>
 </table>
 </body>
 </html>

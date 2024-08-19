@@ -5,18 +5,18 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class BorrowDto {
+public class UnreturnDto {
 	private String booktitle;
 	private String author;
 	private String callno;
 	private int userno;
 	private Date start;
 	private Date end;
+	private Date unreturned_end;
+	private Date record_end;
 	private int recordno;
 	private String type;
 	private int bookno;
 	private int borrowno;
-	private Date r_start;
-	private Date u_end;
 	
 }
