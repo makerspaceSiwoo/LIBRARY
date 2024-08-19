@@ -13,6 +13,7 @@ public class BlackListDto {
 	private Date forbid_end;
 	private String reason;
 	private int userno;
+	private String contents;
 	
 	
 }

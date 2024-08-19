@@ -16,18 +16,20 @@ public class SearchService {
     @Autowired
     private SearchDao dao;
 
-    public List<BookDto> searchBook(int searchn, String search, int start){
+    public List<BookDto> searchBook(int searchn, String search, String cate, int start){
     	Map<String,Object> m = new HashMap<String, Object>();
     	m.put("searchn", searchn);
     	m.put("search", search);
+    	m.put("cate", cate);
     	m.put("start", start);
     	m.put("count", 10);
     	return dao.searchBook(m);
     }
-    public int countBook(int searchn, String search) {
+    public int countBook(int searchn, String search, String cate) {   
     	Map<String,Object>m = new HashMap<String,Object>();
     	m.put("searchn", searchn);
     	m.put("search", search);
+    	m.put("cate", cate);
     	return dao.countBook(m);
     }
 }

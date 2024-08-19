@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -120,8 +121,8 @@
     <div>
         <a href="/home">도서관 홈</a>
         <a href="/search">도서 검색</a>
-        <a href="/recomm/filter">인기도서</a>
-        <a href="/my">마이 페이지</a>
+        <a href="/recomm">인기도서</a>
+        <a href="/mypage">마이 페이지</a>
         <a href="/board/list">나눔마당</a>
         <a href="/login">로그인</a>
         <a href="/join">회원가입</a>
@@ -142,13 +143,13 @@
         <p>0507-1430-7001</p>
      </div>
      <div>
-        <h2 id="schedule">매주 월요일 및 법정 공휴일 휴관(일요일 제외)</h2>
+        <h3 id="schedule">매주 월요일 및 법정 공휴일 휴관(일요일 제외)</h3>
 	 </div>
 	 <div>
         <h2 id="notice">공지사항</h2>
-        <p>휴관 안내 2024.07.30</p>
-        <p>8월 희망도서 선정 2024.07.29</p>
-        <p>7월 신간 2024.07.02</p>
+       <c:forEach var="notice" items="${notice}">
+            <a href="/board/no/${notice.boardno}">${notice.title}</a><br>
+        </c:forEach>
 	</div>
 	<div>
         <h2 id="quantity">소장 도서 수</h2>
@@ -170,16 +171,16 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>4</td>
-                    <td>5</td>
-                    <td>6</td>
-                    <td>7</td>
-                    <td>8</td>
-                    <td>9</td>
-                    <td>10</td>
+                    <td>${chongbook}</td>
+                    <td>${chulbook}</td>
+                    <td>${jongbook}</td>
+                    <td>${sabook}</td>
+                    <td>${zabook}</td>
+                    <td>${gibook}</td>
+                    <td>${yeabook}</td>
+                    <td>${unbook}</td>
+                    <td>${munbook}</td>
+                    <td>${yeokbook}</td>
                     <td>${allbook}</td>
                 </tr>
             </tbody>
