@@ -24,6 +24,9 @@ public interface UserDao2 {
     @Update("UPDATE user SET ban = #{newBanEnd} WHERE userno = #{userno}")
     int updateUserBan(@Param("userno")int userno, @Param("newBanEnd")Date newBanEnd);
     
-    
-    
+
+    @Select("SELECT * FROM user WHERE userno = #{userno}")
+    UserDto findByUserno(int userno);
+
+
 }

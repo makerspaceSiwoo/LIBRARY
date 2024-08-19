@@ -13,10 +13,10 @@ import com.lib.dto.BookDto;
 public interface AddBookImgDao {
 	
 	// img link가 비어있는 책 db에서 가져오기
-	@Select("select * from library.book where img='' or img is null limit #{limit}")
+	@Select("select * from book where img='' or img is null limit #{limit}")
 	public List<BookDto> findNoImg(int limit);
 	
-	@Update("update library.book set img=#{img} where bookno=#{bookno}")
+	@Update("update book set img=#{img} where bookno=#{bookno}")
 	public int updateImg(@Param("img") String img, @Param("bookno") int bookno);
 
 }

@@ -37,6 +37,11 @@ public class BlackListService {
 	BlackListDao blackDao;
 	
 	  //게시글 신고처리 (boardno가 기존에 있으면 신고처리 불가)
+
+	@Autowired
+    private UserDao2 userDao;
+	
+	// 게시글 신고 처리
     public int reportBoard(BlackListDto dto) {
         
     	return blackDao.insertBoardReportIfNotExists(dto);
