@@ -5,8 +5,21 @@
 <html>
 <head>
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/css/admin/book/manage.css">
 </head>
 <body>
+
+<div id="header">
+		<img src="/logo/logo.png">
+		<a href="/admin/home">도서관 Home</a>
+		<a href="/book/borrow">대출관리</a>
+		<a href="/book/add">도서추가</a>
+		<a href="/book/manage">도서정보 수정</a>
+		<a href="/admin/recomm">인기도서</a>
+		<a href="">회원관리</a>
+		<a href="board/list">나눔마당</a>
+		<!--<c:if test="${user }"></c:if>-->
+	</div>
 <div>
 		<div>
 			<h1>도서 정보 수정/삭제</h1>
@@ -20,7 +33,7 @@
 		<div>
 		<table id="targetlist" border="1" >
 			<tr>
-				<td colspan="7" align="center">검색한 책 목록</td>
+				<td colspan="6" align="center">검색한 책 목록</td>
 			</tr>
 			<tr>
 				<td>책 이름</td>

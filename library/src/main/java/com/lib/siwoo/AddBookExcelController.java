@@ -1,5 +1,7 @@
 package com.lib.siwoo;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,16 +24,16 @@ public class AddBookExcelController {
     }
     
     @PostMapping("book/add/excel")
-    public String uploadExcel(@RequestParam("booklistexcel") MultipartFile file, Model m ) { // 임시 경로에 업로드 된 파일에 접근 가능
-    	int[] result = excelservice.uploadExcel(file);
-    	int done = result[0], fail = result[1];
-    	System.out.println(done);
-    	System.out.println(fail);
-    	if(done == -1) {
+    public void uploadExcel(@RequestParam("booklistexcel") MultipartFile file,HttpServletResponse response, Model m ) { // 임시 경로에 업로드 된 파일에 접근 가능
+    	byte[] result = excelservice.uploadExcel(file);
+    	if(result == null) {
     		System.out.println("엑셀 파일만 업로드 해 주세요");
     	}
-
-    	return "redirect:/book/add";
+//    	int done = 1;
+//    	m.addAttribute("done",done);
+//    	excelservice.downResult(response, file); // 결과 파일 다운로드
+    	excelservice.downResult(response, result, file.getOriginalFilename());
+//    	return "redirect:/book/add";
     }
     
 }
