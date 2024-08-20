@@ -16,7 +16,14 @@
 		<a href="/admin/recomm">인기도서</a>
 		<a href="">회원관리</a>
 		<a href="board/list">나눔마당</a>
-		<!--<c:if test="${user }"></c:if>-->
+		<c:choose>
+			<c:when test="${empty user }">
+				<a href="/login">로그인</a>
+			</c:when>
+			<c:otherwise>
+				${user.userID}
+			</c:otherwise>
+		</c:choose>
 	</div>
 
 	<div>
@@ -119,7 +126,7 @@ function validateAndSubmit() {
     }
     
     return true; // 파일이 선택되었으면 폼 제출 진행
-}s
+}
 
 function exceldownload(){ // 양식 다운로드
     $.ajax({
