@@ -1,6 +1,9 @@
 package com.lib.siwoo;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +24,9 @@ import com.lib.dto.BookDto;
 import com.lib.dto.UserDto;
 import com.lib.mo.service.SearchService;
 
-
+@SessionAttributes("user")
 @Controller
 public class BookManageController {
-	
 	
 	@Autowired
 	BookManageService bservice;
