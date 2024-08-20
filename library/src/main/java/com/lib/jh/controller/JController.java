@@ -36,8 +36,7 @@ public class JController {
 	   public UserDto getDto() {
 	    //  return new userDto();
 		UserDto user = new UserDto();
-		user.setUserno(1);
-		user.setAdmin("1");
+		
 		// 임시로 세션 user에ban값 넣음
 	    // "2024-08-13" 문자열을 Date로 변환
 	    String dateString = "2024-08-12";
