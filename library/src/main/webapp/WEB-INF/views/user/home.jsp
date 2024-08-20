@@ -133,9 +133,7 @@
         <a href="#notice">공지사항</a>
         <a href="#quantity">소장자료 현황</a>
     </div>
-    <div>
-
-    </div>
+  
     <div>
         <h2 id = "locate">Soldesk 도서관</h2>
         <div id="map"></div>
