@@ -27,11 +27,8 @@ public class JAdminController {
 	// 로그인 기능 생기면 변환하기 
 		@ModelAttribute("user")
 		   public UserDto getDto() {
-		    //  return new userDto();
-			UserDto user = new UserDto();
-			user.setUserno(1);
-			user.setAdmin("1");
-			return user;
+			return new UserDto();
+			
 		   }
 		
 		
@@ -56,7 +53,7 @@ public class JAdminController {
 	    @GetMapping("/admin/blacklist")
 	    public String adminBlackList(@ModelAttribute("user") UserDto user, Model model) {
 	        // 관리자 권한 체크
-	        if (user.getAdmin() != "1") {
+	        if (!user.getAdmin().equals("1")) {
 	            // 권한이 없는 경우, 접근 불가 메시지와 함께 다른 페이지로 리다이렉트
 	            model.addAttribute("errorMessage", "접근 권한이 없습니다.");
 	            return "ha_board/errorpage"; // 403 접근 금지 페이지로 리다이렉트
