@@ -121,7 +121,7 @@
     <div>
         <a href="/home">도서관 홈</a>
         <a href="/search">도서 검색</a>
-        <a href="/recomm/filter">인기도서</a>
+        <a href="/recomm">인기도서</a>
         <a href="/mypage">마이 페이지</a>
         <a href="/board/list">나눔마당</a>
         <a href="/login">로그인</a>

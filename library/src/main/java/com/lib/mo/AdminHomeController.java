@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.lib.mo.service.HomeService;
 
 @Controller
-public class AdminHomeContorller {
+public class AdminHomeController {
 
 	@Autowired
 	HomeService service;

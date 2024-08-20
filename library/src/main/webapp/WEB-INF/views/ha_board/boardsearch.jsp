@@ -21,11 +21,11 @@
     </select>
     
     <label for="title">제목:</label>
-    <input type="text" name="title" id="title" />
+    <input type="text" name="title" id="title" value="${title}" />
 
     <button type="submit">검색</button>
 </form>
-
+	
 <!-- 검색 결과 표시 -->
 <c:choose>
     <c:when test="${not empty searchResults}">
@@ -40,4 +40,15 @@
 </c:choose>
 
 </body>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+    $(function(){
+        // 이미 서버에서 전달된 값을 사용하여 select 박스와 input 값을 설정
+        $("#type").val("${type}"); // 선택된 분류 유지
+        $("#title").val("${title}"); // 이전 제목 유지
+    });
+</script>
 </html>
+
+

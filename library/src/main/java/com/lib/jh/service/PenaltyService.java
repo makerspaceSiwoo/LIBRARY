@@ -8,13 +8,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lib.dto.PenaltyDto;
+import com.lib.dto.UserDto;
+import com.lib.jh.dao.BlackListDao;
 import com.lib.jh.dao.PenaltyDao;
+import com.lib.jh.dao.UserDao2;
 
 @Service
 public class PenaltyService {
  
     @Autowired
     private PenaltyDao penaltyDao;
+
+    @Autowired
+    private BlackListService blacklistService;
+    
+    @Autowired
+    private UserDao2 userdao;
+    
     
     public void updatePenaltyAndUserStatus() {
         List<PenaltyDto> penalties = penaltyDao.getAllPenalties();
@@ -29,5 +39,44 @@ public class PenaltyService {
                 penaltyDao.updateUserPenalty(penalty.getUserno(), 1); // user 패널티 1로 설정
             }
         }
+        
+   
+        
     }
-}
+    
+ // 사용자 ban 상태를 업데이트하는 메서드
+    public void updateUserBanStatus(int userno, int boardno, Date forbid_end,int blacklistno) {
+        
+    	// 현재 시간
+        Date now = new Date();
+
+        // 사용자 정보 조회
+        UserDto user = userdao.selectUserById(userno);
+
+        // 사용자의 현재 Ban상태
+        Date currentBanEnd = user.getBan();
+        
+        
+      
+        blacklistService.updateBlacklistForbid_end(blacklistno); //
+        if (currentBanEnd == null) {  //기존 벤이 없는경우 
+            
+        	userdao.updateUserBan(userno, forbid_end);
+        	
+            
+        }
+        else { //기존 벤이 있으면
+            long additionalBanTime = forbid_end.getTime() - now.getTime();
+            Date newBanEnd = new Date(currentBanEnd.getTime() + additionalBanTime);
+            userdao.updateUserBan(userno, newBanEnd); // 사용자 ban 업데이트
+            
+            
+        }
+        
+       }
+    
+
+  }
+    
+    
+    

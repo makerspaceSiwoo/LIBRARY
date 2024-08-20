@@ -21,7 +21,7 @@
         <p>이 글은 블라인드 처리되었습니다.</p>
     </c:when>
     <c:otherwise>
-        <p>${bcontent.contents}</p>
+        <p>${bcontent.contents}</p><p>userID : ${userId}</p>
         <!-- 게시글 신고 버튼 -->
         <form action="/board/report/${bcontent.boardno}" method="post" onsubmit="return confirmAction('게시글을 신고하시겠습니까?')">
             <input type="hidden" name="userno" value="${bcontent.userno}">
@@ -63,7 +63,7 @@
                     <p>이 글은 블라인드 처리되었습니다.</p>
                 </c:when>
                 <c:otherwise>
-                    <p>유저번호: ${comment.userno} - 댓글내용: ${comment.contents} - 작성일: ${comment.write_date}</p>
+                    <p>유저번호: ${comment.userno} - 댓글내용: ${comment.contents} - 작성일: ${comment.write_date} - 작성자: ${comment.userId}</p>
                     
                     <%-- 로그인된 userno와 댓글 작성자의 userno가 같을 때만 수정 및 삭제 버튼을 표시 --%>
                     <c:if test="${ user.userno == comment.userno && comment.state != 'BLIND'}"> 

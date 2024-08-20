@@ -36,7 +36,7 @@ public class JoinService {
     		ex.printStackTrace();
     	}
     	return false;
-    }
+    }//이메일 전송 서비스 실패시 예외처리
     
     @Autowired
     public JoinService(JoinDao joinDao) {
@@ -45,8 +45,8 @@ public class JoinService {
 
     public boolean checkUserIdDuplicate(String userID) {
         int count = joinDao.checkid(userID);
-        return count > 0; // 중복된 아이디가 있으면 true 반환
-    }
+        return count > 0; 
+    }// 중복된 아이디가 있으면 true 반환
 
     public void registerUser(UserDto user) {
         joinDao.insertUser(user);

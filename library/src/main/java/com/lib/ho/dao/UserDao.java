@@ -18,7 +18,7 @@ public interface UserDao {
 	
 	@Insert("INSERT INTO user (userID, userPW, email, name, gender, birth, phone, address, ban, penalty, state, admin) VALUES (#{userID}, #{userPW}, #{email}, #{name}, #{gender}, #{birth}, #{phone}, #{address}, #{ban}, #{penalty}, #{state}, #{admin})")
     void insertUser(UserDto user);
-	
+
 	@Update("UPDATE user SET userID = #{userID}, userPW = #{userPW}, email = #{email}, name = #{name}, birth = #{birth}, phone = #{phone}, address = #{address} WHERE userno = #{userno}")
     void updateUser(UserDto user);
 
@@ -30,6 +30,7 @@ public interface UserDao {
 	
 	@Select("SELECT userID FROM user WHERE email = #{email}")
     String findUserIdByEmail(String email);
+
 	
 	@Update("UPDATE user SET state = #{state} WHERE userID = #{userID}")
     int updateState(@Param("state") String state, @Param("userID") String userID);

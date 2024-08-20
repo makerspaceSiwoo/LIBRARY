@@ -1,8 +1,7 @@
 package com.lib.mo.service;
 
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,23 +14,27 @@ public class RecommService {
 	@Autowired
 	RecommDao dao;
 	
-	public List<RecommDto> recommbook(String gen, String cate, int mon, int start, int end){
-		Map<String, Object> m = new HashMap<String, Object>();
-		m.put("gen", gen);
-		m.put("cate", cate);
-		m.put("mon", mon);
-		m.put("start", start);
-		m.put("end", end);
-		return dao.recommbook(m);
+//	전체
+	public List<RecommDto> allrcbook(){
+		return dao.allrcbook();
 	}
 	
-	public int recommcount(String gen, String cate, int mon, int start, int end) {
-		Map<String, Object> m = new HashMap<String, Object>();
-		m.put("gen", gen);
-		m.put("cate", cate);
-		m.put("mon", mon);
-		m.put("start", start);
-		m.put("end", end);
-		return dao.recommcount(m);
+//	카테고리
+	public List<RecommDto> catercbook(int userno){
+		System.out.println(userno);
+		return dao.catercbook(userno);
 	}
+	
+//	성별
+	public List<RecommDto> genrcbook(String gender){
+		System.out.println(gender);
+		return dao.genrcbook(gender);
+	}
+	
+//	연령대
+	public List<RecommDto> agercbook(Date birth){
+		System.out.println(birth);
+		return dao.agercbook(birth);
+	}
+	
 }
