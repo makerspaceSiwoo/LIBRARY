@@ -46,10 +46,14 @@ public class BoardService {
 	    return dao.selectTotalCount();
 	}
 	
-	//게시글 검색
-	public List<BoardDto> BoardSearch(String type, String title) {
-		 return dao.BoardSearch(type, title);
-	}
+//	// 게시글 검색
+//    public List<BoardDto> BoardSearch(String type, String title) {
+//        return dao.BoardSearch(type, title);
+//    }
+	  // 게시글 검색 (페이징 포함)
+    public List<BoardDto> BoardSearch(String type, String title, int offset, int limit) {
+        return dao.BoardSearch(type, title, offset, limit);
+    }
 	
 	//게시글 조회수 증가 카운팅
 	public void incrementViewCount(int boardno) {
@@ -60,7 +64,13 @@ public class BoardService {
 		return dao.userID(userno);
 	}
 	
-	
-	
-	
+	// getSearchTotalCount 타입에 따른 글 갯수
+	public int getSearchTotalCount(String type, String title) {
+	    return dao.getSearchTotalCount(type, title);
+	}
+
 }
+	
+	
+	
+

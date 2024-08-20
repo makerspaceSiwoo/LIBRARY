@@ -1,5 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%-- boardlist.jsp 지금 사용 안하는중 JController의 public String boardList 도 주석처리중  --%>
+<%-- boardlist.jsp 지금 사용 안하는중 JController의 public String boardList 도 주석처리중  --%>
+<%-- boardlist.jsp 지금 사용 안하는중 JController의 public String boardList 도 주석처리중  --%>
+<%-- boardlist.jsp 지금 사용 안하는중 JController의 public String boardList 도 주석처리중  --%>
+<%-- boardlist.jsp 지금 사용 안하는중 JController의 public String boardList 도 주석처리중  --%>
+<%-- boardlist.jsp 지금 사용 안하는중 JController의 public String boardList 도 주석처리중  --%>
+<%-- boardlist.jsp 지금 사용 안하는중 JController의 public String boardList 도 주석처리중  --%>
+<%-- boardlist.jsp 지금 사용 안하는중 JController의 public String boardList 도 주석처리중  --%>
+<%-- boardlist.jsp 지금 사용 안하는중 JController의 public String boardList 도 주석처리중  --%>
+<%-- boardlist.jsp 지금 사용 안하는중 JController의 public String boardList 도 주석처리중  --%>
+<%-- boardlist.jsp 지금 사용 안하는중 JController의 public String boardList 도 주석처리중  --%>
+<%-- boardlist.jsp 지금 사용 안하는중 JController의 public String boardList 도 주석처리중  --%>
+<%-- boardlist.jsp 지금 사용 안하는중 JController의 public String boardList 도 주석처리중  --%>
+<%-- boardlist.jsp 지금 사용 안하는중 JController의 public String boardList 도 주석처리중  --%>
+<%-- boardlist.jsp 지금 사용 안하는중 JController의 public String boardList 도 주석처리중  --%>
+<%-- boardlist.jsp 지금 사용 안하는중 JController의 public String boardList 도 주석처리중  --%>
+<%-- boardlist.jsp 지금 사용 안하는중 JController의 public String boardList 도 주석처리중  --%>
+<%-- boardlist.jsp 지금 사용 안하는중 JController의 public String boardList 도 주석처리중  --%>
+<%-- boardlist.jsp 지금 사용 안하는중 JController의 public String boardList 도 주석처리중  --%>
+<%-- boardlist.jsp 지금 사용 안하는중 JController의 public String boardList 도 주석처리중  --%>
+<%-- boardlist.jsp 지금 사용 안하는중 JController의 public String boardList 도 주석처리중  --%>
 
 <!DOCTYPE html>
 <html>

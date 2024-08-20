@@ -21,7 +21,8 @@
         <p>이 글은 블라인드 처리되었습니다.</p>
     </c:when>
     <c:otherwise>
-        <p>${bcontent.contents}</p><p>userID : ${userId}</p>
+    	<p>글제목: ${bcontent.title }</p>
+        <p>글내용: ${bcontent.contents}</p><p>userID : ${userId}</p>
         <!-- 게시글 신고 버튼 -->
         <form action="/board/report/${bcontent.boardno}" method="post" onsubmit="return confirmAction('게시글을 신고하시겠습니까?')">
             <input type="hidden" name="userno" value="${bcontent.userno}">
