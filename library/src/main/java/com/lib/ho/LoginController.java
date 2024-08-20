@@ -26,8 +26,6 @@ import com.lib.ho.dao.UserDao;
 import com.lib.ho.service.EmailService;
 import com.lib.ho.service.UserService;
 
-import jakarta.servlet.http.HttpSession;
-
 @SessionAttributes("user")
 @Controller
 public class LoginController {
