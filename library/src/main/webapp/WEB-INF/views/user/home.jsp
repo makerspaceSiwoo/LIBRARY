@@ -118,24 +118,60 @@
     </script>
 </head>
 <body>
-    <div>
-        <a href="/home">도서관 홈</a>
-        <a href="/search">도서 검색</a>
-        <a href="/recomm">인기도서</a>
-        <a href="/mypage">마이 페이지</a>
-        <a href="/board/list">나눔마당</a>
-        <a href="/login">로그인</a>
-        <a href="/join">회원가입</a>
-    </div>
+   <c:choose>
+      <c:when test="${user.admin == 1 }">
+         <div id="adminmenu">
+            <a href="/home"><img src="/logo/logo.png"></a>
+            <a href="/home">도서관 홈</a>
+            <a href="/book/record">대출/반납</a>
+            <a href="/book/add">도서 추가</a>
+            <a href="/book/manage">도서 수정/삭제</a>
+            <a href="/board/search">게시판</a>
+            <a href="/admin/mypage">마이 페이지</a>
+            <a href="/admin/blacklist">유저 관리</a>
+            <c:choose>
+               <c:when test="${empty user }">
+                  <button onclick="location.href='/login';">로그인</button>
+               </c:when>
+               <c:otherwise>
+                  <p>${user.userID }</p>
+                  <form action="/logout" method="post">
+                     <button>로그아웃</button>
+                  </form>
+               </c:otherwise>
+            </c:choose>
+         </div>
+      </c:when>
+      <c:otherwise>
+         <div id="usermenu">
+            <a href="/home"><img src="/logo/logo.png"></a>
+            <a href="/home">도서관 홈</a>
+            <a href="/search">도서 검색</a>
+            <a href="/recomm">추천 도서</a>
+            <a href="/board/search">게시판</a>
+            <a href="/mypage">마이 페이지</a>
+            <c:choose>
+               <c:when test="${empty user }">
+                  <button onclick="location.href='/join';">회원 가입</button>
+                  <button onclick="location.href='/login';">로그인</button>
+               </c:when>
+               <c:otherwise>
+                  <p>${user.userID }</p>
+                  <form action="/logout" method="post">
+                     <button>로그아웃</button>
+                  </form>
+               </c:otherwise>
+            </c:choose>
+         </div>
+      </c:otherwise>
+   </c:choose>
     <div class="navbar">
         <a href="#locate">도서관 위치</a>
         <a href="#schedule">도서관 일정</a>
         <a href="#notice">공지사항</a>
         <a href="#quantity">소장자료 현황</a>
     </div>
-    <div>
-
-    </div>
+  
     <div>
         <h2 id = "locate">Soldesk 도서관</h2>
         <div id="map"></div>

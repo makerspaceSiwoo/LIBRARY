@@ -8,18 +8,27 @@
 <link rel="stylesheet" type="text/css" href="/css/admin/book/manage.css">
 </head>
 <body>
-
-<div id="header">
-		<img src="/logo/logo.png">
-		<a href="/admin/home">도서관 Home</a>
-		<a href="/book/borrow">대출관리</a>
-		<a href="/book/add">도서추가</a>
-		<a href="/book/manage">도서정보 수정</a>
-		<a href="/admin/recomm">인기도서</a>
-		<a href="">회원관리</a>
-		<a href="board/list">나눔마당</a>
-		<!--<c:if test="${user }"></c:if>-->
-	</div>
+			<div id="adminmenu">
+				<img src="/logo/logo.png">
+				<a href="/home">도서관 홈</a>
+				<a href="/book/record">대출/반납</a>
+				<a href="/book/add">도서 추가</a>
+				<a href="/book/manage">도서 수정/삭제</a>
+				<a href="/board/search">게시판</a>
+				<a href="/mypage">마이 페이지</a>
+				<a href="/admin/blacklist">유저 관리</a>
+				<c:choose>
+					<c:when test="${empty user }">
+						<button onclick="location.href='/login';">로그인</button>
+					</c:when>
+					<c:otherwise>
+						<p>${user.userID }</p>
+						<form action="/logout" method="post">
+							<button>로그아웃</button>
+						</form>
+					</c:otherwise>
+				</c:choose>
+			</div>
 <div>
 		<div>
 			<h1>도서 정보 수정/삭제</h1>

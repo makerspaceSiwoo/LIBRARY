@@ -47,46 +47,61 @@ public class AdminModController {
 	    } 
 	 
 	 @PostMapping("/admin/mod/info")
-	    public String editUser(@SessionAttribute("user") UserDto sessionUser,
-	                           @RequestParam("userID") String userID,
-	                           @RequestParam("userPW") String userPW,
-	                           @RequestParam("name") String name,
-	                           @RequestParam("birth") @DateTimeFormat(pattern = "yyyy-MM-dd") Date birth,
-	                           @RequestParam("phone") String phone,
-	                           @RequestParam("email") String email,
-	                           @RequestParam("address") String address,
-	                           @RequestParam("verificationCode") String verificationCode,
-	                           HttpSession session,
-	                           Model model) {
-		 
-		 	// RedirectAttributes redirectAttributes
-		 
-	        if (!sessionUser.getUserID().equals(userID) && userService.existsByUserID(userID)) {
-	            model.addAttribute("error", "이미 사용 중인 ID입니다.");
-	            return "/ho_mod/adminmodinfo";
-	        }
+	 public String editUser(@SessionAttribute("user") UserDto sessionUser,
+	                        @RequestParam(value = "userID", required = false) String userID,
+	                        @RequestParam(value = "userPW", required = false) String userPW,
+	                        @RequestParam(value = "name", required = false) String name,
+	                        @RequestParam(value = "birth", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date birth,
+	                        @RequestParam(value = "phone", required = false) String phone,
+	                        @RequestParam(value = "email", required = false) String email,
+	                        @RequestParam(value = "address", required = false) String address,
+	                        @RequestParam(value = "verificationCode", required = false) String verificationCode,
+	                        HttpSession session,
+	                        Model model) {
 
-	        String sessionVerificationCode = (String) session.getAttribute("verificationCode");
-	        if (sessionVerificationCode == null || !sessionVerificationCode.equals(verificationCode)) {
-	            model.addAttribute("error", "인증 코드가 일치하지 않습니다.");
-	            return "/ho_mod/adminmodinfo";
-	        }
+	     // 아이디 변경 시 중복 체크
+	     if (userID != null && !sessionUser.getUserID().equals(userID) && userService.existsByUserID(userID)) {
+	         model.addAttribute("error", "이미 사용 중인 ID입니다.");
+	         return "/ho_mod/adminmodinfo";
+	     } 
 
-	        sessionUser.setUserID(userID);
-	        sessionUser.setUserPW(userPW);
-	        sessionUser.setName(name);
-	        sessionUser.setBirth(birth);
-	        sessionUser.setPhone(phone);
-	        sessionUser.setEmail(email);
-	        sessionUser.setAddress(address);
+	     // 이메일 필드가 변경되었을 때만 인증 코드 확인
+	     if (!sessionUser.getEmail().equals(email)) {
+	         String sessionVerificationCode = (String) session.getAttribute("verificationCode");
+	         if (verificationCode == null || sessionVerificationCode == null || !sessionVerificationCode.equals(verificationCode)) {
+	             model.addAttribute("error", "인증 코드가 일치하지 않습니다.");
+	             return "/ho_mod/adminmodinfo";
+	         }
+	     }
 
-	        userService.updateUser(sessionUser);
-	        session.setAttribute("user", sessionUser);
-	        
-	        // redirectAttributes.addFlashAttribute("successMessage", "수정이 완료되었습니다.");
+	     // 사용자 정보 업데이트
+	     if (userID != null) {
+	         sessionUser.setUserID(userID);
+	     }
+	     if (userPW != null && !userPW.isEmpty()) {
+	         sessionUser.setUserPW(userPW);
+	     }
+	     if (name != null) {
+	         sessionUser.setName(name);
+	     }
+	     if (birth != null) {
+	         sessionUser.setBirth(birth);
+	     }
+	     if (phone != null) {
+	         sessionUser.setPhone(phone);
+	     }
+	     if (email != null) {
+	         sessionUser.setEmail(email);
+	     }
+	     if (address != null) {
+	         sessionUser.setAddress(address);
+	     }
 
-	        return "redirect:/home";  // 수정 완료 후 리다이렉트
-	    }
+	     userService.updateUser(sessionUser);
+	     session.setAttribute("user", sessionUser);
+
+	     return "redirect:/home";  // 수정 완료 후 리다이렉트
+	 }
 
 	    @PostMapping("/send/code2")
 	    @ResponseBody

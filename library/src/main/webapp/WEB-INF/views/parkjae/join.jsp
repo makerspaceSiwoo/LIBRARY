@@ -134,7 +134,7 @@
 $(document).ready(function() {
     function checkDuplicate() {
         // 아이디 입력 필드의 값을 가져옵니다.
-        var userId = document.querySelector('input[name="userID"]').value;
+        var userID = document.querySelector('input[name="userID"]').value;
 
         if (userID === "") {
             alert("아이디를 입력하세요.");
@@ -143,9 +143,9 @@ $(document).ready(function() {
 
         // AJAX를 사용하여 서버에 중복 체크 요청을 보냅니다.
         $.ajax({
-            url: '/join/id_check', // 서버의 중복 체크 엔드포인트 URL
+            url: '/checkUserID', // 서버의 중복 체크 엔드포인트 URL
             type: 'POST',
-            data: { userID: userId }, // userId 변수 전달
+            data: { userID: userID }, // userId 변수 전달
             success: function(response) {
                 if (response.status === "duplicate") {
                     alert("아이디가 중복되었습니다.");

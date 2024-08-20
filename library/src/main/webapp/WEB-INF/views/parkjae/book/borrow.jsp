@@ -11,6 +11,28 @@
 
 </head>
 <body>
+         <div id="adminmenu">
+            <a href="/home"><img src="/logo/logo.png"></a>
+            <a href="/home">도서관 홈</a>
+            <a href="/book/record">대출/반납</a>
+            <a href="/book/add">도서 추가</a>
+            <a href="/book/manage">도서 수정/삭제</a>
+            <a href="/board/search">게시판</a>
+            <a href="/admin/mypage">마이 페이지</a>
+            <a href="/admin/blacklist">유저 관리</a>
+            <c:choose>
+               <c:when test="${empty user }">
+                  <button onclick="location.href='/login';">로그인</button>
+               </c:when>
+               <c:otherwise>
+                  <p>${user.userID }</p>
+                  <form action="/logout" method="post">
+                     <button>로그아웃</button>
+                  </form>
+               </c:otherwise>
+            </c:choose>
+         </div>
+  
 <h1>대출관리</h1>
 <form action="/book/record" method="GET">
 <input type="text" name="booktitle">
@@ -25,8 +47,9 @@
 			<tr><td>${fn:substring(borrow.booktitle, 0, 10)}</td>
             <td>${fn:substring(borrow.author, 0, 10)}</td>
             <td>${fn:substring(borrow.callno, 0, 10)}</td>
+            <%-- 검색결과 책이름, 저자, 주문번호 출력 --%>
 			<c:if test="${borrow.userno != 0 }">
-				<c:if test="${borrow.u_end.time <= now.time}">	
+				<c:if test="${borrow.u_end.time <= now.time}">
 					<c:set var="formattedDate">
 					<fmt:formatDate value="${borrow.u_end}" pattern="yyyy-MM-dd"/>
 					</c:set>
@@ -34,6 +57,7 @@
 					<td><button type="button" style="color: red;" onclick="location.href='/book/latereturn?userno=${borrow.userno}&formattedDate=${formattedDate}&bookno=${borrow.bookno}'">
 					반납
 					</button>
+					<%-- 반납예정일자가 현재일자보다 낮다면(연체라면) 글자빨강에 반납시 컨트롤러 latereturn 호출 --%>
 				</td>
 				</c:if>
 				<c:if test="${borrow.u_end.time > now.time}">		
@@ -41,19 +65,22 @@
 					<td><button type="button" onclick="location.href='/book/return?userno=${borrow.userno}&bookno=${borrow.bookno}'">
 					반납
 					</button>
+					<%-- 반납예정일자가 현재일자보다 크다면(정상대출이라면) 반납시 컨트롤러 return호출  --%>
 				</td>
 				</c:if>
-				
+			
 			</c:if>
 			
 			
 			<c:if test="${borrow.userno == 0 }">
 				<td><button type="button" onclick="location.href='/book/lent?bookno=${borrow.bookno}'">대출</button></td>
 			</c:if>
+			<%-- 대출버튼 클릭시 컨트롤러 lent호출 (유저번호 입력페이지 생성 예정) --%>
 		</tr>
 		</c:forEach>
 		</tr>
 </table>
+
 </body>
 </html>
 

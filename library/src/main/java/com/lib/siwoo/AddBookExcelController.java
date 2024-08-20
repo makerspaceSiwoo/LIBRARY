@@ -18,12 +18,12 @@ public class AddBookExcelController {
 	@Autowired
 	AddBookExcelService excelservice;
 	
-    @GetMapping("book/add/downform")
+    @GetMapping("/book/add/downform")
     public void downExcel(HttpServletResponse response) {
        excelservice.downExcel(response);
     }
     
-    @PostMapping("book/add/excel")
+    @PostMapping("/book/add/excel")
     public void uploadExcel(@RequestParam("booklistexcel") MultipartFile file,HttpServletResponse response, Model m ) { // 임시 경로에 업로드 된 파일에 접근 가능
     	byte[] result = excelservice.uploadExcel(file);
     	if(result == null) {

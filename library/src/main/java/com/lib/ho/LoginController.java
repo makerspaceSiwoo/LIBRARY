@@ -60,33 +60,41 @@ public class LoginController {
 	//로그인 , admin 1일시 사서 홈, 0일시 유저 홈으로.
 	
 	@PostMapping("/login")
-	public ModelAndView login(@RequestParam("userID") String userID, @RequestParam("userPW") String userPW, RedirectAttributes redirectAttributes, Model m) {
-		ModelAndView mav = null;
+	public ModelAndView login(@RequestParam("userID") String userID, 
+	                          @RequestParam("userPW") String userPW, 
+	                          RedirectAttributes redirectAttributes, 
+	                          Model m) {
+
+
 	    List<UserDto> users = userService.getAllUsers();
-	    int i = 0;
 	    for (UserDto user : users) {
 	        if (user.getUserID().equals(userID) && user.getUserPW().equals(userPW)) {
-	        	
-	        	String state = user.getState();
-	        	
-	        	if ("탈퇴".equals(state)) {
+	            
+	            // 계정 상태 확인
+	            String state = user.getState();
+	            if ("탈퇴".equals(state)) {
 	                redirectAttributes.addFlashAttribute("errorMessage", "탈퇴된 계정입니다.");
-	                mav = new ModelAndView("redirect:/login");
+	                return new ModelAndView("redirect:/login");
 	            }
-	        	//System.out.println(user);
-	            // 정상적인 로그인 처리
-	        	mav = new ModelAndView("redirect:/home");
-	        	m.addAttribute("user", user);
-	        	i = 1;
-	           break;
+
+	            // 로그인 성공: 세션에 사용자 정보 저장
+	            m.addAttribute("user", user);
+	            
+	            boolean admin = user.getAdmin().equals("1");
+	            if (admin) {
+	                return new ModelAndView("redirect:/admin/home");
+	            } else {
+	                return new ModelAndView("redirect:/home");
+	            }
+
 	        }
 	        
 	    }
-	    if(i == 0) {
-	    	redirectAttributes.addFlashAttribute("errorMessage", "아이디 또는 비밀번호가 잘못되었습니다.");
-	    	mav = new ModelAndView("redirect:/login");
-	    }
-	    return mav;  
+	    
+	    // 아이디 또는 비밀번호가 일치하지 않을 경우
+	    redirectAttributes.addFlashAttribute("errorMessage", "아이디 또는 비밀번호가 잘못되었습니다.");
+	    return new ModelAndView("redirect:/login");
+
 	}
 	
 	// 로그아웃
@@ -166,6 +174,28 @@ public class LoginController {
 
         // 인증 코드를 클라이언트 측에서 사용할 수 있도록 반환
         return verificationCode;
+    }
+    
+    @PostMapping("/user/del")
+    public ModelAndView withdrawUser(@ModelAttribute("user") UserDto user, 
+                                     RedirectAttributes redirectAttributes, 
+                                     SessionStatus sessionStatus) {
+    	
+    	System.out.println(user);
+
+        if (user.getUserID() != null) {
+            // 사용자 상태를 "탈퇴"로 변경
+            userService.withdrawUser(user.getUserID());
+            
+            // 세션 상태를 완료(무효화)하여 로그아웃 처리
+            sessionStatus.setComplete();
+            
+            redirectAttributes.addFlashAttribute("successMessage", "회원 탈퇴가 완료되었습니다.");
+            return new ModelAndView("redirect:/login");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "로그인이 필요합니다.");
+            return new ModelAndView("redirect:/login");
+        }
     }
     
 }

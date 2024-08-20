@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -31,4 +32,16 @@ public interface UserDao {
     String findUserIdByEmail(String email);
 
 	
+	@Update("UPDATE user SET state = #{state} WHERE userID = #{userID}")
+    int updateState(@Param("state") String state, @Param("userID") String userID);
+	
+	@Select("SELECT * FROM user WHERE userID = #{userID} AND email = #{email}")
+    UserDto findByUserIdAndEmail(@Param("userID") String userID, @Param("email") String email);
+
+    @Update("UPDATE user SET userPW = #{userPW} WHERE userno = #{userno}")
+    void updateUserPassword(@Param("userno") int userno, @Param("userPW") String userPW);
+    
+    @Select("SELECT COUNT(*) FROM users WHERE email = #{email}")
+    boolean existsByEmail(String email);
+
 }

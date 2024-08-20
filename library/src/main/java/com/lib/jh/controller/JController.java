@@ -32,8 +32,10 @@ public class JController {
 	// 로그인 기능 생기면 변환하기 
 	@ModelAttribute("user")
 	   public UserDto getDto() {
+
 	    return new UserDto();
 		
+
 	   }
 	
 	//BoardService 주입
