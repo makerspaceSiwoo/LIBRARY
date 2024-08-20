@@ -78,7 +78,7 @@ public class LoginController {
 	            String state = user.getState();
 	            if ("탈퇴".equals(state)) {
 	                redirectAttributes.addFlashAttribute("errorMessage", "탈퇴된 계정입니다.");
-	                mav = new ModelAndView("redirect:/login");
+	                return new ModelAndView("redirect:/login");
 	            }
 
 	            
