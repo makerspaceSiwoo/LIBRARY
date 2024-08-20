@@ -14,4 +14,4 @@ public class CodeGenerator {
         }
         return builder.toString();
     }
-}
+}//회원가입시 대,소문자 숫자 특수기호 포함되도록 설정하는 클래스를 따로만듬
