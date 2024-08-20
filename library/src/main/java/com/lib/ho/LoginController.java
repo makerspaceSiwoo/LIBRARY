@@ -62,7 +62,6 @@ public class LoginController {
 	//로그인 , admin 1일시 사서 홈, 0일시 유저 홈으로.
 	
 	@PostMapping("/login")
-
 	public ModelAndView login(@RequestParam("userID") String userID, 
 	                          @RequestParam("userPW") String userPW, 
 	                          RedirectAttributes redirectAttributes, 
@@ -70,7 +69,6 @@ public class LoginController {
 
 
 	    List<UserDto> users = userService.getAllUsers();
-	    int i = 0;
 	    for (UserDto user : users) {
 	        if (user.getUserID().equals(userID) && user.getUserPW().equals(userPW)) {
 	            
@@ -81,7 +79,6 @@ public class LoginController {
 	                return new ModelAndView("redirect:/login");
 	            }
 
-	            
 	            // 로그인 성공: 세션에 사용자 정보 저장
 	            m.addAttribute("user", user);
 	            
@@ -95,7 +92,6 @@ public class LoginController {
 	        }
 	        
 	    }
-
 	    
 	    // 아이디 또는 비밀번호가 일치하지 않을 경우
 	    redirectAttributes.addFlashAttribute("errorMessage", "아이디 또는 비밀번호가 잘못되었습니다.");
