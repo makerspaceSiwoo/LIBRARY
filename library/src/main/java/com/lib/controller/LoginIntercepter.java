@@ -14,7 +14,7 @@ public class LoginIntercepter implements HandlerInterceptor {
 
 	public List<String> loginEssential = Arrays.asList("/board/**", "/comm/**"); // board의 모든 하위 파일 (,찍고 다른 파일도 추가할 수 있음) 로그인이 필요한 항목
 	
-	public List<String> loginInessential = Arrays.asList("/board/list/**","/board/content/**","/board/search"); // **은 글 번호가 바뀌어도 받을 수 있게 로그인이 필요 없는 항목
+	public List<String> loginInessential = Arrays.asList("/board/list/**","/board/no/**","/board/search/**"); // **은 글 번호가 바뀌어도 받을 수 있게 로그인이 필요 없는 항목
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
