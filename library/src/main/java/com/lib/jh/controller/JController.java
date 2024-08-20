@@ -1,7 +1,5 @@
 package com.lib.jh.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -34,21 +32,10 @@ public class JController {
 	// 로그인 기능 생기면 변환하기 
 	@ModelAttribute("user")
 	   public UserDto getDto() {
-	    //  return new userDto();
-		UserDto user = new UserDto();
-		
-		// 임시로 세션 user에ban값 넣음
-	    // "2024-08-13" 문자열을 Date로 변환
-	    String dateString = "2024-08-12";
-	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-	    try {
-	        Date banDate = formatter.parse(dateString);
-	        user.setBan(banDate); // 변환된 Date 객체를 setBan에 설정
-	    } catch (ParseException e) {
-	        e.printStackTrace(); // 예외 처리
-	    }
 
-	    return user;
+	    return new UserDto();
+		
+
 	   }
 	
 	//BoardService 주입

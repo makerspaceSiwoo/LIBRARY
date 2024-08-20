@@ -37,7 +37,28 @@
 </script>
 </head>
 <body>
-
+         <div id="adminmenu">
+            <a href="/home"><img src="/logo/logo.png"></a>
+            <a href="/home">도서관 홈</a>
+            <a href="/book/record">대출/반납</a>
+            <a href="/book/add">도서 추가</a>
+            <a href="/book/manage">도서 수정/삭제</a>
+            <a href="/board/search">게시판</a>
+            <a href="/admin/mypage">마이 페이지</a>
+            <a href="/admin/blacklist">유저 관리</a>
+            <c:choose>
+               <c:when test="${empty user }">
+                  <button onclick="location.href='/login';">로그인</button>
+               </c:when>
+               <c:otherwise>
+                  <p>${user.userID }</p>
+                  <form action="/logout" method="post">
+                     <button>로그아웃</button>
+                  </form>
+               </c:otherwise>
+            </c:choose>
+         </div>
+ 
 <c:forEach items="${blacklistdto }" var="black">
     blacklistno: ${black.blacklistno }  forbid_end: ${black.forbid_end } reason: ${black.reason } userno: ${black.userno } boardno: ${black.boardno } commno: ${black.commno } contents :${black.contents} <br>
     
