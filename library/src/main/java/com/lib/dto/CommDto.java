@@ -13,5 +13,5 @@ public class CommDto {
 	private int userno;
 	private Date write_date;
 	private String state;
-	
+	private String userId;
 }

@@ -55,6 +55,12 @@ public class BoardService {
 	public void incrementViewCount(int boardno) {
 	    dao.incrementViewCount(boardno);
 	}
+	// 유저 아이디 가져오기
+	public String userIdGet(int userno) {
+		return dao.userID(userno);
+	}
+	
+	
 	
 	
 }
