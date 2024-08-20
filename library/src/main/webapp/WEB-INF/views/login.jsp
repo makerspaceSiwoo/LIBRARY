@@ -20,6 +20,16 @@
             margin-bottom: 20px;
         }
     </style>
+    
+    <script>
+        window.onload = function() {
+            const loginMessage = "<c:out value='${loginMessage}'/>";
+            if (loginMessage) {
+                alert(loginMessage);
+            }
+        };
+    </script>
+    
 </head>
 <body>
     <div class="container">

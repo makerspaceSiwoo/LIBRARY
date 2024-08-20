@@ -10,12 +10,12 @@
             margin: 20px;
             padding-right: 220px; /* navbar 공간 확보를 위한 오른쪽 여백 */
         }
-        .topmenu {
+        .usermenu {
             padding: 10px;
             text-align: center;
             border-bottom: 10px solid #3C33A4; /* 어두운 파란색 구분선 */
         }
-        .topmenu a {
+        .usermenu a {
             margin: 0 15px;
             text-decoration: none;
             color: #333;
@@ -87,16 +87,27 @@
     </style>
 </head>
 <body>
+         <div id="usermenu">
+            <a href="/home"><img src="/logo/logo.png"></a>
+            <a href="/home">도서관 홈</a>
+            <a href="/search">도서 검색</a>
+            <a href="/recomm">추천 도서</a>
+            <a href="/board/search">게시판</a>
+            <a href="/mypage">마이 페이지</a>
+            <c:choose>
+               <c:when test="${empty user }">
+                  <button onclick="location.href='/join';">회원 가입</button>
+                  <button onclick="location.href='/login';">로그인</button>
+               </c:when>
+               <c:otherwise>
+                  <p>${user.userID }</p>
+                  <form action="/logout" method="post">
+                     <button>로그아웃</button>
+                  </form>
+               </c:otherwise>
+            </c:choose>
+         </div>
 
-<div class="topmenu">
-    <a href="/home">도서관 홈</a>
-    <a href="/search">도서 검색</a>
-    <a href="/recomm">인기도서</a>
-    <a href="/mypage">마이 페이지</a>
-    <a href="/board/list">나눔마당</a>
-    <a href="/login">로그인</a>
-    <a href="/join">회원가입</a>
-</div>
 
 <div class="navbar">
     <a href="#all">전체</a>
