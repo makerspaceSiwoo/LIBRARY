@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lib.dto.UserDto;
 import com.lib.mo.dto.RecommDto;
@@ -26,11 +27,17 @@ public class RecommController {
 		return new UserDto();
 
 	}
+	
+	
 
 	@GetMapping("/recomm")
-	public String recomm(Model m, @ModelAttribute("user") UserDto user) {
+	public String recomm(Model m, @ModelAttribute("user") UserDto user, RedirectAttributes redirectAttributes) {
 
 		System.out.println(user);
+		if(user.getUserno() == 0) {
+			redirectAttributes.addFlashAttribute("loginMessage", "로그인이 필요한 페이지입니다.");
+			return "redirect:/login";
+		}else {
 
 		List<RecommDto> allrcbook = service.allrcbook();
 		m.addAttribute("allrc", allrcbook);
@@ -45,5 +52,6 @@ public class RecommController {
 		m.addAttribute("agerc", agercbook);
 
 		return "/user/recomm";
+		}
 	}
 }
