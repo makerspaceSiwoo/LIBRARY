@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.lib.dto.PenaltyDto;
 import com.lib.dto.UserDto;
-import com.lib.jh.dao.BlackListDao;
 import com.lib.jh.dao.PenaltyDao;
 import com.lib.jh.dao.UserDao2;
 
@@ -68,6 +67,8 @@ public class PenaltyService {
         else { //기존 벤이 있으면
             long additionalBanTime = forbid_end.getTime() - now.getTime();
             Date newBanEnd = new Date(currentBanEnd.getTime() + additionalBanTime);
+            System.out.println("currentBanEnd"+currentBanEnd);
+            System.out.println(newBanEnd);
             userdao.updateUserBan(userno, newBanEnd); // 사용자 ban 업데이트
             
             

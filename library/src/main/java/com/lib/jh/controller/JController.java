@@ -40,7 +40,7 @@ public class JController {
 		user.setAdmin("1");
 		// 임시로 세션 user에ban값 넣음
 	    // "2024-08-13" 문자열을 Date로 변환
-	    String dateString = "2024-08-16";
+	    String dateString = "2024-08-12";
 	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 	    try {
 	        Date banDate = formatter.parse(dateString);
@@ -62,22 +62,22 @@ public class JController {
 	
 	@Autowired
     BlackListService blacklistService;
-	
-	//게시글 리스트 (페이징) 별로면 수업때 썻던 코드 가지고 오기.
-	@GetMapping("/board/list")
-	public String boardList(Model m, @RequestParam(value="p", defaultValue = "1") int page) {
-	    int size = 10; // 한 페이지에 보여줄 게시글 수
-	    List<BoardDto> result1 = boardservice.selectPage(page, size);
-	    int totalCount = boardservice.selectTotalCount();
-	    int totalPages = (int) Math.ceil(((double)totalCount) / size);
-
-	    m.addAttribute("blist", result1);
-	    m.addAttribute("currentPage", page);
-	    m.addAttribute("totalPages", totalPages);
-
-	    return "ha_board/boardlist";
-	}
-	//
+// 사용 안하는중 ===================================================================================
+//	//게시글 리스트 (페이징) 별로면 수업때 썻던 코드 가지고 오기.
+//	@GetMapping("/board/list")
+//	public String boardList(Model m, @RequestParam(value="p", defaultValue = "1") int page) {
+//	    int size = 10; // 한 페이지에 보여줄 게시글 수
+//	    List<BoardDto> result1 = boardservice.selectPage(page, size);
+//	    int totalCount = boardservice.selectTotalCount();
+//	    int totalPages = (int) Math.ceil(((double)totalCount) / size);
+//
+//	    m.addAttribute("blist", result1);
+//	    m.addAttribute("currentPage", page);
+//	    m.addAttribute("totalPages", totalPages);
+//
+//	    return "ha_board/boardlist";
+//	}
+// 사용 안하는중 ===================================================================================
 	
 	//게시글 상세보기(내용) 보기 기능
 	@GetMapping("/board/no/{boardno}")
@@ -187,14 +187,38 @@ public class JController {
 		return "redirect:/board/list"	;
 	}
 	
-	// 게시글 검색 기능
+	// 게시글 검색(페이징기능)
 	@GetMapping("/board/search")
-	public String boardSearch(@RequestParam(value="type", required=false) String type,
-	                          @RequestParam(value="title", required=false) String title,
-	                          Model m) {
-	    List<BoardDto> searchResults = boardservice.BoardSearch(type, title); // 검색 로직 구현
+	public String boardSearch(
+	    @RequestParam(value="type", required=false) String type,
+	    @RequestParam(value="title", required=false) String title,
+	    @RequestParam(value="p", defaultValue = "1") int page, // 페이지 파라미터 추가
+	    @RequestParam(value="size", defaultValue = "10") int size, // 한 페이지에 보여줄 게시글 수 (기본값)
+	    Model m) {
+
+	    List<BoardDto> searchResults;
+	    int totalCount;
+
+	    // 검색 조건이 없을 경우 전체 게시글 가져오기
+	    if (type == null && title == null || (type.isEmpty() && title.isEmpty())) {
+	        searchResults = boardservice.selectPage(page, size);
+	        totalCount = boardservice.selectTotalCount();
+	    } else {
+	        // 검색 조건이 있을 때 검색 결과 가져오기
+	        int offset = (page - 1) * size; // 페이징을 위한 오프셋 계산
+	        searchResults = boardservice.BoardSearch(type, title, offset, size);
+	        totalCount = boardservice.getSearchTotalCount(type, title);
+	    }
+
 	    m.addAttribute("searchResults", searchResults);
-	    m.addAttribute("type", type); // 선택된 분류    m.addAttribute("title", title); // 입력된 제목
+	    m.addAttribute("type", type);
+	    m.addAttribute("title", title);
+
+	    // 총 페이지 수 계산
+	    int totalPages = (int) Math.ceil((double) totalCount / size);
+	    m.addAttribute("currentPage", page);
+	    m.addAttribute("totalPages", totalPages);
+
 	    return "ha_board/boardsearch"; // JSP 파일로 이동
 	}
 	

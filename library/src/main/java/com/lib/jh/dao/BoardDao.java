@@ -42,10 +42,10 @@ public interface BoardDao {
     int selectTotalCount();
     //--------------------------------------------
     
-    //게시글 검색
-    @Select("SELECT * FROM board WHERE (type = #{type} OR #{type} IS NULL) AND (title LIKE CONCAT('%', #{title}, '%') OR #{title} IS NULL)")
-    List<BoardDto> BoardSearch(@Param("type") String type, @Param("title") String title);
-    
+//    //게시글 검색
+//    @Select("SELECT * FROM board WHERE (type = #{type} OR #{type} IS NULL) AND (title LIKE CONCAT('%', #{title}, '%') OR #{title} IS NULL)")
+//    List<BoardDto> BoardSearch(@Param("type") String type, @Param("title") String title);
+//    
     //게시글 조회수
     @Update("UPDATE board SET view = view + 1 WHERE boardno = #{boardno}")
     int incrementViewCount(@Param("boardno") int boardno);
@@ -55,4 +55,15 @@ public interface BoardDao {
 	@Select("select userID from user where userno = #{userno} ")
 	String userID(int userno);
 	
+	
+	// getSearchTotalCount 타입에 따른 글 갯수
+	@Select("SELECT COUNT(*) FROM board WHERE (type = #{type} OR #{type} IS NULL) AND (title LIKE CONCAT('%', #{title}, '%') OR #{title} IS NULL)")
+	int getSearchTotalCount(@Param("type") String type, @Param("title") String title);
+	
+	// BoardSearch 게시판 검색기능 
+	@Select("SELECT * FROM board WHERE (type = #{type} OR #{type} IS NULL) AND (title LIKE CONCAT('%', #{title}, '%') OR #{title} IS NULL) LIMIT #{offset}, #{limit}")
+	List<BoardDto> BoardSearch(@Param("type") String type, @Param("title") String title, @Param("offset") int offset, @Param("limit") int limit);
+	
+
 }
+

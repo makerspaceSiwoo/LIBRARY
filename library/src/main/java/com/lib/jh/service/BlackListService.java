@@ -15,7 +15,6 @@ import com.lib.dto.UserDto;
 import com.lib.jh.dao.BlackListDao;
 import com.lib.jh.dao.BoardDao;
 import com.lib.jh.dao.CommDao;
-import com.lib.jh.dao.PenaltyDao;
 import com.lib.jh.dao.UserDao2;
 
 @Service
@@ -38,8 +37,7 @@ public class BlackListService {
 	
 	  //게시글 신고처리 (boardno가 기존에 있으면 신고처리 불가)
 
-	@Autowired
-    private UserDao2 userDao;
+
 	
 	// 게시글 신고 처리
     public int reportBoard(BlackListDto dto) {
