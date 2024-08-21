@@ -1,11 +1,14 @@
 package com.lib.jh.controller;
 
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +32,11 @@ import jakarta.servlet.http.HttpServletResponse;
 @Controller
 public class JController {
 	
+	@ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+	   public String numberFormatError(Model m,SQLException exception) {
+	      m.addAttribute("errorMessage", exception);
+	      return "/ha_board/errorpage";
+	   }
 	// 로그인 기능 생기면 변환하기 
 	@ModelAttribute("user")
 	   public UserDto getDto() {
@@ -141,7 +149,7 @@ public class JController {
 	@PostMapping("/board/write")
 	public String boardWriteS(BoardDto dto) {
 		boardservice.insert(dto);
-		return "redirect:/board/list";
+		return "redirect:/board/search";
 	}
 	// ----------------------------------------
 	
@@ -161,7 +169,7 @@ public class JController {
 	@PostMapping("/board/mod/complete")
 	public String boardUpdateS(BoardDto dto) {
 		boardservice.update(dto);
-		return "redirect:/board/list";
+		return "redirect:/board/search";
 	}
 	// ----------------------------------------
 	
@@ -170,7 +178,7 @@ public class JController {
 	@GetMapping("/board/delete/{boardno}")
 	public String boardDeleteS(@PathVariable("boardno")int boardno,Model m,@ModelAttribute("user") UserDto user) {
 		boardservice.delete(user.getUserno(),boardno);
-		return "redirect:/board/list"	;
+		return "redirect:/board/search"	;
 	}
 	
 	// 게시글 검색(페이징기능)
@@ -186,12 +194,17 @@ public class JController {
 	    int totalCount;
 
 	    // 검색 조건이 없을 경우 전체 게시글 가져오기
-	    if (type == null && title == null || (type.isEmpty() && title.isEmpty())) {
+	    if (type == null && title == null || (type.trim().isEmpty() && title.trim().isEmpty())) {
+	    	System.out.println("if");
 	        searchResults = boardservice.selectPage(page, size);
 	        totalCount = boardservice.selectTotalCount();
 	    } else {
+	    	System.out.println("else");
 	        // 검색 조건이 있을 때 검색 결과 가져오기
 	        int offset = (page - 1) * size; // 페이징을 위한 오프셋 계산
+	        if (offset < 0) {
+	            offset = 0; // offset이 음수일 경우 0으로 설정 
+	        }
 	        searchResults = boardservice.BoardSearch(type, title, offset, size);
 	        totalCount = boardservice.getSearchTotalCount(type, title);
 	    }
@@ -205,12 +218,26 @@ public class JController {
 	    m.addAttribute("currentPage", page);
 	    m.addAttribute("totalPages", totalPages);
 
+	    // 페이지 범위 계산
+	    int startPage = Math.max(1, page - 2); // 현재 페이지 기준 시작 페이지
+	    int endPage = Math.min(totalPages, startPage + 4); // 시작 페이지에서 5페이지까지
+	    m.addAttribute("startPage", startPage);
+	    m.addAttribute("endPage", endPage);
+
+	    // 페이지 유효성 검사
+	    if (page < 1) {	
+	        return "redirect:/board/search?p=1"; // 1페이지로 리다이렉트
+	    }
+	    if(page > totalPages)
+	    {
+	    	return "redirect:/board/search?p="+totalPages;
+	    }
 	    return "ha_board/boardsearch"; // JSP 파일로 이동
 	}
 	
 	// 댓글 작성 기능
 	@PostMapping("/comm/write")
-	public String commWrite(CommDto dto,@ModelAttribute("user") UserDto user, Model m) {
+	public String commWrite(CommDto dto,@ModelAttribute UserDto user, Model m) {
 		 // user.ban값 있으면 댓글 작성 금지
 		if(user.getBan()==null) {
 			commservice.insertComm(dto);

@@ -96,6 +96,6 @@
     </c:forEach>
 </ul>
 
-<a href="/board/list">게시글로 돌아가기</a>
+<a href="/board/search">게시글로 돌아가기</a>
 </body>
 </html>

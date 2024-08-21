@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +23,9 @@
 		
 			<td class="orange">type</td>
 			<td><select name="type" id="type">
-        	<option value="announcement">공지사항</option>
+			<c:if test = "${ user.admin == 1  }">
+			<option value="announcement">공지사항</option>
+			</c:if>
         	<option value="free">자유</option>
         	<option value="recommend">추천</option>
         	<option value="review">리뷰</option>
