@@ -24,11 +24,11 @@ public interface BookManageDao {
 	@Select("select count(*) from book where callno=#{callno}")
 	public int checkDuplicate(String callno);
 	
-	// 청구기호로 책 목록 검색
-	@Select("select count(*) from book where callno like concat('%',#{callno},'%')")
-	public int targetcount(String callno);
-	@Select("select * from book where callno like concat('%',#{callno},'%') order by callno limit #{start}, #{count}")
-	public List<BookDto> targetbook(@Param("callno") String callno, @Param("start") int start, @Param("count") int count);
+	// 제목으로 책 목록 검색
+	@Select("select count(*) from book where booktitle like concat('%',#{booktitle},'%')")
+	public int targetcount(String booktitle);
+	@Select("select * from book where booktitle like concat('%',#{booktitle},'%') order by booktitle limit #{start}, #{count}")
+	public List<BookDto> targetbook(@Param("booktitle") String booktitle, @Param("start") int start, @Param("count") int count);
 	
 	// 수정/삭제할 책 정보 가져오기
 	@Select("select * from book where bookno=#{bookno}")
