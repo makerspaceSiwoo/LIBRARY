@@ -101,7 +101,10 @@
 
 
 <h1>게시판 검색</h1>
-
+<!-- 게시판 작성 -->
+<form action="/board/write" method="get">
+<button type="submit">글작성</button>
+</form>
 <!-- 검색 폼 -->
 <form action="/board/search" method="get">
     <label for="type">분류:</label> 
@@ -115,7 +118,7 @@
     
     <label for="title">제목:</label>
     <input type="text" name="title" id="title" value="${title}" />
-
+	
     <button type="submit">검색</button>
 </form>
     
@@ -129,23 +132,21 @@
 
         <!-- 페이징 네비게이션 -->
         <ul class="pagination">
-            
-                <li><a href="/board/search?type=${type}&title=${title}&p=${currentPage - 1}" onclick="prepage(event)">이전</a></li>
-            
-            <c:forEach var="i" begin="1" end="${totalPages}">
-                <c:choose>
-                    <c:when test="${i == currentPage}">
-                        <li class="active"><strong>${i}</strong></li>
-                    </c:when>
-                    <c:otherwise>
-                        <li><a href="/board/search?type=${type}&title=${title}&p=${i}">${i}</a></li>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
-            
-                <li><a href="/board/search?type=${type}&title=${title}&p=${currentPage + 1}" onclick="postpage(event)">다음</a></li>
-            
-        </ul>
+    <li><a href="/board/search?type=${type}&title=${title}&p=${currentPage - 5}" onclick="prepage(event)">이전</a></li>
+    
+    <c:forEach var="i" begin="${startPage}" end="${endPage}">
+        <c:choose>
+            <c:when test="${i == currentPage}">
+                <li class="active"><strong>${i}</strong></li>
+            </c:when>
+            <c:otherwise>
+                <li><a href="/board/search?type=${type}&title=${title}&p=${i}">${i}</a></li>
+            </c:otherwise>
+        </c:choose>
+    </c:forEach>
+    
+    <li><a href="/board/search?type=${type}&title=${title}&p=${currentPage + 5}" onclick="postpage(event)">다음</a></li>
+</ul>
     </c:when>
     <c:otherwise>
         <h2>검색 결과가 없습니다.</h2>

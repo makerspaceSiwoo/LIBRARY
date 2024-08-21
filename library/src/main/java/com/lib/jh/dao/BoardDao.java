@@ -35,7 +35,7 @@ public interface BoardDao {
 	BoardDto selectOne(int boardno);
 	
 	//게시글 리스트(페이징)
-    @Select("select * from board order by write_date asc limit #{offset}, #{limit}")
+    @Select("select * from board order by write_date desc limit #{offset}, #{limit}")
     List<BoardDto> selectPage(@Param("offset") int offset, @Param("limit") int limit);
    
     @Select("select count(*) from board") // 게시글 총 갯수 

@@ -40,6 +40,9 @@ public class BoardService {
 	//게시글 리스트 ( 페이징 )
 	public List<BoardDto> selectPage(int page, int size) {
 	    int offset = (page - 1) * size;
+	    if (offset < 0) {
+            offset = 0; // offset이 음수일 경우 0으로 설정 
+        }
 	    return dao.selectPage(offset, size);
 	}
 	public int selectTotalCount() {
@@ -50,7 +53,7 @@ public class BoardService {
 //    public List<BoardDto> BoardSearch(String type, String title) {
 //        return dao.BoardSearch(type, title);
 //    }
-	  // 게시글 검색 (페이징 포함)
+	// 게시글 검색 (페이징 포함)
     public List<BoardDto> BoardSearch(String type, String title, int offset, int limit) {
         return dao.BoardSearch(type, title, offset, limit);
     }
