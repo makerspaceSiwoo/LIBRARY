@@ -12,9 +12,14 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class LoginIntercepter implements HandlerInterceptor {
 
-	public List<String> loginEssential = Arrays.asList("/board/**", "/comm/**"); // board의 모든 하위 파일 (,찍고 다른 파일도 추가할 수 있음) 로그인이 필요한 항목
+	public List<String> loginEssential = Arrays.asList("/recomm/**", "/book/**","/user/**",
+														"/admin/**","/logout","/send/code2",
+														"/find/**","/findpwform","pwcode","/board/**"
+														,"/comm/**","/mypage"); // board의 모든 하위 파일 (,찍고 다른 파일도 추가할 수 있음) 로그인이 필요한 항목
 	
-	public List<String> loginInessential = Arrays.asList("/board/list/**","/board/no/**","/board/search/**"); // **은 글 번호가 바뀌어도 받을 수 있게 로그인이 필요 없는 항목
+	public List<String> loginInessential = Arrays.asList("/home/**","/join","/checkUserID","/send",
+												"/user/register/**","/board/search/**","/board/no/**",
+												"/search/**","/login/**"); // **은 글 번호가 바뀌어도 받을 수 있게 로그인이 필요 없는 항목
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -32,20 +37,23 @@ public class LoginIntercepter implements HandlerInterceptor {
 			if(dto.getState().equals("탈퇴")) {
 				response.sendRedirect("/join"); // join 페이지에 alert 로 탈퇴한 계정입니다 한 번 띄우기
 				return false;
-			}
-			else if(dto.getAdmin().equals("0")) { // user
-				// url이 user로 시작하는지 -> 맞다면 true 아니면 잘못된 접근 페이지, false
-				System.out.println("normal");
-				System.out.println(url);
-				return true;
-			}else { // admin
+			}else if(dto.getAdmin().equals("1")) { // admin
 				// admin
 				System.out.println("admin");
 				System.out.println(url);
 				return true;
+			}else { // user
+				// url이 user로 시작하는지 -> 맞다면 true 아니면 잘못된 접근 페이지, false
+				System.out.println("normal");
+				System.out.println(url);
+				if(url.startsWith("/book/")||url.startsWith("/admin/")) {
+					response.sendRedirect("/restrict");
+					return false;
+				}
+				return true;
 			}
 		}
-		response.sendRedirect("/login");
+		response.sendRedirect("/login"); // alert 추가하면 좋겠다
 		return false;
 	}
 }
