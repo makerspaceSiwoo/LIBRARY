@@ -19,9 +19,10 @@ public class BookService {
 	@Autowired
 	BookDao bookDao;
 	  
-	 public List<BorrowDto> borrowbook(String booktitle) {
-	     return bookDao.borrowbook(booktitle);
+	 public List<BorrowDto> borrowbook(String booktitle,int size,int offset) {
+	     return bookDao.borrowbook(booktitle,size,offset);
 	 }//검색 서비스
+	 
 	 
 	 public void borrowno(int bookno,int userno) {
 		 bookDao.borrowno(bookno,userno);
@@ -53,8 +54,8 @@ public class BookService {
 		 return bookDao.loan();
 	 }//연체시 대출기능 정지를 위한 패널티보유자 검색
 
-	 
-	 
-	 
+	 public int countBooks(String booktitle) {
+	        return bookDao.countBooks(booktitle);
+	    }
 	 
 }

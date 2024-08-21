@@ -16,11 +16,13 @@ import com.lib.dto.BorrowDto;
 import com.lib.dto.UnreturnDto;
 import com.lib.dto.UserDto;
 
+import lombok.experimental.PackagePrivate;
+
 @Mapper
 public interface BookDao {
 
-	@Select("select b.booktitle, b.author,b.bookno, b.callno ,u.end as u_end,u.borrowno,u.userno from book b left join unreturned u on b.bookno = u.bookno where b.booktitle like concat('%',#{booktitle},'%')")
-	List<BorrowDto> borrowbook(String booktitle);
+	@Select("select b.booktitle, b.author,b.bookno, b.callno ,u.end as u_end,u.borrowno,u.userno from book b left join unreturned u on b.bookno = u.bookno where b.booktitle like concat('%',#{booktitle},'%') limit #{size} offset #{offset}")
+	List<BorrowDto> borrowbook(@Param("booktitle") String booktitle,@Param("size")int size,@Param("offset")int offset);
 	//검색 기능
 	
 	@Insert("insert into record (type, bookno, userno,end) values('반납',#{bookno},#{userno},now())")
@@ -51,7 +53,7 @@ public interface BookDao {
 	List<Integer> loan();
 	//연체시 대출기능 정지를 위한 패널티보유자 검색
 	
+	 @Select("SELECT COUNT(*) FROM book WHERE booktitle LIKE CONCAT('%', #{booktitle}, '%')")
+	    int countBooks(@Param("booktitle") String booktitle);
+	}
 	
-	
-	
-}
