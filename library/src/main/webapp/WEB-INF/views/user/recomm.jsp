@@ -22,8 +22,8 @@
             font-weight: bold;
         }
         .navbar {
-            position: fixed;
-            top: 0;
+            position: relative;
+            top: 15px;
             right: 0;
             width: 200px;
             height: 100%; /* 화면 전체 높이에 맞춤 */
