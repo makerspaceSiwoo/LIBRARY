@@ -272,3 +272,7 @@ table td button:hover {
 #page a.page.prv, #page a.page.next {
     font-weight: bold;
 }
+
+#page .active{
+   	background-color: #ccccff;
+}
