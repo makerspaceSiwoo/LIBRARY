@@ -53,7 +53,7 @@ public class LoginIntercepter implements HandlerInterceptor {
 				return true;
 			}
 		}
-		response.sendRedirect("/login"); // alert 추가하면 좋겠다
+		response.sendRedirect("/loginfirst"); // alert 추가하면 좋겠다
 		return false;
 	}
 }

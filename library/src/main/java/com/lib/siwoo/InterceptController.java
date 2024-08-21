@@ -16,4 +16,9 @@ public class InterceptController {
 		return "restrict";
 	}
 	
+	@GetMapping("/loginfirst")
+	public String loginFirst() {
+		return "loginFirst";
+	}
+	
 }
