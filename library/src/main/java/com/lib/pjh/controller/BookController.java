@@ -29,10 +29,28 @@ public class BookController {
 	} //기본페이지
 	
 	@GetMapping("/book/record")
-	public String borrowbook(@RequestParam(name="booktitle", defaultValue="")String booktitle, Model m){
-		List<BorrowDto> borrowbook = bookservice.borrowbook(booktitle);
+	public String borrowbook(@RequestParam(name="booktitle", defaultValue="")String booktitle,@RequestParam(name="page", defaultValue="1")int page,@RequestParam(name="size", defaultValue="10")int size, Model m){
+	    if (page < 1) {page = 1;}// 페이지 값이 1보다 작을 경우 1로 설정
+	    
+		int totalItems = bookservice.countBooks(booktitle); // 전체 항목 수 계산
+		int totalPages = (int) Math.ceil((double) totalItems / size); // 총 페이지 수 계산
+		
+		if (page > totalPages) {page = totalPages;}// 만약 총 페이지 수보다 현재 페이지가 클 경우, 마지막 페이지로 설정
+		
+		int offset = (page - 1) * size;
+		List<BorrowDto> borrowbook = bookservice.borrowbook(booktitle,size,offset);
+		// 현재 페이지 범위 계산
+	    int currentBlock = (int) Math.ceil((double) page / 5);  // 현재 페이지가 속한 5개 페이지 블록
+	    int startPage = (currentBlock - 1) * 5 + 1;
+	    int endPage = Math.min(currentBlock * 5, totalPages);
+	    
 		m.addAttribute("unreturned", borrowbook);
 		m.addAttribute("now", new Date());
+		m.addAttribute("currentPage", page);
+	    m.addAttribute("pageSize", size);
+	    m.addAttribute("totalPages", totalPages);
+	    m.addAttribute("startPage", startPage);
+	    m.addAttribute("endPage", endPage);
 		return "parkjae/book/borrow";
 	}//검색 컨트롤러
 	

@@ -18,5 +18,6 @@ public class BorrowDto {
 	private int borrowno;
 	private Date r_start;
 	private Date u_end;
+	private int no;
 	
 }
