@@ -90,6 +90,7 @@ public class BookManageController {
 					end = totalPages;
 				}
 				m.addAttribute("begin", begin);
+				m.addAttribute("current",page);
 				m.addAttribute("pageNum", pageNum);
 				m.addAttribute("totalPages", totalPages);
 				m.addAttribute("end", end);

@@ -80,7 +80,22 @@
 					<a href="/book/manage?callno=${callno }&p=${begin-1 }" class="page prv">&lt;</a>
 				</c:if>
 				<c:forEach begin="${begin }" end="${end}" var="i">
-					<a href="/book/manage?callno=${callno }&p=${i}">${i}</a>
+				
+				
+				
+				       
+			<c:choose>
+            <c:when test="${i == current}">
+                <a class="active" href="/book/manage?callno=${callno }&p=${i}">${i}</a>
+            </c:when>
+            <c:otherwise>
+                 <a href="/book/manage?callno=${callno }&p=${i}">${i}</a>
+            </c:otherwise>
+        </c:choose>
+        
+        
+        
+					
 				</c:forEach>
 				<c:if test="${end < totalPages }">
 					<a href="/book/manage?callno=${callno }&p=${end+1}" class="page next">&gt;</a>

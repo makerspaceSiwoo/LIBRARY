@@ -7,177 +7,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="/css/admin/book/manage.css">
 <style>
-.pagination {
-    display: flex;
-    justify-content: center; /* 가운데 정렬 */
-    padding-left: 0;
-    list-style: none;
-}
-
-.pagination .page-item {
-    display: inline; /* 가로로 배치 */
-    margin: 0 5px; /* 각 페이지 링크 간격 조정 */
-}
-
-.pagination .page-link {
-    text-decoration: none;
-    color: #007bff;
-}
-
-.pagination .page-item.disabled .page-link {
-    color: #6c757d;
-}
-
-.pagination .page-item.active .page-link {
+#returnbutton {
+    background-color: red;
     color: white;
-    background-color: #007bff;
-    border-color: #007bff;
-}
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-}
-nav, header, aside, main, footer {
-    width: 100%;
-    margin: 0 auto;
-    padding: 0;
-    box-sizing: border-box;
-}
-main{
-   margin-left: 3vw;
-   margin-bottom: 5vw;
-}
-#adminmenu {
-   position: relative;
-   width: 100%;
-    height: 30px; /* 헤더의 높이를 40%로 설정 */
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* 요소들이 좌우로 배치되도록 설정 */
-    padding: 1vw 0vw; /* 상하 10px, 좌우 20px의 여백 */
-    background-color: white; /* 배경색을 흰색으로 설정 */
-    
-    margin-right: 10%;
-}
-#adminmenu a,p {
-   flex-shrink: 1; /* 창 크기가 작아지면 크기를 줄임 */
-   display: inline-block;
-    margin: 0 0.5vw; /* 각 링크 사이에 좌우 15px의 여백 */
-    text-decoration: none;
-    color: black; /* 글자 색을 검정으로 설정 */
-    font-size: 1.6vw; /* 뷰포트 너비에 따라 유연하게 크기 조정 */
-    font-weight: 500; /* 글자 두께를 중간으로 설정 */
-    white-space: nowrap; /* 텍스트가 줄바꿈 되지 않도록 설정 */
-}
-
-#adminmenu a img {
-    height: 6vw; /* 로고 이미지의 높이를 40px로 설정 */
-    margin-right: 0px; /* 로고 이미지 오른쪽에 여백 추가 */
-}
-
-#joinbutton {
-   flex-shrink: 1; /* 창 크기가 작아지면 크기를 줄임 */
-    padding: 1vw 1.5vw; /* 버튼의 안쪽 여백 설정 */
-    font-size: 1.6vw; /* 뷰포트 너비에 따라 유연하게 크기 조정 */
-    border-radius: 0.8vw; /* 버튼의 모서리를 둥글게 설정 */
-    border: 1px solid #ccc; /* 버튼의 테두리 설정 */
-    background-color: #f2f2f2; /* 버튼의 배경색을 연한 회색으로 설정 */
+    border: none;
+    padding: 0.5vw 1vw;
+    font-size: 1vw;
+    border-radius: 0.5vw;
     cursor: pointer;
-    margin-left: 0.5vw; /* 버튼 간의 간격 설정 */
-    white-space: nowrap; /* 텍스트가 줄바꿈 되지 않도록 설정 */
+    width: 100%; /* 버튼이 셀의 전체 너비를 차지하도록 설정 */
+    box-sizing: border-box; /* 패딩과 테두리를 포함한 전체 너비 계산 */
+    overflow: hidden; /* 버튼 내부 텍스트가 넘칠 경우 숨김 */
+    text-overflow: ellipsis; /* 버튼 텍스트 넘침 시 말줄임 표시 (...) */
+    white-space: nowrap; /* 버튼 텍스트 줄바꿈 방지 */
 }
 
-#loginbutton {
-   flex-shrink: 1; /* 창 크기가 작아지면 크기를 줄임 */
-    padding: 1vw 1.5vw; /* 버튼의 안쪽 여백 설정 */
-    font-size: 1.6vw; /* 뷰포트 너비에 따라 유연하게 크기 조정 */
-    border-radius: 0.8vw; /* 버튼의 모서리를 둥글게 설정 */
-    border: 1px solid #ccc; /* 버튼의 테두리 설정 */
-    cursor: pointer;
-    margin-left: 0.5vw; /* 버튼 간의 간격 설정 */
-    white-space: nowrap; /* 텍스트가 줄바꿈 되지 않도록 설정 */
-    background-color: #4CAF50; /* 예: 버튼 배경색을 초록색으로 설정 */
-    color: white;
-    margin-right: 1vw; /* 버튼 간의 간격 설정 */
-    
+#returnbutton:hover {
+    background-color: #cc0000;
 }
-
-#loginbutton:hover {
-    background-color: #45a049; /* 초록색 로그인 버튼에 마우스를 올렸을 때 색 변경 */
-    font-weight: bold; /* hover 시 폰트를 굵게 설정 */
-}
-
-#logoutbutton {
-   flex-shrink: 1; /* 창 크기가 작아지면 크기를 줄임 */
-    padding: 1vw 1.5vw; /* 버튼의 안쪽 여백 설정 */
-    font-size: 1.6vw; /* 뷰포트 너비에 따라 유연하게 크기 조정 */
-    border-radius: 0.8vw; /* 버튼의 모서리를 둥글게 설정 */
-    border: 1px solid #ccc; /* 버튼의 테두리 설정 */
-    cursor: pointer;
-    margin-left: 0.5vw; /* 버튼 간의 간격 설정 */
-    white-space: nowrap; /* 텍스트가 줄바꿈 되지 않도록 설정 */
-    background-color: red; /* 예: 버튼 배경색을 초록색으로 설정 */
-    color: white;
-    margin-right: 1vw; /* 버튼 간의 간격 설정 */
-    
-}
-
-#logoutbutton:hover {
-    background-color: #cc0000; /* 초록색 로그인 버튼에 마우스를 올렸을 때 색 변경 */
-    font-weight: bold; /* hover 시 폰트를 굵게 설정 */
-}
-
-/* 페이지를 부드럽게 스크롤 */
-html {
-    scroll-behavior: smooth;
-}
-
-
-main {
-    width: 90%; /* 화면의 90%만 차지하도록 설정 */
-    margin: 0 auto; /* 중앙 정렬 */
-    padding: 2vh 0; /* 위아래 여백 설정 */
-}
-
-section {
-    margin-bottom: 4vh; /* 각 섹션 간의 여백 설정 */
-}
-
-section h2, section h3 {
-    font-size: 2vw; /* 반응형 텍스트 크기 */
-    margin-bottom: 2vh; /* 제목 아래 여백 */
-    color: #333;
-}
-
-section p {
-    font-size: 1.5vw; /* 반응형 텍스트 크기 */
-    margin-bottom: 2vh; /* 텍스트 아래 여백 */
-    color: #555;
-}
-
-/* 도서 추가 페이지 스타일 */
-h1 {
-    font-size: 2.5vw; /* 큰 제목의 크기 */
-    color: #333;
-    margin-bottom: 2vh; /* 제목 아래 여백 */
-}
-
-h3 {
-    font-size: 2vw; /* 소제목의 크기 */
-    color: #333;
-    margin-bottom: 1.5vh; /* 소제목 아래 여백 */
-}
-
-
-
 </style>
-
 </head>
 <body>
+<nav>
          <div id="adminmenu">
             <a href="/home"><img src="/logo/logo.png"></a>
             <a href="/home">도서관 홈</a>
@@ -199,15 +52,17 @@ h3 {
                </c:otherwise>
             </c:choose>
          </div>
-  
+ </nav>
+ <main>
+ <section>
 <h1>대출관리</h1>
 <form action="/book/record" method="GET">
-<input type="text" name="booktitle">
+<input type="text" name="booktitle" placeholder="제목을 입력하세요...">
 <button type="submit" >검색</button>
 </form>
 <table border="1">   
 	<tr>
-		<td>"제목"검색결과</td><br>
+		<td colspan="5">"제목"검색결과</td><br>
 	</tr>
 	<tr> 
 		<c:forEach items="${unreturned}" var="borrow">
@@ -220,7 +75,7 @@ h3 {
 					<c:set var="formattedDate">
 					<fmt:formatDate value="${borrow.u_end}" pattern="yyyy-MM-dd"/>
 					</c:set>
-					<td style="color: red;">${formattedDate}</td>
+					<td style="color: red;"><strong>${formattedDate}</strong></td>
 					<td><button type="button" style="color: red;" onclick="location.href='/book/latereturn?userno=${borrow.userno}&formattedDate=${formattedDate}&bookno=${borrow.bookno}'">
 					반납
 					</button>
@@ -228,8 +83,11 @@ h3 {
 				</td>
 				</c:if>
 				<c:if test="${borrow.u_end.time > now.time}">		
-					<td><fmt:formatDate value="${borrow.u_end}" pattern="yyyy-MM-dd"/></td>
-					<td><button type="button" onclick="location.href='/book/return?userno=${borrow.userno}&bookno=${borrow.bookno}'">
+					<c:set var="formattedDate">
+					<fmt:formatDate value="${borrow.u_end}" pattern="yyyy-MM-dd"/>
+					</c:set>
+					<td style="color: green;"><strong>${formattedDate}</strong></td>
+					<td><button id="returnbutton" type="button" onclick="location.href='/book/return?userno=${borrow.userno}&bookno=${borrow.bookno}'">
 					반납
 					</button>
 					<%-- 반납예정일자가 현재일자보다 크다면(정상대출이라면) 반납시 컨트롤러 return호출  --%>
@@ -240,6 +98,7 @@ h3 {
 			
 			
 			<c:if test="${borrow.userno == 0 }">
+			<td>대출 가능</td>
 				<td><button type="button" onclick="location.href='/book/lent?bookno=${borrow.bookno}'">대출</button></td>
 			</c:if>
 			<%-- 대출버튼 클릭시 컨트롤러 lent호출 (유저번호 입력페이지 생성 예정) --%>
@@ -248,30 +107,45 @@ h3 {
 		</tr>
 </table>
  <!-- 페이지 네비게이션 -->
+ <div id="page">
   <nav aria-label="Page navigation">
-    <ul class="pagination">
+
         <!-- 이전 10개 페이지로 이동 -->
-        <li class="page-item <c:if test='${startPage == 1}'>disabled</c:if>">
-            <a class="page-link" href="?booktitle=${param.booktitle}&page=${startPage - 10 > 0 ? startPage - 10 : 1}&size=${pageSize}" aria-label="Previous">
+        <c:if test='${startPage != 1}'>
+
+        	<a class="page-link" href="?booktitle=${param.booktitle}&page=${startPage - 10 > 0 ? startPage - 10 : 1}&size=${pageSize}" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
             </a>
-        </li>
+
+        </c:if>
 
         <!-- 페이지 번호 출력 -->
         <c:forEach var="i" begin="${startPage}" end="${endPage}">
-            <li class="page-item <c:if test='${i == currentPage}'>active</c:if>">
-                <a class="page-link" href="?booktitle=${param.booktitle}&page=${i}&size=${pageSize}">${i}</a>
-            </li>
+			<c:choose>
+            <c:when test="${i == currentPage}">
+                <a class="active" href="?booktitle=${param.booktitle}&page=${i}&size=${pageSize}">${i}</a>
+            </c:when>
+            <c:otherwise>
+                 <a href="?booktitle=${param.booktitle}&page=${i}&size=${pageSize}">${i}</a>
+            </c:otherwise>
+        </c:choose>
         </c:forEach>
 
         <!-- 다음 10개 페이지로 이동 -->
-        <li class="page-item <c:if test='${endPage == totalPages}'>disabled</c:if>">
-            <a class="page-link" href="?booktitle=${param.booktitle}&page=${endPage + 1}&size=${pageSize}" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    </ul>
+
+        
+        <c:if test='${endPage != totalPages}'>
+
+	        	<a class="page-link" href="?booktitle=${param.booktitle}&page=${endPage + 1}&size=${pageSize}" aria-label="Next">
+	                <span aria-hidden="true">&raquo;</span>
+	            </a>
+
+        </c:if>
+
 </nav>
+</div>
+</section>
+</main>
 </body>
 </html>
 
