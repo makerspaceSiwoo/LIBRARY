@@ -39,14 +39,14 @@ public class AdminModController {
 	 }
 	 
 	 // 수정 페이지로 이동
-	 @GetMapping("/admin/mod")
+	 @GetMapping("/user/mod")
 	    public String editProfile(@ModelAttribute("user") UserDto user, Model model) {
 		 
 	        model.addAttribute("user", user);
 	        return "/ho_mod/adminmodinfo";
 	    } 
 	 
-	 @PostMapping("/admin/mod/info")
+	 @PostMapping("/user/mod/info")
 	 public String editUser(@SessionAttribute("user") UserDto sessionUser,
 	                        @RequestParam(value = "userID", required = false) String userID,
 	                        @RequestParam(value = "userPW", required = false) String userPW,
