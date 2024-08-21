@@ -45,12 +45,12 @@ public class LoginController {
 		return "test12345/testmod12";
 	}
 	
-	// 세션
-	@ModelAttribute("user")
-	    public UserDto getDto() {
-	     return new UserDto();
-	      
-	}
+//	// 세션
+//	@ModelAttribute("user")
+//	    public UserDto getDto() {
+//	     return new UserDto();
+//	      
+//	}
 	
 	@GetMapping("/login")
     public String loginPage() {
@@ -80,12 +80,8 @@ public class LoginController {
 	            // 로그인 성공: 세션에 사용자 정보 저장
 	            m.addAttribute("user", user);
 	            
-	            boolean admin = user.getAdmin().equals("1");
-	            if (admin) {
-	                return new ModelAndView("redirect:/admin/home");
-	            } else {
-	                return new ModelAndView("redirect:/home");
-	            }
+//	            boolean admin = user.getAdmin().equals("1");
+	            return new ModelAndView("redirect:/home");
 
 	        }
 	        
