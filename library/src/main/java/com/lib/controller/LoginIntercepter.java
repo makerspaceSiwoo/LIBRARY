@@ -38,13 +38,13 @@ public class LoginIntercepter implements HandlerInterceptor {
 				return false;
 			}else if(dto.getAdmin().equals("1")) { // admin
 				// admin
-				System.out.println("admin");
-				System.out.println(url);
+//				System.out.println("admin");
+//				System.out.println(url);
 				return true;
 			}else { // user
 				// url이 user로 시작하는지 -> 맞다면 true 아니면 잘못된 접근 페이지, false
-				System.out.println("normal");
-				System.out.println(url);
+//				System.out.println("normal");
+//				System.out.println(url);
 				if(url.startsWith("/book/")||url.startsWith("/admin/")) {
 					response.sendRedirect("/restrict");
 					return false;
