@@ -35,7 +35,7 @@
 		</div>
 		<div>
 			<form id="modform">
-				<input type="text" name="callno" placeholder="청구 기호 입력...">
+				<input type="text" name="booktitle" placeholder="제목 입력...">
 				<button>검색</button>
 			</form>
 		</div>

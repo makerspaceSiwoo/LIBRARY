@@ -45,12 +45,12 @@ public class BookManageService {
 	}
 	
 	
-	public int targetcount(String callno) {
-		return dao.targetcount(callno);
+	public int targetcount(String booktitle) {
+		return dao.targetcount(booktitle);
 	}
 	
-	public List<BookDto> targetbook(String callno, int startRow, int perPage){ // 청구기호로 책 검색
-		return dao.targetbook(callno, startRow, perPage);
+	public List<BookDto> targetbook(String booktitle, int startRow, int perPage){ // 청구기호로 책 검색
+		return dao.targetbook(booktitle, startRow, perPage);
 		
 	}
 	

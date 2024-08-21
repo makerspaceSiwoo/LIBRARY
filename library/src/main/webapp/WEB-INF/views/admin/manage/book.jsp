@@ -4,30 +4,33 @@
 <html>
 <head>
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="/css/admin/book/add.css">
+    <link rel="stylesheet" type="text/css" href="/css/home.css">
+
 </head>
 <body>
+<nav>
 			<div id="adminmenu">
-				<img src="/logo/logo.png">
-				<a href="/home">도서관 홈</a>
-				<a href="/book/record">대출/반납</a>
-				<a href="/book/add">도서 추가</a>
-				<a href="/book/manage">도서 수정/삭제</a>
-				<a href="/board/search">게시판</a>
-				<a href="/mypage">마이 페이지</a>
-				<a href="/admin/blacklist">유저 관리</a>
-				<c:choose>
-					<c:when test="${empty user }">
-						<button onclick="location.href='/login';">로그인</button>
-					</c:when>
-					<c:otherwise>
-						<p>${user.userID }</p>
-						<form action="/logout" method="post">
-							<button>로그아웃</button>
-						</form>
-					</c:otherwise>
-				</c:choose>
-			</div>
+            <a href="/home"><img src="/logo/logo.png"></a>
+            <a href="/home">도서관 홈</a>
+            <a href="/book/record">대출/반납</a>
+            <a href="/book/add">도서 추가</a>
+            <a href="/book/manage">도서 수정/삭제</a>
+            <a href="/board/search">게시판</a>
+            <a href="/admin/mypage">마이 페이지</a>
+            <a href="/admin/blacklist">유저 관리</a>
+            <c:choose>
+               <c:when test="${empty user }">
+                  <button id="loginbutton" onclick="location.href='/login';">로그인</button>
+               </c:when>
+               <c:otherwise>
+                  <p>${user.userID }님</p>
+                  <form action="/logout" method="post">
+                     <button id="logoutbutton" >로그아웃</button>
+                  </form>
+               </c:otherwise>
+            </c:choose>
+         </div>
+</nav>
 	<div>
 		<h1>도서 추가</h1>
 	</div>

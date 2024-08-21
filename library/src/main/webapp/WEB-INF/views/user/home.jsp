@@ -54,7 +54,7 @@
                   <button id="loginbutton" onclick="location.href='/login';">로그인</button>
                </c:when>
                <c:otherwise>
-                  <p>${user.userID }</p>
+                  <p>${user.userID }님</p>
                   <form action="/logout" method="post">
                      <button id="logoutbutton" >로그아웃</button>
                   </form>
@@ -129,7 +129,7 @@
 	 </section>
 	 <section>
 	 <div>
-        <h2 id="notice">공지사항</h2>
+        <h2 id="notice">공지사항</h2> <c:if test="${user.admin == '1' }"><button id="noticebutton" onclick="location.href='/board/write'">+</button></c:if><br>
        <c:forEach var="notice" items="${notice}">
             <a href="/board/no/${notice.boardno}">${notice.title}</a><br>
         </c:forEach>
