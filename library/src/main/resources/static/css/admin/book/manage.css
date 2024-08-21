@@ -1,82 +1,145 @@
-/* Header Styling */
-#header {
-    background-color: #f8f8f8; /* 헤더 배경색 */
-    padding: 1% 2%; /* 헤더 내부 패딩 */
-    display: flex; /* 플렉스 박스 레이아웃 사용 */
-    align-items: center; /* 아이템을 수직으로 중앙 정렬 */
-    justify-content: space-between; /* 아이템 간격 조정 */
-}
-
-#header img {
-    max-height: 3vw; /* 이미지의 최대 높이 설정 */
-    width: auto; /* 너비는 자동으로 설정 */
-    margin-right: 2%; /* 로고와 링크 사이의 간격 */
-    object-fit: contain; /* 이미지 비율을 유지하며, 셀 안에 맞춤 */
-}
-
-#header a {
-    text-decoration: none;
-    color: #333;
-    margin: 0 1.5%;
-    font-size: 1.2vw;
-    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
-}
-
-#header a:hover {
-    color: #6FBA82; /* 링크에 마우스를 올렸을 때 색상 */
-}
-
-#header div {
-    display: flex;
-    align-items: center;
-}
-
-
-
-
-/* General Layout */
+/* 공통 스타일 */
 body {
     font-family: Arial, sans-serif;
-    background-color: #FFFFFF;
     margin: 0;
     padding: 0;
+    width: 100%;
 }
 
-a {
+nav, header, aside, main, footer {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+main{
+	margin-left: 3vw;
+	margin-bottom: 5vw;
+}
+
+#adminmenu {
+	position: relative;
+	width: 100%;
+    height: 30px; /* 헤더의 높이를 40%로 설정 */
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 요소들이 좌우로 배치되도록 설정 */
+    padding: 1vw 0vw; /* 상하 10px, 좌우 20px의 여백 */
+    background-color: white; /* 배경색을 흰색으로 설정 */
+    
+    margin-right: 10%;
+}
+
+#adminmenu a,p {
+	flex-shrink: 1; /* 창 크기가 작아지면 크기를 줄임 */
+	display: inline-block;
+    margin: 0 0.5vw; /* 각 링크 사이에 좌우 15px의 여백 */
     text-decoration: none;
+    color: black; /* 글자 색을 검정으로 설정 */
+    font-size: 1.6vw; /* 뷰포트 너비에 따라 유연하게 크기 조정 */
+    font-weight: 500; /* 글자 두께를 중간으로 설정 */
+    white-space: nowrap; /* 텍스트가 줄바꿈 되지 않도록 설정 */
+}
+
+#adminmenu a img {
+    height: 6vw; /* 로고 이미지의 높이를 40px로 설정 */
+    margin-right: 0px; /* 로고 이미지 오른쪽에 여백 추가 */
+}
+
+#joinbutton {
+	flex-shrink: 1; /* 창 크기가 작아지면 크기를 줄임 */
+    padding: 1vw 1.5vw; /* 버튼의 안쪽 여백 설정 */
+    font-size: 1.6vw; /* 뷰포트 너비에 따라 유연하게 크기 조정 */
+    border-radius: 0.8vw; /* 버튼의 모서리를 둥글게 설정 */
+    border: 1px solid #ccc; /* 버튼의 테두리 설정 */
+    background-color: #f2f2f2; /* 버튼의 배경색을 연한 회색으로 설정 */
+    cursor: pointer;
+    margin-left: 0.5vw; /* 버튼 간의 간격 설정 */
+    white-space: nowrap; /* 텍스트가 줄바꿈 되지 않도록 설정 */
+}
+
+#loginbutton {
+	flex-shrink: 1; /* 창 크기가 작아지면 크기를 줄임 */
+    padding: 1vw 1.5vw; /* 버튼의 안쪽 여백 설정 */
+    font-size: 1.6vw; /* 뷰포트 너비에 따라 유연하게 크기 조정 */
+    border-radius: 0.8vw; /* 버튼의 모서리를 둥글게 설정 */
+    border: 1px solid #ccc; /* 버튼의 테두리 설정 */
+    cursor: pointer;
+    margin-left: 0.5vw; /* 버튼 간의 간격 설정 */
+    white-space: nowrap; /* 텍스트가 줄바꿈 되지 않도록 설정 */
+    background-color: #4CAF50; /* 예: 버튼 배경색을 초록색으로 설정 */
+    color: white;
+    margin-right: 1vw; /* 버튼 간의 간격 설정 */
+    
+}
+
+#loginbutton:hover {
+    background-color: #45a049; /* 초록색 로그인 버튼에 마우스를 올렸을 때 색 변경 */
+    font-weight: bold; /* hover 시 폰트를 굵게 설정 */
+}
+
+#logoutbutton {
+	flex-shrink: 1; /* 창 크기가 작아지면 크기를 줄임 */
+    padding: 1vw 1.5vw; /* 버튼의 안쪽 여백 설정 */
+    font-size: 1.6vw; /* 뷰포트 너비에 따라 유연하게 크기 조정 */
+    border-radius: 0.8vw; /* 버튼의 모서리를 둥글게 설정 */
+    border: 1px solid #ccc; /* 버튼의 테두리 설정 */
+    cursor: pointer;
+    margin-left: 0.5vw; /* 버튼 간의 간격 설정 */
+    white-space: nowrap; /* 텍스트가 줄바꿈 되지 않도록 설정 */
+    background-color: red; /* 예: 버튼 배경색을 초록색으로 설정 */
+    color: white;
+    margin-right: 1vw; /* 버튼 간의 간격 설정 */
+    
+}
+
+#logoutbutton:hover {
+    background-color: #cc0000; /* 초록색 로그인 버튼에 마우스를 올렸을 때 색 변경 */
+    font-weight: bold; /* hover 시 폰트를 굵게 설정 */
+}
+
+/* 페이지를 부드럽게 스크롤 */
+html {
+    scroll-behavior: smooth;
+}
+
+
+main {
+    width: 90%; /* 화면의 90%만 차지하도록 설정 */
+    margin: 0 auto; /* 중앙 정렬 */
+    padding: 2vh 0; /* 위아래 여백 설정 */
+}
+
+section {
+    margin-bottom: 4vh; /* 각 섹션 간의 여백 설정 */
+}
+
+section h2, section h3 {
+    font-size: 2vw; /* 반응형 텍스트 크기 */
+    margin-bottom: 2vh; /* 제목 아래 여백 */
     color: #333;
-    margin: 0 1.5%;
-    font-size: 1.5vw;
 }
 
-a:hover {
-    color: #6FBA82;
+section p {
+    font-size: 1.5vw; /* 반응형 텍스트 크기 */
+    margin-bottom: 2vh; /* 텍스트 아래 여백 */
+    color: #555;
 }
 
-div {
-    margin: 2%;
-}
-
-/* 이미지 크기 조정 */
-div img {
-    width: auto; /* 너비를 자동으로 설정 */
-    height: 4vw; /* a 태그의 폰트 크기와 동일하게 높이 설정 */
-    vertical-align: middle; /* 텍스트와 이미지의 수직 정렬을 맞춤 */
-}
-
+/* 도서 추가 페이지 스타일 */
 h1 {
-    font-size: 2.5vw;
-    color: #3D3D3D;
-    margin-bottom: 1%;
-    border-bottom: 0.4vw solid #A084CA;
-    padding-bottom: 1%;
+    font-size: 2.5vw; /* 큰 제목의 크기 */
+    color: #333;
+    margin-bottom: 2vh; /* 제목 아래 여백 */
 }
 
 h3 {
-    font-size: 1.8vw;
-    color: #555555;
+    font-size: 2vw; /* 소제목의 크기 */
+    color: #333;
+    margin-bottom: 1.5vh; /* 소제목 아래 여백 */
 }
-
 
 
 form {
@@ -136,12 +199,34 @@ table td {
     font-size: 1vw;
 }
 
-table tr:nth-child(even) {
-    background-color: #f9f9f9;
+
+table {
+    width: 100%;
+    border-collapse: collapse; /* 테두리 겹침 제거 */
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    font-size: 1.2vw;
+    table-layout: fixed; /* 열의 너비를 고정 */
+    overflow: hidden;
 }
 
-table tr:hover {
-    background-color: #f1f1f1;
+table th, table td, table th, table td {
+    padding: 1vw; /* 셀 안쪽 여백 */
+    border: 1px solid #ccc; /* 셀 테두리 색상 */
+    text-align: center;
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+    overflow: hidden; /* 넘치는 내용 숨김 처리 */
+    text-overflow: ellipsis; /* 넘치는 텍스트를 말줄임표(...)로 표시 */
+}
+
+table tr:first-child, table tr:first-child {
+    background-color: #f2f2f2; /* 첫 번째 행의 배경색 */
+    font-weight: bold;
+}
+
+table td[colspan="7"], table td[colspan="7"] {
+    background-color: #eee;
+    font-size: 1.5vw;
 }
 
 table td button {

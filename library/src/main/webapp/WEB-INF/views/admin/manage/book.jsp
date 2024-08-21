@@ -4,7 +4,7 @@
 <html>
 <head>
 <title>Insert title here</title>
-    <link rel="stylesheet" type="text/css" href="/css/home.css">
+<link rel="stylesheet" type="text/css" href="/css/admin/book/add.css">
 
 </head>
 <body>
@@ -31,9 +31,13 @@
             </c:choose>
          </div>
 </nav>
+<main>
+	<section>
 	<div>
 		<h1>도서 추가</h1>
 	</div>
+	</section>
+	<section>
 	<div>
 		<h3>직접 입력</h3>
 	</div>
@@ -45,7 +49,7 @@
 			<input id="publisher" name="publisher" placeholder="출판사">
 			<input id="pubyear" type="number" name="pubyear" placeholder="출판연도">
 			<button type="button" onclick="return addToList();">추가</button>
-			<input type="reset" value="초기화">
+			<button type="reset">초기화</button>
 		</div>
 
 		<div>
@@ -59,7 +63,7 @@
 					<td>청구기호</td>
 					<td>출판사</td>
 					<td>출판연도</td>
-					<td colspan="2"></td>
+					<td colspan="2">수정/삭제</td>
 				</tr>
 			</table>
 		</div>
@@ -67,7 +71,8 @@
 			<button type="button" onclick="return listSubmit();">등록</button>
 		</div>
 	</form>
-	
+	</section>
+	<section>
     <div id="failedbox">
 		<table id="failedlist" border="1" >
 			<tr>
@@ -79,13 +84,14 @@
 				<td>청구기호</td>
 				<td>출판사</td>
 				<td>출판연도</td>
-				<td colspan="2"></td>
+				<td colspan="2">수정/삭제</td>
 			</tr>
 		</table>
 		<button type="button" onclick="return cancel();">전송 취소</button>
 	</div>
+	</section>
 
-	
+	<section>	
 	<div>
 		<h3>엑셀 업로드 (.xlsx)</h3>
 	</div>
@@ -96,13 +102,16 @@
     	<br>
 		<form id="excelupload" action="/book/add/excel" method="post" enctype="multipart/form-data" onsubmit="return validateAndSubmit();">
 			<label for="file-upload" class="custom-file-upload">
-	    		업로드 버튼
+	    		파일 선택
 			</label>
 			<input id="file-upload" type="file" name="booklistexcel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
-			<button type="submit">도서목록 업로드</button>
+			<button type="submit">업로드</button>
 		</form>
 	</div>
-
+	</section>
+</main>
+<footer>
+</footer>
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
