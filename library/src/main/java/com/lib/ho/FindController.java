@@ -34,7 +34,7 @@ public class FindController {
 	public String findUserId(@RequestParam("email") String email, Model model) {
 		try {
 			String userId = userservice.findUserIdByEmail(email);
-			model.addAttribute("message", "해당 이메일의 사용자 ID: " + userId);
+			model.addAttribute("message", "입력하신 이메일의 아이디는\n" + userId + " 입니다");
 		} catch (IllegalArgumentException e) {
 			model.addAttribute("message", "오류: " + e.getMessage());
 		}

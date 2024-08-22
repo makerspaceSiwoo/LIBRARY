@@ -6,89 +6,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인 페이지</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f2f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-        }
-
-        h2 {
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        .error-message {
-            color: #e74c3c;
-            background-color: #f8d7da;
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #555;
-            text-align: left;
-        }
-
-        input[type="text"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #3498db;
-            border: none;
-            border-radius: 4px;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            margin-bottom: 10px;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #2980b9;
-        }
-
-        .additional-options {
-            margin-top: 20px;
-        }
-
-        .additional-options button {
-            width: 48%;
-            background-color: #95a5a6;
-            margin: 5px 1%;
-        }
-
-        .additional-options button:hover {
-            background-color: #7f8c8d;
-        }
-    </style>
+<link rel="stylesheet" type="text/css" href="/css/ho/login.css">
     
     <script>
         window.onload = function() {
@@ -124,17 +42,13 @@
             </div>
         </form>
     
-    <form action="/find/search/id" method="get">
+    <div class="link-container">
+    <a id="searchid" href="/find/search/id">아이디 찾기</a>
+    <a id="searchpw" href="/find/search/pw">비밀번호 찾기</a>
+    <a id="join" href="/join">회원가입</a>
+	</div>
+	</div>
     
-    <button>아이디 찾기</button>
-    
-    </form>
-    
-    <form action="/find/search/pw" method="get">
-    
-    <button>비밀번호 찾기</button>
-    
-    </form>
     
     <!--  my페이지 아직 안만들어서 임시로 넣어놓음, -->
     
