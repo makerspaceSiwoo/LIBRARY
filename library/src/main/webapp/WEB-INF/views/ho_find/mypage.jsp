@@ -63,7 +63,7 @@ function withdrawUser() {
             <a href="/search">도서 검색</a>
             <a href="/recomm">추천 도서</a>
             <a href="/board/search">게시판</a>
-            <a href="/admin/mod">마이 페이지</a>
+            <a href="/mypage">마이 페이지</a>
             <c:choose>
                <c:when test="${empty user }">
                   <button onclick="location.href='/join';">회원 가입</button>
@@ -81,7 +81,7 @@ function withdrawUser() {
    </c:choose>
 	my 페이지(임시)
 	
-	<form action="/admin/mod" method="get">
+	<form action="/user/mod" method="get">
     
     <button>정보 수정</button>
     
