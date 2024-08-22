@@ -86,8 +86,59 @@ function withdrawUser() {
     <button>정보 수정</button>
     
 	</form>
+	
     <h1>사용자 정보</h1>
     <p>안녕하세요, ${user.name}님!</p>
     <p><button onclick="withdrawUser()">회원 탈퇴</button></p>
+    
+    <div>
+    <h2> 현재 대출중인 도서</h2>
+    <table>
+            <thead>
+                <tr>
+                    <th>제목</th>
+                    <th>저자</th>
+                    <th>출판사</th>
+                    <th>분류</th>
+                    <th>반납예정일</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        <c:forEach items="${unretbook}" var="book">
+            <tr>
+                <td>${book.booktitle}</td>
+                <td>${book.author}</td>
+                <td>${book.publisher}</td>
+                <td>${book.category}</td>
+                <td>${book.end}</td>
+            </tr>
+        </c:forEach>
+        </table>
+        </div>       
+        <div>
+        
+        <h2>최근 대출 목록</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>제목</th>
+                    <th>저자</th>
+                    <th>출판사</th>
+                    <th>분류</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        <c:forEach items="${recode}" var="code">
+            <tr>
+                <td>${code.booktitle}</td>
+                <td>${code.author}</td>
+                <td>${code.publisher}</td>
+                <td>${code.category}</td>
+            </tr>
+        </c:forEach>
+        </table>
+        </div>
 </body>
 </html>

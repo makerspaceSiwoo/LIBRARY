@@ -2,22 +2,91 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 페이지</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
+
         .container {
-            width: 300px;
-            margin: 0 auto;
-            padding: 50px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
             text-align: center;
         }
-        .error-message {
-            color: red;
+
+        h2 {
             margin-bottom: 20px;
+            color: #333;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            background-color: #f8d7da;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            text-align: left;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #3498db;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .additional-options {
+            margin-top: 20px;
+        }
+
+        .additional-options button {
+            width: 48%;
+            background-color: #95a5a6;
+            margin: 5px 1%;
+        }
+
+        .additional-options button:hover {
+            background-color: #7f8c8d;
         }
     </style>
     
@@ -69,12 +138,12 @@
     
     <!--  my페이지 아직 안만들어서 임시로 넣어놓음, -->
     
-    <h3>이메일 발송(임시)</h3>
+    <!-- <h3>이메일 발송(임시)</h3>
     <form action="/admin/new" method="post">
         <label for="email">이메일을 입력하세요</label>
         <input type="email" id="email" name="email" required>
         <button type="submit">발송</button>
     </form>
-    </div>
+    </div> !-->
 </body>
 </html>
