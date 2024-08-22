@@ -7,10 +7,8 @@
 <body>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
-$(function(){ // 페이지 로딩시 즉시 사용할 메소드
-	alert("로그인 후 이용 가능합니다.");
-	location.href="/login";
-});
+alert("로그인 후 이용 가능합니다.");
+location.href="/login";
 </script>
 </body>
 </html>

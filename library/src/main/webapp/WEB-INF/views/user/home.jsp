@@ -6,7 +6,7 @@
     <title>도서관 홈 페이지</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <link rel="stylesheet" type="text/css" href="/css/home.css">
+    <link rel="stylesheet" type="text/css" href="/css/home2.css">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=75bada73f8c74910c3c69014a4957dd1"></script>
 	<script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -50,7 +50,7 @@
             <a href="/admin/mypage">마이 페이지</a>
             <a href="/admin/blacklist">유저 관리</a>
             <c:choose>
-               <c:when test="${empty user }">
+               <c:when test="${empty user or empty user.userID}">
                   <button id="loginbutton" onclick="location.href='/login';">로그인</button>
                </c:when>
                <c:otherwise>
@@ -71,7 +71,7 @@
             <a href="/board/search">게시판</a>
             <a href="/mypage">마이 페이지</a>
             <c:choose>
-               <c:when test="${empty user }">
+               <c:when test="${empty user or empty user.userID}">
                   <button id="joinbutton" onclick="location.href='/join';">회원 가입</button>
                   <button id="loginbutton" onclick="location.href='/login';">로그인</button>
                </c:when>
@@ -88,10 +88,14 @@
 </nav>
 
 <header>
-	<span class="under">
-		<img src="/logo/headerImg1.jpg">
-		<img src="/logo/headerImg2.jpg">
-	</span>
+    <div class="slider-container">
+        <div class="under">
+            <img src="https://via.placeholder.com/600x300?text=Image+1" alt="Image 1">
+            <img src="https://via.placeholder.com/600x300?text=Image+2" alt="Image 2">
+            <img src="https://via.placeholder.com/600x300?text=Image+3" alt="Image 3">
+            <img src="https://via.placeholder.com/600x300?text=Image+4" alt="Image 4">
+        </div>
+    </div>
 	<span class="upper">
 		<img src="/logo/logo.png">
 	</span>
@@ -175,5 +179,35 @@
 </main>
 <footer>
 </footer>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+
+$(document).ready(function() {
+    console.log("Document is ready."); // 첫 번째 검사 지점
+
+    let currentIndex = 0;
+    const totalSlides = $('.under img').length / 2;  // 총 슬라이드 수
+
+    console.log("Total slides:", totalSlides); // 두 번째 검사 지점
+
+    function slideImages() {
+        currentIndex++;
+        if (currentIndex >= totalSlides) {
+            currentIndex = 0;
+        }
+        console.log("Current index:", currentIndex); // 슬라이드 시점의 인덱스 출력
+
+        $('.under').css('transform', `translateX(-${currentIndex * 100}vw)`);
+        console.log(`Sliding to: -${currentIndex * 100}vw`); // 슬라이드 위치 출력
+    }
+
+    setInterval(slideImages, 1000); // 1초마다 슬라이드
+});
+
+
+</script>
+
+
+
 </body>
 </html>
