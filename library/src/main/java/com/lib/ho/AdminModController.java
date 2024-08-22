@@ -33,11 +33,6 @@ public class AdminModController {
 	 @Autowired
 	 private EmailService emailService;
 	 
-	 @GetMapping("/mypage")
-	 public String mypage() {
-		 return "/ho_find/mypage";
-	 }
-	 
 	 // 수정 페이지로 이동
 	 @GetMapping("/admin/mod")
 	    public String editProfile(@ModelAttribute("user") UserDto user, Model model) {

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.lib.dto.UserDto;
 import com.lib.ho.dao.UserDao;
+import com.lib.ho.dto.UnretDto;
 
 @Service
 public class UserService {
@@ -54,4 +55,13 @@ public class UserService {
 	public boolean existsByEmail(String email) {
         return dao.existsByEmail(email);
     }
+	
+	public List<UnretDto> unret(int user){
+		return dao.unretbook(user);
+	}
+	
+	public List<UnretDto> record(int user){
+		return dao.recodbook(user);
+	}
+	
 }
