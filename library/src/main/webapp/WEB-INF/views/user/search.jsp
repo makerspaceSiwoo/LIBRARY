@@ -5,8 +5,10 @@
 <head>
     <meta charset="UTF-8">
     <title>도서 검색</title>
+	<link rel="stylesheet" type="text/css" href="/css/mo/search.css">
 </head>
 <body>
+    <nav>
     	<div id="usermenu">
             <a href="/home"><img src="/logo/logo.png"></a>
             <a href="/home">도서관 홈</a>
@@ -16,18 +18,21 @@
             <a href="/mypage">마이 페이지</a>
             <c:choose>
                <c:when test="${empty user }">
-                  <button onclick="location.href='/join';">회원 가입</button>
-                  <button onclick="location.href='/login';">로그인</button>
+                  <button id="joinbutton" onclick="location.href='/join';">회원 가입</button>
+                  <button id="loginbutton" onclick="location.href='/login';">로그인</button>
                </c:when>
                <c:otherwise>
-                  <p>${user.userID }</p>
+                  <p>${user.userID }님</p>
                   <form action="/logout" method="post">
-                     <button>로그아웃</button>
+                     <button id="logoutbutton">로그아웃</button>
                   </form>
                </c:otherwise>
             </c:choose>
          </div>
-	<h2>도서 검색</h2>
+	</nav>
+	<h2 class="title">도서 검색</h2>
+	
+	
     <form action="search">
         <!-- 검색 분류 -->
         <select name="searchn" id="searchn">
@@ -53,28 +58,44 @@
         <input type="text" id="search" name="search" placeholder="검색어를 입력하세요" >
         <!-- 검색 버튼 -->
         <input type="submit" value="검색"/>
-
     </form>
     
-    <div id="searchlist">
-    	<h3>검색결과</h3>
-    	<c:if test="${count == 0}">검색 결과 없음</c:if>
+    <h3 id = "result">검색결과</h3>
+    
+    <hr id = "gubunsun">
+    
+    <div id="searchresult">
+    	<div id ="searchlist">
+    	<c:if test="${count == 0}"><h3 id ="noresult">검색 결과가 없습니다.</h3></c:if>
     	<c:if test="${count > 0}">
     		<table>
     			<c:forEach var="book" items="${bList }">
-    			<div onclick="location.href='/search/no=${book.callno}'" style="cursor:pointer;">
-    			<hr>
-	    			<img alt="표지사진" src="${book.img}" width="80">
-	    			${book.booktitle}
-	    			${book.author}
-	    			${book.publisher}
-	    			${book.pubyear}
-	    		<hr>
-    			</div>
+    			<div id="bookresult" onclick="location.href='/search/no=${book.callno}'">
+				    <img alt="표지사진" src="${book.img}">
+				    <div class="book-info">
+				        <div class="book-row">
+				            <span class="label">제목</span>
+				            <span class="value">${book.booktitle}</span>
+				        </div>
+				        <div class="book-row">
+				            <span class="label">저자</span>
+				            <span class="value">${book.author}</span>
+				        </div>
+				        <div class="book-row">
+				            <span class="label">출판사</span>
+				            <span class="value">${book.publisher}</span>
+				        </div>
+				        <div class="book-row">
+				            <span class="label">출판 연도</span>
+				            <span class="value">${book.pubyear}</span>
+		      </div>
+    </div>
+</div>
+
     		</c:forEach>
-    		</table>
-    		
+    		</table>	
     	</c:if>
+    	</div>
     <div id="page">
 				<c:if test="${begin > pageNum }">
 					<a href="/search?searchn=${searchn }&search=${search }&p=${begin-1 }" class="page prv">&lt;</a>
