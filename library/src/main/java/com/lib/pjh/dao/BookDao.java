@@ -29,17 +29,20 @@ public interface BookDao {
 	void borrowno(@Param("bookno") int bookno, @Param("userno")int userno);
 	//반납시 record 테이블 등록
 	
-	@Insert("insert into record (start, end, type, bookno, userno) values(now(),date_add(now(),interval 7 day),'대출',#{bookno},#{userno})")
-	void bookno(@Param("bookno") int bookno,@Param("userno") int userno);
+	@Insert("insert into record (start, end, type, bookno, userno) values(now(),date_add(now(),interval 7 day),'대출',#{bookno},(select userno from user where userID = #{userID}))")
+	void bookno(@Param("bookno")int bookno,@Param("userID")String userID);
 	//대출시 record 테이블 등록
 	
-	@Insert("insert into unreturned (end,bookno,userno) values(date_add(now(),interval 7 day),#{bookno},#{userno})")
-	void unreturn(@Param("bookno") int bookno,@Param("userno") int userno);
+	@Insert("insert into unreturned (end,bookno,userno) values(date_add(now(),interval 7 day),#{bookno},(select userno from user where userID = #{userID}))")
+	void unreturn(@Param("bookno")int bookno,@Param("userID")String userID);
 	//대출시 unrecord 테이블 등록
-	
+
 	@Insert("insert into penalty(penalty_end, userno) values(date_add(now(), interval timestampdiff(day, now(), #{u_end}) day),#{userno})")
 	void latereturn(@Param("userno") int userno,@Param("u_end") Date u_end);
 	//연체 반납시 패널티 테이블 등록
+	
+//	@Select("select penalty_end from penalty where userno=#{userno}")
+//	Date penalty_end(int userno);
 	
 	@Update("update user set penalty=1 where userno=#{userno}")
 	void penalty(@Param("userno") int userno);
@@ -49,11 +52,15 @@ public interface BookDao {
 	void delete(@Param("bookno") int bookno);
 	//반납,연체 반납완료시 unrecord 테이블 값 삭제
 	
-	@Select("select userno from user where penalty=1")
-	List<Integer> loan();
+	@Select("select count(*) from user where penalty=1 and userID=#{userID}")
+	int prohibited(@Param("userID")String userID);
 	//연체시 대출기능 정지를 위한 패널티보유자 검색
 	
+	@Select("select count(*) from unreturned where userno=(select userno from user where userID=#{userID})")
+	int treebook(@Param("userID")String userID);
+	//책3권 제한하기위한 개수검색
+	
 	 @Select("SELECT COUNT(*) FROM book WHERE booktitle LIKE CONCAT('%', #{booktitle}, '%')")
-	    int countBooks(@Param("booktitle") String booktitle);
-	}
+	int countBooks(@Param("booktitle") String booktitle);
+	}//페이징
 	

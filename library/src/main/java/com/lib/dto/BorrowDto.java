@@ -19,5 +19,6 @@ public class BorrowDto {
 	private Date r_start;
 	private Date u_end;
 	private int no;
+	private String userID;
 	
 }

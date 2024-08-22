@@ -23,23 +23,20 @@ public class BookService {
 	     return bookDao.borrowbook(booktitle,size,offset);
 	 }//검색 서비스
 	 
-	 
 	 public void borrowno(int bookno,int userno) {
 		 bookDao.borrowno(bookno,userno);
 	 }//반납시 record 테이블 등록
 	 
-	 public void bookno(int bookno, int userno) {
-		 bookDao.bookno(bookno, userno);
-		 
+	 public void bookno(int bookno, String userID) {
+		 bookDao.bookno(bookno, userID); 
 	 }//대출시 record 테이블 등록
 	 
-	 public void unreturn(int bookno, int userno) {
-		 bookDao.unreturn(bookno, userno);
+	 public void unreturn(int bookno, String userID) {
+		 bookDao.unreturn(bookno, userID);
 	 }//대출시 unrecord 테이블 등록
 	 
 	 public void latereturn(int userno, Date u_end) {
 		  bookDao.latereturn(userno, u_end);
-		  
 	 }//연체 반납시 패널티 테이블 등록
 	 
 	 public void penalty(int userno) {
@@ -50,12 +47,16 @@ public class BookService {
 		 bookDao.delete(bookno);
 	 }//반납,연체 반납완료시 unrecord 테이블 값 삭제
 	 
-	 public List<Integer>loan(){
-		 return bookDao.loan();
+	 public int loan(String userID){
+		 return bookDao.prohibited(userID);
 	 }//연체시 대출기능 정지를 위한 패널티보유자 검색
+	 
+	 public int treebook(String userID) {
+		 return bookDao.treebook(userID);
+	 }//책3권 제한하기위한 개수검색 
 
 	 public int countBooks(String booktitle) {
-	        return bookDao.countBooks(booktitle);
-	    }
+	      return bookDao.countBooks(booktitle);
+	 }//페이징을위한 책개수 검색
 	 
 }
