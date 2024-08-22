@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class LoginIntercepter implements HandlerInterceptor {
 
 	public List<String> loginEssential = Arrays.asList("/recomm/**", "/book/**","/user/**",
-														"/admin/**","/logout","/send/code2",
+														"/admin/**","/send/code2",
 														"/board/**","/comm/**","/mypage"); // board의 모든 하위 파일 (,찍고 다른 파일도 추가할 수 있음) 로그인이 필요한 항목
 	
 	public List<String> loginInessential = Arrays.asList("/home/**","/join","/checkUserID","/send",
@@ -32,6 +32,7 @@ public class LoginIntercepter implements HandlerInterceptor {
 //			response.sendRedirect("/login");
 //			return false;
 //		}
+		System.out.println(url);
 		if(dto != null && dto.getUserID() != null) {// 일단 로그인 되어있는지.
 			if(dto.getState().equals("탈퇴")) {
 				response.sendRedirect("/join"); // join 페이지에 alert 로 탈퇴한 계정입니다 한 번 띄우기
@@ -51,8 +52,9 @@ public class LoginIntercepter implements HandlerInterceptor {
 				}
 				return true;
 			}
+		}else {
+			response.sendRedirect("/loginfirst"); // alert 추가하면 좋겠다
+			return false;
 		}
-		response.sendRedirect("/loginfirst"); // alert 추가하면 좋겠다
-		return false;
 	}
 }
