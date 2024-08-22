@@ -13,28 +13,39 @@ nav, header, aside, main, footer {
     box-sizing: border-box;
 }
 
+hr {
+    border: none; /* 기본 테두리를 제거 */
+    height: 5px; /* 라인의 두께를 설정 */
+    background-color: #3C33A4; /* 라인의 색상을 초록색으로 설정 */
+    margin: 0 0; /* 상하 여백을 추가 (필요에 따라 조정 가능) */
+    padding: none;
+}
+
+
 main {
     margin-left: 2.1vw;
     margin-bottom: 3.5vw;
 }
 
-#usermenu {
+/* 공통 스타일: #usermenu와 #adminmenu에 동일하게 적용 */
+.menu {
     position: relative;
     width: 100%;
-    height: 3vw;
+    height: 3vw; /* 상대값으로 비율 조정 */
     overflow: hidden;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0.5vw 0vw;
+    justify-content: center; /* a 태그들을 가운데 정렬 */
+    padding: 0.5vw 0;
     background-color: white;
     margin-right: 7%;
+
 }
 
-#usermenu a,p {
+.menu a, .menu p {
     flex-shrink: 1;
     display: inline-block;
-    margin: 0 0.3vw; /* 간격 축소 */
+    margin: 0 0.3vw; /* 간격 조정 */
     text-decoration: none;
     color: black;
     font-size: 1.4vw;
@@ -42,49 +53,43 @@ main {
     white-space: nowrap;
 }
 
-#usermenu a img {
+.menu a img {
     height: 3vw;
     margin-right: 0px;
 }
 
-#adminmenu {
-    position: relative;
-    width: 100%;
-    height: 15px;
+/* 메뉴 리스트를 중앙에 배치 */
+.menulist {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1; /* 중앙에 위치하도록 flex-grow 사용 */
+    gap: 0.3vw; /* 메뉴 항목들 간의 간격 조정 */
+}
+
+.menulist a {
+	    margin: 0 2vw; /* 간격 조정 */
+}
+
+/* 버튼 컨테이너: 버튼들을 오른쪽에 정렬 */
+.button-container {
+    margin-left: auto; /* 왼쪽 마진 자동으로 설정해 버튼들이 오른쪽에 정렬 */
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0.5vw 0vw;
-    background-color: white;
-    margin-right: 7%;
+    gap: 0.2vw; /* 버튼 간의 간격 */
 }
 
-#adminmenu a,p {
-    flex-shrink: 1;
-    display: inline-block;
-    margin: 0 0.2vw; /* 간격 축소 */
-    text-decoration: none;
-    color: black;
-    font-size: 1.4vw;
-    font-weight: 500;
-    white-space: nowrap;
-}
-
-#adminmenu a img {
-    height: 3vw;
-    margin-right: 0px;
-}
-
-#joinbutton, #loginbutton, #logoutbutton {
-    flex-shrink: 1;
+.button-container button {
     padding: 0.5vw 1vw;
     font-size: 1vw;
     border-radius: 0.35vw;
     border: 1px solid #ccc;
     cursor: pointer;
-    margin-left: 0.2vw; /* 버튼 간의 간격 축소 */
     white-space: nowrap;
-    margin-right: 0.2vw; /* 버튼들이 더 오른쪽으로 이동하고 간격 축소 */
+    margin-right: 1vw;
+}
+.button-container p {
+	margin-right: 1vw;
 }
 
 #joinbutton {
@@ -92,7 +97,7 @@ main {
 }
 
 #loginbutton {
-    background-color: #4CAF50;
+    background-color: #3C33A4;
     color: white;
 }
 
@@ -100,6 +105,7 @@ main {
     background-color: red;
     color: white;
 }
+
 
 #joinbutton:hover, #loginbutton:hover, #logoutbutton:hover {
     font-weight: bold;
@@ -110,12 +116,14 @@ main {
 }
 
 #loginbutton:hover {
-    background-color: #45a049;
+    background-color: #2c2578;
 }
 
 #logoutbutton:hover {
     background-color: #cc0000;
 }
+
+
 
 header {
     position: relative;
@@ -128,19 +136,19 @@ header {
 .slider-container {
     width: 100%;
     height: 100%;
-    overflow: hidden; /* 슬라이더가 컨테이너 안에 잘리도록 설정 */
+    overflow: hidden;
     position: relative;
 }
 
 .under {
     display: flex;
-    width: 200vw; /* 4개의 이미지를 수평으로 배치 */
+    width: 600%; /* 6개의 이미지를 수평으로 배치 (복제된 이미지 포함) */
     height: 100%;
-    transition: transform 0.5s ease-in-out; /* 부드러운 슬라이드 효과 */
+    transition: transform 0.5s ease-in-out;
 }
 
 .under img {
-    width: 50vw; /* 각 이미지를 뷰포트의 절반 크기로 설정 */
+   	width: 50vw;
     height: 100%;
     object-fit: cover;
 }
@@ -198,55 +206,61 @@ header {
     padding: 1.05% 2.1%;
     font-size: 0.84vw;
     border: none;
-    background-color: #333;
+    background-color: #3C33A4;
     color: white;
     cursor: pointer;
     border-radius: 0.35vw;
     margin: 0.7%;
 }
-
+.upper form button:hover{
+	font-weight: bold;
+	background-color: #2c2578;
+}
 
 
 
 
 aside {
     position: fixed; /* 화면에 고정 */
-    top: 60vh; /* header의 높이만큼 아래에 위치하도록 설정 */
+    top: 38vh; /* header의 높이만큼 아래에 위치하도록 설정 */
     right: 2vw; /* 오른쪽 끝에 고정 */
-    width: 70px; /* 네비게이션 바의 너비 설정 */
+    width: 130px; /* 네비게이션 바의 너비를 증가시킴 */
     z-index: 1000; /* 다른 요소들보다 위에 위치하도록 설정 */
-    border-radius: 0.8vw; /* aside의 모서리를 둥글게 설정 */
+    border-radius: 1vw; /* aside의 모서리를 더 둥글게 설정 */
     overflow: hidden; /* 모서리가 둥글게 적용된 영역을 벗어나는 요소를 숨김 */
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* 약간의 그림자 추가 */
+    
 }
 
 .navbar {
     display: flex;
     flex-direction: column; /* 링크를 세로로 나열 */
-    padding: 0.5vw;
+    padding: 1vw; /* padding 값을 더 넉넉하게 설정 */
     background-color: white; /* 네비게이션 바의 배경색 설정 */
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* 약간의 그림자 추가 */
-    border-radius: 0.8vw; /* 모서리를 둥글게 설정 */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); /* 약간의 그림자 추가 */
+    border-radius: 1vw; /* 모서리를 더 둥글게 설정 */
 }
 
 .navbar a {
 	white-space: nowrap; /* 텍스트가 줄바꿈 되지 않도록 설정 */
 	flex-shrink: 1;
-    margin: 0.1vh 0; /* 링크 사이에 간격을 설정 */
+    margin: 0.2vh 0; /* 링크 사이에 더 넉넉한 간격 설정 */
     text-decoration: none;
     color: gray;
-    font-size: 9px; /* 뷰포트 너비에 따라 유연하게 크기 조정 */
+    font-size: 12px; /* 텍스트 크기를 증가 */
     font-weight: 500; /* 글자 두께를 중간으로 설정 */
-    padding: 1vw 0.5vw; /* 링크에 패딩을 추가하여 클릭 영역을 확장 */
+    padding: 1.5vw 1vw; /* 링크에 패딩을 추가하여 클릭 영역을 확장 */
     border-radius: 1vw; /* 링크의 모서리를 둥글게 설정 */
     transition: background-color 0.3s, color 0.3s; /* 마우스를 올렸을 때 부드러운 전환 효과 추가 */
 	text-align: center;
+
 }
 
 .navbar a:hover {
     background-color: #f2f2f2; /* 마우스를 올렸을 때 배경색 변경 */
     color: #333; /* 마우스를 올렸을 때 텍스트 색상 변경 */
 }
+
 
 /* 페이지를 부드럽게 스크롤 */
 html {
@@ -278,7 +292,7 @@ section p {
 
 
 table {
-    width: 100%;
+    width: 90%;
     border-collapse: separate; /* 셀 테두리를 분리하여 둥근 모서리를 유지 */
     margin-bottom: 2vh; /* 표 아래 여백 */
     border-radius: 1vw; /* 표 전체의 둥근 테두리 */
