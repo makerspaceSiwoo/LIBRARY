@@ -26,11 +26,11 @@
 	</script>
 	<style>
     #map { /*지도*/
-        width: 250px;
-        height: 200px; /* 원하는 크기로 설정 */
-        margin-left: 3vw;
+        width: 40vw;
+        height: 30vw; /* 원하는 크기로 설정 */
+        margin-left: 0vw;
         margin-bottom: 2vh; /* 지도 아래 여백 */
-    	border: 0.5vw solid #BBB; /* 지도의 테두리 설정 */
+    	border: 0.2vw solid #BBB; /* 지도의 테두리 설정 */
     	border-radius: 1vw; /* 둥근 테두리 */
     	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
     }
@@ -49,7 +49,7 @@
 	            <a href="/book/add">도서 추가</a>
 	            <a href="/book/manage">도서 수정/삭제</a>
 	            <a href="/board/search">게시판</a>
-	            <a href="/admin/mypage">마이 페이지</a>
+	            <a href="/mypage">마이 페이지</a>
 	            <a href="/admin/blacklist">유저 관리</a>
             </div>
             <div class="button-container">
@@ -144,11 +144,13 @@
 	 </div>
 	 </section>
 	 <section>
-	 <div>
-        <h2 id="notice">공지사항</h2> <c:if test="${user.admin == '1' }"><button id="noticebutton" onclick="location.href='/board/write'">+</button></c:if><br>
+	<div class="notice-box">
+        <h2 id="notice">공지사항</h2> <c:if test="${user.admin == '1' }"><button id="noticebutton" onclick="location.href='/board/write'">+</button></c:if>
+        <div>
        <c:forEach var="notice" items="${notice}">
             <a href="/board/no/${notice.boardno}">${notice.title}</a><br>
         </c:forEach>
+        </div>
 	</div>
 	</section>
 	<section>
