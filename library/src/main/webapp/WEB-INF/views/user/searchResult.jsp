@@ -77,7 +77,10 @@
 		<span id="bookinfo">
 			<table border="1">
 				<tr>
-					<td colspan="3" align="center">제목 : ${blist[0].booktitle }</td>
+					<td colspan="3" align="center">제목</td>
+				</tr>
+				<tr>
+					<td colspan="3" align="center">${blist[0].booktitle }</td>
 				</tr>
 				<tr>
 					<td align="center">저자</td > <td align="center">출판사</td> <td align="center">출판연도</td>
