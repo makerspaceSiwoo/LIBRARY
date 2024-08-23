@@ -4,6 +4,7 @@
 <html>
 <head>
 <title>book info</title>
+<link rel="stylesheet" type="text/css" href="/css/header.css">
 </head>
 <body>
 
@@ -38,7 +39,38 @@
 </nav>
 
 <div>
-	<hr>
+	<h2>도서 검색</h2>
+    <form action="/search">
+        <!-- 검색 분류 -->
+        <select name="searchn" id="searchn">
+            <option value="0">제목+분류 검색</option>
+            <option value="1">저자+분류 검색</option>
+        </select>
+        <span id="cateSelect">
+      	<select id="cate" name="cate">
+        		<option value="">전체</option>
+        		<option value="총류">총류</option>
+        		<option value="철학">철학</option>
+        		<option value="종교">종교</option>
+        		<option value="사회과학">사회과학</option>
+        		<option value="자연과학">자연과학</option>
+        		<option value="기술과학">기술과학</option>
+        		<option value="예술">예술</option>
+        		<option value="언어">언어</option>
+        		<option value="문학">문학</option>
+        		<option value="역사">역사</option>
+        	</select>
+        </span>
+        <!-- 검색어 입력 필드 -->
+        <input type="text" id="search" name="search" placeholder="검색어를 입력하세요" >
+        <!-- 검색 버튼 -->
+        <input type="submit" value="검색"/>
+
+    </form>
+</div>
+
+
+<div>
 		<span id="bookimg">
 			<img alt="표지사진" src="${blist[0].img }" width="200">
 		</span>
@@ -115,5 +147,8 @@
 </c:otherwise>
 </c:choose>
 
+<footer>
+<p>© 2024. Soldesk도서관. all rights reserved.</p>
+</footer>
 </body>
 </html>

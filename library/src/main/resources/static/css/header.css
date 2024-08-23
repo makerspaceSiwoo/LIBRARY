@@ -13,7 +13,7 @@ nav, header, aside, main, footer {
     box-sizing: border-box;
 }
 
-hr {
+nav hr {
     border: none; /* 기본 테두리를 제거 */
     height: 5px; /* 라인의 두께를 설정 */
     background-color: #3C33A4; /* 라인의 색상을 초록색으로 설정 */
@@ -121,5 +121,16 @@ main {
 
 #logoutbutton:hover {
     background-color: #cc0000;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: left;
+    padding: 2% 0;
+    font-size: 1.2vw;
+}
+footer p{
+	margin-left: 2vw;
 }
 
