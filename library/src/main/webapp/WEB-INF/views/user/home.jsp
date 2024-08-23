@@ -6,7 +6,10 @@
     <title>도서관 홈 페이지</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <link rel="stylesheet" type="text/css" href="/css/header.css">
     <link rel="stylesheet" type="text/css" href="/css/home2.css">
+
+    
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=75bada73f8c74910c3c69014a4957dd1"></script>
 	<script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -38,7 +41,7 @@
 </head>
 <body>
 <nav>
-<hr>
+
    <c:choose>
       <c:when test="${user.admin == 1 }">
          <div id="adminmenu" class="menu">
