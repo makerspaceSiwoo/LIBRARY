@@ -121,11 +121,19 @@
 	</table>
 </div>
 
+
+
+
+
 <c:choose>
 <c:when test="${otherbooks.size() != 0 }">
-<div id ="searchlist">
+<div id="searchresult">
+	<div id ="searchlist">
+		<hr>
+		<h2>작가의 다른 책</h2>
+		<hr>
     		<table>
-    			<c:forEach var="book" items="${bList }">
+    			<c:forEach var="book" items="${otherbooks }">
     			<div id="bookresult" onclick="location.href='/search/no=${book.callno}'">
 				    <img alt="표지사진" src="${book.img}">
 				    <div class="book-info">
@@ -151,6 +159,7 @@
     		</table>	
 
     	</div>
+</div>
 </c:when>
 <c:otherwise>
 	<hr>
