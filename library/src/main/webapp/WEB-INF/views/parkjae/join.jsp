@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="/css/admin/book/add.css">
 <style>
     h2 {
         display: inline-block;
@@ -36,16 +37,39 @@
 
 </head>
 <body>
-<div>
-    <h2>(사진)솔데스크 도서관</h2>
-    <h2>도서관 HOME</h2>
-    <h2>도서 검색</h2>
-    <h2>인기 도서</h2>
-    <h2>MY 페이지</h2>
-    <h2>나눔 마당</h2>
-    <button class="button" onclick="">로그인</button>
-    <button class="button" onclick="">회원가입</button>
-</div>
+<nav>
+<hr>
+   <c:choose>
+      <c:when test="${user.admin == 1 }">
+         <div id="adminmenu" class="menu">
+            <a href="/home"><img src="/logo/logo.png"></a>
+            <div class="menulist">
+	            <a href="/home">도서관 홈</a>
+	            <a href="/book/record">대출/반납</a>
+	            <a href="/book/add">도서 추가</a>
+	            <a href="/book/manage">도서 수정/삭제</a>
+	            <a href="/board/search">게시판</a>
+	            <a href="/mypage">마이 페이지</a>
+	            <a href="/admin/blacklist">유저 관리</a>
+            </div>
+            <div class="button-container">
+	            <c:choose>
+	               <c:when test="${empty user or empty user.userID}">
+	                  <button id="loginbutton" onclick="location.href='/login';">로그인</button>
+	               </c:when>
+	               <c:otherwise>
+	                  <p>${user.userID }님</p>
+	                  <form action="/logout" method="post">
+	                     <button id="logoutbutton" >로그아웃</button>
+	                  </form>
+	               </c:otherwise>
+	            </c:choose>
+	        </div>
+         </div>
+      </c:when>
+   </c:choose>
+   <hr>
+</nav>
 <h1>회원가입</h1>
 <h5>회원정보입력</h5>
 <form action="/user/register" method="post" onsubmit="return submitForm()">
@@ -63,9 +87,10 @@
         <tr>
             <td>아이디</td>
             <td colspan="3">
-                <input type="text" name="userID" required> 
-                <button type="button" onclick="checkDuplicate()">중복확인</button>
-            </td>
+                    <input type="text" name="userID" id="userID" required>
+                    <button type="button" id="checkID">중복확인</button>
+                    <span id="userIDCheckResult"></span>
+                </td>
         </tr>
         <tr>
             <td>비밀번호</td>
@@ -132,32 +157,39 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 $(document).ready(function() {
-    function checkDuplicate() {
-        // 아이디 입력 필드의 값을 가져옵니다.
-        var userID = document.querySelector('input[name="userID"]').value;
+    const contextPath = "${pageContext.request.contextPath}";
+    let originalUserID = "${originalUserID}";
+    let isUserIDChecked = false;
+
+    $("#checkID").click(function() {
+        let userID = $("#userID").val();
 
         if (userID === "") {
             alert("아이디를 입력하세요.");
             return;
         }
 
-        // AJAX를 사용하여 서버에 중복 체크 요청을 보냅니다.
         $.ajax({
-            url: '/checkUserID', // 서버의 중복 체크 엔드포인트 URL
-            type: 'POST',
-            data: { userID: userID }, // userId 변수 전달
-            success: function(response) {
-                if (response.status === "duplicate") {
-                    alert("아이디가 중복되었습니다.");
-                } else {
-                    alert("사용 가능한 아이디입니다.");
+        	url: contextPath + "/user/checkID",
+            type: "POST",
+            data: { userID: userID },
+            success: function(data) {
+            	if (data === '1') {  
+                    $("#userIDCheckResult").text("사용 가능한 아이디입니다.").css("color", "green");
+                    isUserIDChecked = true;
+                } else { 
+                    $("#userIDCheckResult").text("이미 사용 중인 아이디입니다.").css("color", "red");
+                    isUserIDChecked = false;
                 }
             },
-            error: function() {
-                alert("중복 확인 중 오류가 발생했습니다.");
+            error: function(xhr, status, error) {
+                alert("아이디 중복 체크에 실패했습니다.");
+                console.error("Error:", error);
+                console.error("Status:", status);
+                console.error("XHR:", xhr);
             }
         });
-    }
+    });
 
     // 이벤트 핸들러 등록
     $('button[onclick="checkDuplicate()"]').on('click', checkDuplicate);
