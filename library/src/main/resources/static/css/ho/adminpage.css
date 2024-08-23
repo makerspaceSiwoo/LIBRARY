@@ -1,0 +1,114 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.section {
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.tit {
+    font-size: 24px;
+    font-weight: bold;
+    color: #000000;
+    margin-bottom: 10px;
+}
+
+#smallline {
+    border: 0;
+    height: 2px;
+    background: #3C33A4;
+    margin-bottom: 20px;
+}
+
+.book-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.book-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    
+    
+}
+
+.rank p {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-right: 15px;
+    margin: 0;
+    
+    
+}
+
+.book-cover {
+    width: 60px;
+    height: 90px;
+    object-fit: cover;
+    margin-right: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-left: 50px;
+    
+}
+
+.book-info {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+    
+}
+
+.author, .publisher {
+    font-size: 14px;
+    color: #666;
+    
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+    
+}
+
+button {
+    background-color: #3C33A4;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover {
+    background-color: #3C33A4;
+    font-weight: bold;
+}
+
+button.deldel {
+    background-color: #f44336;
+}
+
+button.deldel:hover {
+    background-color: #e53935;
+    font-weight: bold;
+}

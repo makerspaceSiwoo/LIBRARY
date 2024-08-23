@@ -41,7 +41,7 @@
                 <button type="submit">로그인</button>
             </div>
         </form>
-    
+
     <div class="link-container">
     <a id="searchid" href="/find/search/id">아이디 찾기</a>
     <a id="searchpw" href="/find/search/pw">비밀번호 찾기</a>

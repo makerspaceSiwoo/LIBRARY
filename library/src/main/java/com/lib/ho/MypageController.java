@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.lib.dto.UserDto;
 import com.lib.ho.dto.UnretDto;
 import com.lib.ho.service.UserService;
+import com.lib.mo.dto.RecommDto;
+import com.lib.mo.service.RecommService;
 
 @SessionAttributes("user")
 @Controller
@@ -19,6 +21,9 @@ public class MypageController {
 	
 	@Autowired
 	 private UserService userService;
+	
+	@Autowired
+	RecommService service;
 	
 	// 세션
 	@ModelAttribute("user")
@@ -37,5 +42,16 @@ public class MypageController {
 		return "/ho_find/mypage";
 		
 	}
+	
+	@GetMapping("/admin/mypage")
+	public String adminmy(@ModelAttribute("user") UserDto user, Model m) {
+		
+		List<RecommDto> allrcbook = service.allrcbook();
+		m.addAttribute("allrc", allrcbook);
+		
+		return "ho_find/adminmypage";
+	}
+	
+	
 
 }
