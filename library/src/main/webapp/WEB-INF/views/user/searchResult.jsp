@@ -123,24 +123,34 @@
 
 <c:choose>
 <c:when test="${otherbooks.size() != 0 }">
-<div>
-	<hr>
-	<h2>작가의 다른 책</h2>
-	<hr>
-	<div class="section">    
-    <div class="book-list">
-        <c:forEach var="b" items="${otherbooks}">
-            <div class="book-item" onclick="location.href='/search/no=${b.callno}'">
-                <img alt="표지사진" src="${b.img}">
-                <div class="title">${b.booktitle}</div>
-                <div class="author">${b.author}</div>
-                <div class="publisher">${b.publisher}</div>
-            </div>
-        </c:forEach>
+<div id ="searchlist">
+    		<table>
+    			<c:forEach var="book" items="${bList }">
+    			<div id="bookresult" onclick="location.href='/search/no=${book.callno}'">
+				    <img alt="표지사진" src="${book.img}">
+				    <div class="book-info">
+				        <div class="book-row">
+				            <span class="label">제목</span>
+				            <span class="value">${book.booktitle}</span>
+				        </div>
+				        <div class="book-row">
+				            <span class="label">저자</span>
+				            <span class="value">${book.author}</span>
+				        </div>
+				        <div class="book-row">
+				            <span class="label">출판사</span>
+				            <span class="value">${book.publisher}</span>
+				        </div>
+				        <div class="book-row">
+				            <span class="label">출판 연도</span>
+				            <span class="value">${book.pubyear}</span>
+		      </div>
     </div>
-	</div>
-	<hr>
 </div>
+    		</c:forEach>
+    		</table>	
+
+    	</div>
 </c:when>
 <c:otherwise>
 	<hr>
