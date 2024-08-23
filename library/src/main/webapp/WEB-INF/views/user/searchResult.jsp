@@ -5,11 +5,13 @@
 <head>
 <title>book info</title>
 <link rel="stylesheet" type="text/css" href="/css/header.css">
+<link rel="stylesheet" type="text/css" href="/css/mo/searchresult.css">
+
 </head>
 <body>
 
 <nav>
-<hr>
+
          <div id="usermenu" class="menu">
             <a href="/home"><img src="/logo/logo.png"></a>
             <div class="menulist">
@@ -39,7 +41,7 @@
 </nav>
 
 <div>
-	<h2>도서 검색</h2>
+	<h2 id ="title">도서 검색</h2>
     <form action="/search">
         <!-- 검색 분류 -->
         <select name="searchn" id="searchn">
@@ -70,7 +72,7 @@
 </div>
 
 
-<div>
+<div class="content-container">
 		<span id="bookimg">
 			<img alt="표지사진" src="${blist[0].img }" width="200">
 		</span>
@@ -93,7 +95,7 @@
 	<hr>
 </div>
 
-<div>
+<div class="content-container">
 	<table border="1">
 		<tr>
 			<td colspan="5" align="center">소장정보</td>
@@ -162,10 +164,14 @@
 </div>
 </c:when>
 <c:otherwise>
+<div id="searchresult">
+	<div id ="searchlist">
 	<hr>
 	<h2>작가의 다른 책</h2>
 	<hr>
 	<p>소장 중인 작가의 다른 작품이 없습니다.</p>
+	</div>
+	</div>
 </c:otherwise>
 </c:choose>
 
