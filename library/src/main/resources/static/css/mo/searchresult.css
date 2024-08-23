@@ -1,0 +1,97 @@
+/* 기본 스타일 초기화 */
+body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, table, tr, td, th {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 페이지 전체 스타일 */
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+    padding: 20px;
+}
+
+/* 헤더 스타일 */
+h1, h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* 책 정보 섹션 스타일 */
+#bookinfo {
+    margin-left: 20px;
+    vertical-align: top;
+}
+
+#bookimg img {
+    border: 5px solid #ddd;
+    border-radius: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: center;
+}
+
+table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+table td {
+    border: 1px solid #ddd;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* 대출 상태에 따른 스타일링 */
+table td:nth-child(4) {
+    font-weight: bold;
+}
+
+table td:nth-child(4):contains('대출 가능') {
+    color: #28a745;
+}
+
+table td:nth-child(4):contains('대출 중') {
+    color: #dc3545;
+}
+
+/* 반납예정일 스타일 */
+table td:nth-child(5) {
+    color: #6c757d;
+}
+
+/* hr 스타일 */
+hr {
+    border: 0;
+    height: 1px;
+    background-color: #ddd;
+    margin: 20px 0;
+}
+
+/* 반응형 디자인 */
+@media screen and (max-width: 768px) {
+    #bookinfo {
+        display: block;
+        margin-left: 0;
+        margin-top: 20px;
+    }
+
+    table {
+        font-size: 14px;
+    }
+}
