@@ -43,10 +43,9 @@ public class JoinService {
         this.joinDao = joinDao;
     }
 
-    public boolean checkUserIdDuplicate(String userID) {
-        int count = joinDao.checkid(userID);
-        return count > 0; 
-    }// 중복된 아이디가 있으면 true 반환
+    public boolean isUserIDAvailable(String userID) {
+        return joinDao.checkid(userID) == 0;  // 사용 가능한 경우 `0`을 반환
+    }
 
     public void registerUser(UserDto user) {
         joinDao.insertUser(user);
