@@ -7,6 +7,36 @@
 </head>
 <body>
 
+<nav>
+<hr>
+         <div id="usermenu" class="menu">
+            <a href="/home"><img src="/logo/logo.png"></a>
+            <div class="menulist">
+	            <a href="/home">도서관 홈</a>
+	            <a href="/search">도서 검색</a>
+	            <a href="/recomm">추천 도서</a>
+	            <a href="/board/search">게시판</a>
+	            <a href="/mypage">마이 페이지</a>
+            </div>
+            <div class="button-container">
+	            <c:choose>
+	               <c:when test="${empty user or empty user.userID}">
+	                  <button id="joinbutton" onclick="location.href='/join';">회원 가입</button>
+	                  <button id="loginbutton" onclick="location.href='/login';">로그인</button>
+	               </c:when>
+	               <c:otherwise>
+	                  <p>${user.userID }님</p>
+	                  <form action="/logout" method="post">
+	                     <button id="logoutbutton">로그아웃</button>
+	                  </form>
+	               </c:otherwise>
+	            </c:choose>
+	        </div>
+         </div>
+
+   <hr>
+</nav>
+
 <div>
 	<hr>
 		<span id="bookimg">
@@ -56,7 +86,34 @@
 	</table>
 </div>
 
-
+<c:choose>
+<c:when test="${otherbooks.size() != 0 }">
+<div>
+	<hr>
+	<h2>작가의 다른 책</h2>
+	<hr>
+	<div class="section">    
+    <div class="book-list">
+        <c:forEach var="b" items="${otherbooks}">
+            <div class="book-item" onclick="location.href='/search/no=${b.callno}'">
+                <img alt="표지사진" src="${b.img}">
+                <div class="title">${b.booktitle}</div>
+                <div class="author">${b.author}</div>
+                <div class="publisher">${b.publisher}</div>
+            </div>
+        </c:forEach>
+    </div>
+	</div>
+	<hr>
+</div>
+</c:when>
+<c:otherwise>
+	<hr>
+	<h2>작가의 다른 책</h2>
+	<hr>
+	<p>소장 중인 작가의 다른 작품이 없습니다.</p>
+</c:otherwise>
+</c:choose>
 
 </body>
 </html>

@@ -20,7 +20,9 @@ public class SearchResultController {
 	@GetMapping("/search/no={callno}")
 	public String searchResult(@PathVariable("callno") String callno, Model m) {
 		List<UnreturnedBookDto> blist = bservice.searchResult(callno);
+		List<BookDto> otherbooks = bservice.sameAuthor(blist.get(0).getAuthor(),callno);
 		m.addAttribute("blist",blist);
+		m.addAttribute("otherbooks", otherbooks);
 		return "user/searchResult";
 	}
 

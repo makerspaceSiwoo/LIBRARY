@@ -19,4 +19,9 @@ public class SearchResultService {
 		blist = dao.searchResult(callno); // 해당 청구기호의 책 목록을 저장
 		return blist;
 	}
+	
+	public List<BookDto> sameAuthor(String author, String callno){
+		List<BookDto> blist = dao.sameAuthor(author,callno);
+		return blist;
+	}
 }
