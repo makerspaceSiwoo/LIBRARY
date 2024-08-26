@@ -220,35 +220,18 @@ div[style*="color: red;"] {
 </head>
 <body>
 <nav>
-<hr>
    <c:choose>
-      <c:when test="${user.admin == 1 }">
          <div id="adminmenu" class="menu">
             <a href="/home"><img src="/logo/logo.png"></a>
             <div class="menulist">
 	            <a href="/home">도서관 홈</a>
-	            <a href="/book/record">대출/반납</a>
-	            <a href="/book/add">도서 추가</a>
-	            <a href="/book/manage">도서 수정/삭제</a>
+	            <a href="/search">도서 검색</a>
+	            <a href="/recomm">추천 도서</a>
 	            <a href="/board/search">게시판</a>
 	            <a href="/mypage">마이 페이지</a>
-	            <a href="/admin/blacklist">유저 관리</a>
             </div>
-            <div class="button-container">
-	            <c:choose>
-	               <c:when test="${empty user or empty user.userID}">
-	                  <button id="loginbutton" onclick="location.href='/login';">로그인</button>
-	               </c:when>
-	               <c:otherwise>
-	                  <p>${user.userID }님</p>
-	                  <form action="/logout" method="post">
-	                     <button id="logoutbutton" >로그아웃</button>
-	                  </form>
-	               </c:otherwise>
-	            </c:choose>
-	        </div>
+            
          </div>
-      </c:when>
    </c:choose>
    <hr>
 </nav>
@@ -410,8 +393,6 @@ $(document).ready(function() {
     function searchAddress() {
         new daum.Postcode({
             oncomplete: function(data) {
-                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
-                // 예제를 참고하여 다양한 활용법을 확인해 보세요.
                 document.querySelector('input[name="address"]').value = data.address;
             }
         }).open();
