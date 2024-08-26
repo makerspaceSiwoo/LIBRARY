@@ -75,7 +75,7 @@ function withdrawUser() {
    <hr>
 </nav>
 	
-    <h1>${user.name}님의 대출 현황</h1>
+    <h1>${user.userID}님의 대출 현황</h1>
     
     <div>
     <h3> 현재 대출중인 도서</h3>

@@ -6,109 +6,301 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="/css/admin/book/add.css">
 <style>
-    h2 {
-        display: inline-block;
-        border: 1px solid #ddd;
-        padding: 8px;
-    }
-    .button {
-        background-color: #4CAF50;
-        color: white;
-        cursor: pointer;
-    }
-    h1 {
-        display: flex;
-        align-items: center; /* 수직 중앙 정렬 */
-        justify-content: center; /* 수평 중앙 정렬 */
-    }
-    #endinfo {
-        display: flex;
-        align-items: center; /* 수직 중앙 정렬 */
-        justify-content: center; /* 수평 중앙 정렬 */
-    }
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
-    table {
-        border: 1px solid black;
-    }
+/* 회원가입 h1 태그 중앙 정렬 */
+.center-title {
+    text-align: center; /* 중앙 정렬 */
+    margin-bottom: 10px; /* 아래쪽 여백을 줄임 */
+}
+
+.center-subtitle {
+    text-align: left; /* 왼쪽 정렬 */
+    margin-left: 20%; /* 테이블과 일치하는 위치로 이동 */
+    margin-bottom: 5px; /* 아래쪽 여백 추가 */
+}
+
+/* 회원정보입력 h5 태그 테이블 왼쪽 위로 이동 */
+.table-title {
+    text-align: left; /* 왼쪽 정렬 */
+    margin-bottom: 10px; /* 테이블과의 간격 조정 */
+    margin-left: auto; /* 자동 왼쪽 마진 */
+    margin-right: auto; /* 자동 오른쪽 마진 */
+    width: 80%; /* 테이블과 같은 너비로 설정 */
+    max-width: 800px; /* 테이블과 같은 최대 너비로 설정 */
+    padding-left: 10px; /* 필요시 추가 여백 */
+}
+
+.container {
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center; /* 컨테이너 내부 요소 가운데 정렬 */
+}
+    .container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.form-table {
+    width: 80%; /* 테이블 너비를 80%로 설정 */
+    max-width: 800px; /* 테이블 최대 너비 설정 */
+    border-collapse: collapse; /* 테두리 겹치기 설정 */
+    margin: 0 auto 20px auto; /* 테이블을 가운데 정렬 */
+    border: 1px solid #ccc; /* 테이블 전체 테두리 */
+}
+
+form th {
+    text-align: left; /* 헤더 텍스트를 왼쪽 정렬 */
+    padding: 10px;
+    background-color: #f2f2f2; /* 헤더 셀에 배경색 추가 */
+    border: 1px solid #ccc; /* 헤더 셀 테두리 */
+}
+
+form td {
+    text-align: left; /* 모든 텍스트를 왼쪽 정렬 */
+    vertical-align: middle; /* 수직 정렬을 가운데로 */
+}
+
+/* 공통 입력 필드 스타일 */
+form td input[type="text"],
+form td input[type="password"] {
+    width: calc(50% - 10px); /* 입력 필드의 너비를 설정하여 셀을 거의 꽉 채우지 않도록 조정 */
+    display: inline-block; /* 인풋 필드를 인라인 블록으로 설정하여 옆에 다른 요소 배치 가능 */
+    margin-left: 0; /* 왼쪽 여백 제거 */
+    text-align: left; /* 입력된 텍스트를 왼쪽 정렬 */
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* 패딩 포함하여 너비 계산 */
+    font-size: 20px;
+}
+
+/* 성명 입력 필드 스타일 */
+form input[name="name"] {
+    width: 100%; /* 입력 필드 너비를 100%로 설정하여 테이블 셀을 완전히 채우도록 설정 */
+    max-width: 100%; /* 최대 너비를 설정하여 완전히 채워지도록 설정 */
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 20px;
+}
+
+/* 테이블 스타일 */
+form table {
+    width: 80%; /* 테이블 너비를 80%로 설정 */
+    max-width: 800px; /* 테이블 최대 너비 설정 */
+    border-collapse: collapse; /* 테두리 겹치기 설정 */
+    margin: 0 auto 20px auto; /* 테이블을 가운데 정렬 */
+    border: 1px solid #ccc; /* 테이블 전체 테두리 */
+}
+
+.table-title {
+    position: absolute;
+    top: -30px; /* 테이블 위로 이동 */
+    left: 0; /* 테이블 왼쪽에 맞춤 */
+    font-size: 18px; /* 글꼴 크기 조절 */
+}
+
+/* 테이블 행 스타일 */
+form table tr {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ccc; /* 행 사이에 테두리 추가 */
+}
+
+
+/* 기본적으로 모든 td에 배경색을 적용 */
+form table td {
+    padding: 10px;
+    vertical-align: middle;
+    text-align: center; /* 텍스트를 왼쪽 정렬 */
+    border: 1px solid #bbb; 
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+    font-weight: bold;
+}
+
+/* 인풋 태그를 포함하는 td의 배경색 제거 */
+form table td input {
+    background-color: transparent; /* 배경색을 투명으로 설정 */
+}
+/* 인풋 태그가 없는 td에만 배경색 적용 */
+form table td:not(:has(input)) {
+    background-color: #eee; /* 배경색을 #ccc로 설정 */
+}
+
+
+/* 버튼 스타일 */
+form button {
+    background-color: #695FC2;
+    color: white;
+    padding: 10px 40px; /* 세로 패딩을 10px로 늘려서 버튼의 세로 길이를 늘림 */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background-color 0.3s ease;
+    margin: 0 auto; /* 가운데 정렬 */
+    display: block; /* 버튼을 블록 요소로 변경 */
+}
+
+/* 버튼 호버 효과 */
+form button:hover {
+    background-color: #3C33A4;
+}
+
+/* 입력 그룹 스타일 */
+.input-group {
+    display: flex;
+    align-items: center;
+}
+
+
+.input-group select {
+    height: 38px; /* 이메일 선택 부분의 높이를 늘리기 위해 설정 */
+    padding: 8px 10px; /* padding을 조정하여 높이와 일관성 유지 */
+    font-size: 16px; /* 텍스트 크기를 입력 필드와 일치 */
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-sizing: border-box; /* 패딩 포함 높이 계산 */
+    
+}
+
+.input-group button {
+    margin-left: 5px; /* 입력 필드와 버튼 간의 간격을 위해 왼쪽 마진 추가 */
+    padding: 8px 10px; /* 버튼 패딩 조정 */
+    font-size: 15px; /* 버튼 폰트 크기 조정 */
+}
+
+/* 생년월일 입력 필드의 플레이스홀더 스타일 */
+.input-group input::placeholder {
+    font-size: 14px; /* 플레이스홀더 글자 크기를 줄임 */
+    color: #888; /* 필요한 경우, 플레이스홀더 색상도 변경할 수 있음 */
+}
+
+.input-group input[type="text"] {
+    margin-right: 10px; /* 인풋 필드와 @ 선택 박스 사이의 간격을 10px로 설정 */
+}
+
+/* 에러 메시지 스타일 */
+div[style*="color: red;"] {
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* 인증 코드 결과 및 아이디 중복 체크 결과 스타일 */
+#userIDCheckResult,
+#emailVerificationResult {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+/* 인증 코드 입력 필드 스타일 */
+#verificationCode {
+    width: 100%; /* 입력 필드 너비를 100%로 설정 */
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-align: center; /* 입력 내용 가운데 정렬 */
+}
+
+.password-hint,
+.phone-hint {
+    font-size: 12px; /* 글씨 크기를 작게 설정 */
+    color: #888; /* 연한 회색으로 설정 */
+    vertical-align: middle; /* 설명 문구를 입력 필드와 수직으로 가운데 정렬 */
+    margin-left: 5px; /* 인풋 필드와 설명 문구 사이에 여백 추가 */
+}
+
 </style>
 
 </head>
 <body>
 <nav>
-<hr>
    <c:choose>
-      <c:when test="${user.admin == 1 }">
          <div id="adminmenu" class="menu">
             <a href="/home"><img src="/logo/logo.png"></a>
             <div class="menulist">
 	            <a href="/home">도서관 홈</a>
-	            <a href="/book/record">대출/반납</a>
-	            <a href="/book/add">도서 추가</a>
-	            <a href="/book/manage">도서 수정/삭제</a>
+	            <a href="/search">도서 검색</a>
+	            <a href="/recomm">추천 도서</a>
 	            <a href="/board/search">게시판</a>
 	            <a href="/mypage">마이 페이지</a>
-	            <a href="/admin/blacklist">유저 관리</a>
             </div>
-            <div class="button-container">
-	            <c:choose>
-	               <c:when test="${empty user or empty user.userID}">
-	                  <button id="loginbutton" onclick="location.href='/login';">로그인</button>
-	               </c:when>
-	               <c:otherwise>
-	                  <p>${user.userID }님</p>
-	                  <form action="/logout" method="post">
-	                     <button id="logoutbutton" >로그아웃</button>
-	                  </form>
-	               </c:otherwise>
-	            </c:choose>
-	        </div>
+            
          </div>
-      </c:when>
    </c:choose>
    <hr>
 </nav>
-<h1>회원가입</h1>
-<h5>회원정보입력</h5>
+<!-- 회원가입 h1 태그 -->
+<h1 class="center-title">회원가입</h1>
+
+<!-- 회원정보입력 h5 태그 -->
+<h5 class="center-subtitle">회원정보입력</h5>
+
 <form action="/user/register" method="post" onsubmit="return submitForm()">
-    <table>
+    <table class="form-table">
         <tr>
-            <td>성 명</td>
-            <td><input type="text" name="name" required></td>
-            <td>생년월일</td>
-            <td>
-                 <input type="text" name="year" placeholder="연도 (예: 1990)" required pattern="\d{4}" title="4자리 연도를 입력하세요">
-       			 <input type="text" name="month" placeholder="월 (예: 07)" required pattern="[0-1]?[0-9]" title="1에서 12 사이의 월을 입력하세요">
-        		 <input type="text" name="day" placeholder="일 (예: 15)" required pattern="[0-3]?[0-9]" title="1에서 31 사이의 일을 입력하세요">
-            </td>
-        </tr>
+    		<td>성 명</td>
+			<td><input name="name" class="name-input" required></td>
+   			 <td>생년월일</td>
+   		 <td>
+       		<div class="input-group">
+            	<input type="text" name="year" placeholder="연도 (예: 1990)" required pattern="\d{4}" title="4자리 연도를 입력하세요">
+           		<input type="text" name="month" placeholder="월 (예: 07)" required pattern="[0-1]?[0-9]" title="1에서 12 사이의 월을 입력하세요">
+           		<input type="text" name="day" placeholder="일 (예: 15)" required pattern="[0-3]?[0-9]" title="1에서 31 사이의 일을 입력하세요">
+     		 </div>
+    		</td>
+		</tr>
+
         <tr>
-            <td>아이디</td>
-            <td colspan="3">
-                    <input type="text" name="userID" id="userID" required>
-                    <button type="button" id="checkID">중복확인</button>
-                    <span id="userIDCheckResult"></span>
-                </td>
-        </tr>
+    	<td>아이디</td>
+   		 <td colspan="3">
+        <div class="input-group">
+            <input type="text" name="userID" id="userID" required>
+            <button type="button" id="checkID">중복확인</button>
+            <span id="userIDCheckResult"></span>
+        </div>       
+    </td>
+</tr>
+      <tr>
+    <td>비밀번호</td>
+    <td colspan="3">
+    	<div class="input-group">
+        <input type="password" name="userPW" required>
+        <small class="password-hint">* 영문자(대,소문자), 숫자, 특수문자를 모두 혼합하여 8자리 이상</small>
+    	</div>   
+    </td>
+</tr>
+<tr>
+    <td>비밀번호 확인</td>
+    <td colspan="3">
+    <div class="input-group">
+        <input type="password" name="confirm_password" required>
+        <small class="password-hint">* 비밀번호 확인을 위해 다시 한번 입력하세요</small>
+    </div>
+    </td>
+</tr>
+       
+ <tr>
+    <td>휴대폰</td>
+    <td colspan="3">
+    <div class="input-group">
+        <input type="text" name="phone" required>
+        <small class="phone-hint">* 숫자만 입력하세요. 예: 01012345678</small>
+  	</div>
+    </td>
+</tr>
+
         <tr>
-            <td>비밀번호</td>
-            <td colspan="3"><input type="password" name="userPW" required></td>
-        </tr>
-        <tr>
-            <td>비밀번호 확인</td>
-            <td colspan="3"><input type="password" name="confirm_password" required></td>
-        </tr>
-        <tr>
-            <td>휴대폰</td>
-            <td colspan="3"><input type="text" name="phone" required></td>
-        </tr>
-        <tr>
-            <td>이메일</td>
-            <td colspan="3">
-                <input type="text" name="email_user" required>
-                <select name="email_domain" required>
+    <td>이메일</td>
+    <td colspan="3">
+        <div class="input-group">
+            <input type="text" name="email_user" required>
+                @<select name="email_domain" required>
                     <option value="">선택</option>
                     <option value="naver.com">naver.com</option>
                     <option value="gmail.com">gmail.com</option>
@@ -122,44 +314,48 @@
                     <option value="icloud.com">icloud.com</option>
                 </select>
                 <button type="button" onclick="requestVerificationCode()">인증요청</button>
-            </td>
-        </tr>
+        </div>
+    </td>
+</tr>
         <tr>
-        	<td>인증번호</td>
-        	<td><input type="text" name="email_check" required id = "numnum">
-        	<button type="button" onclick="memcheck()">확인</button></td>
-        </tr>
-        <tr>
-            <td>주소</td>
-            <td colspan="3">
-                <input type="text" name="address" required> <button type="button" onclick="searchAddress()">주소찾기</button>
-             
-            </td>
-        </tr>
-        <tr>
-            <td>성별</td>
-            <td colspan="3">
-                <select name="gender" required>
-                    <option value="M">남성</option>
-                    <option value="F">여성</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="4">
-                <button type="submit" class="btn btn-primary">가입완료</button>
-                <button type="reset">초기화</button>
-            </td>
-        </tr>
+    <td>인증번호</td>
+    <td colspan="3">
+        <div class="input-group">
+            <input type="text" name="email_check" required id="numnum">
+            <button type="button" onclick="memcheck()">확인</button>
+        </div>
+    </td>
+</tr>
+     <tr>
+    <td>주소</td>
+    <td colspan="3">
+        <div class="input-group">
+            <input type="text" name="address" required>
+            <button type="button" onclick="searchAddress()">주소찾기</button>
+            <label for="male" style="margin-left: 20px;">성별:</label>
+            <input type="radio" id="male" name="gender" value="M" required>
+            <label for="male">남성</label>
+            <input type="radio" id="female" name="gender" value="F" required>
+            <label for="female">여성</label>
+        </div>
+    </td>
+</tr>
+        
     </table>
+    <button type="submit" class="btn btn-primary">가입완료</button>
 </form>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+let num = null;
+let isUserIDChecked = false;
+let isMemcheck=false;
+
+
 $(document).ready(function() {
     const contextPath = "${pageContext.request.contextPath}";
     let originalUserID = "${originalUserID}";
-    let isUserIDChecked = false;
+   
 
     $("#checkID").click(function() {
         let userID = $("#userID").val();
@@ -170,17 +366,18 @@ $(document).ready(function() {
         }
 
         $.ajax({
-        	url: contextPath + "/user/checkID",
+        	url: "/checkID",
             type: "POST",
             data: { userID: userID },
             success: function(data) {
-            	if (data === '1') {  
+            	if (data == '1') {  
                     $("#userIDCheckResult").text("사용 가능한 아이디입니다.").css("color", "green");
                     isUserIDChecked = true;
                 } else { 
                     $("#userIDCheckResult").text("이미 사용 중인 아이디입니다.").css("color", "red");
                     isUserIDChecked = false;
                 }
+            	console.log(isUserIDChecked)
             },
             error: function(xhr, status, error) {
                 alert("아이디 중복 체크에 실패했습니다.");
@@ -191,20 +388,17 @@ $(document).ready(function() {
         });
     });
 
-    // 이벤트 핸들러 등록
-    $('button[onclick="checkDuplicate()"]').on('click', checkDuplicate);
+
 });
     function searchAddress() {
         new daum.Postcode({
             oncomplete: function(data) {
-                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
-                // 예제를 참고하여 다양한 활용법을 확인해 보세요.
                 document.querySelector('input[name="address"]').value = data.address;
             }
         }).open();
     }
-    function submitForm() {
-        var password = document.querySelector('input[name="userPW"]').value;
+    /*    function submitForm() {
+         var password = document.querySelector('input[name="userPW"]').value;
         var confirmPassword = document.querySelector('input[name="confirm_password"]').value;
 
         if (password !== confirmPassword) {
@@ -213,9 +407,10 @@ $(document).ready(function() {
         }
 
         return true; // 폼 제출 허용
-    }
+    } */
     function submitForm() {
-        var password = document.querySelector('input[name="userPW"]').value;
+    	console.log("submit"+isUserIDChecked)
+    	var password = document.querySelector('input[name="userPW"]').value;
         var confirmPassword = document.querySelector('input[name="confirm_password"]').value;
 
         // 비밀번호 유효성 검사
@@ -229,7 +424,14 @@ $(document).ready(function() {
             alert("비밀번호가 일치하지 않습니다.");
             return false; // 폼 제출 중단
         }
-
+        if(!isUserIDChecked){
+        	 alert("사용할 수 없는 아이디입니다. 아이디 중복 확인 하세요.");
+             return false; // 폼 제출 중단
+        }
+        if(!isMemcheck){
+       	 alert("이메일 인증이 되지 않았습니다.");
+            return false; // 폼 제출 중단
+       }
         return true; // 폼 제출 허용
     }
     function requestVerificationCode() {
@@ -251,11 +453,21 @@ $(document).ready(function() {
     }
     function memcheck(){
     	let numnum = document.querySelector("#numnum").value;
-    	if(num==numnum){
-    		alert("인증 코드가 일치합니다.");
-    	}else {
-    		alert("인증코드를 다시 확인해 주세요");
+    	
+    	if(num == null){
+    		alert("먼저 인증 요청을 해 주십시오.");
     	}
+    	
+    	else if(num==numnum){
+    		alert("인증 코드가 일치합니다.");
+    		isMemcheck = true;
+    	}else if(num!=numnum) {
+    		alert("인증코드를 다시 확인해 주세요.");
+    	}else{
+    		alert("먼저 인증 요청을 해 주십시오.");
+    	}
+    		
+  
     }
   
 </script>
