@@ -30,4 +30,8 @@ public interface CommDao {
 	// 특정 댓글 가져오기
     @Select("SELECT * FROM comm WHERE commno = #{commno}")
     CommDto selectOne(int commno);
+    
+	// 특정 댓글 STATE가져오기
+    @Select("SELECT state FROM comm WHERE commno = #{commno}")
+    String selectOneState(int commno);
 }

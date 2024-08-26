@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.lib.dto.BlackListDto;
 import com.lib.dto.BoardDto;
+import com.lib.dto.BoardJoinUserDto;
 import com.lib.dto.CommDto;
 import com.lib.dto.UserDto;
 import com.lib.jh.service.BlackListService;
@@ -32,10 +33,11 @@ import jakarta.servlet.http.HttpServletResponse;
 @Controller
 public class JController {
 	
+	//신고된 게시글,댓글 삭제할때 errorpage로 넘김 중복 키 오류 (Primary Key, Unique Constraint)
+	// 외래 키 제약 조건 위반 (Foreign Key Constraint Violation) 떄문에 exception으로 처리함.
 	@ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-	   public String numberFormatError(Model m,SQLException exception) {
-	      m.addAttribute("errorMessage", exception);
-	      return "/ha_board/errorpage";
+	   public String numberFormatError(Model m) {
+	      return "/ha_board/errorpage(reportedpost)";
 	   }
 	// 로그인 기능 생기면 변환하기 
 	@ModelAttribute("user")
@@ -136,8 +138,7 @@ public class JController {
         }
 		else if (user.getBan().after(new Date())) { // BAN날짜가 오늘 날짜보다 값이 많으면 벤당한것
             // 권한이 없는 경우, 접근 불가 메시지와 함께 다른 페이지로 리다이렉트
-            m.addAttribute("errorMessage", "너 벤당함");
-            return "ha_board/errorpage"; // 403 접근 금지 페이지로 리다이렉트
+            return "ha_board/errorpage(ban)"; // 403 접근 금지 페이지로 리다이렉트
         }
         else {
         	return "ha_board/boardwrite";
@@ -167,9 +168,10 @@ public class JController {
 	
 	//( 게시글 수정후 실제 업로드 ) 
 	@PostMapping("/board/mod/complete")
-	public String boardUpdateS(BoardDto dto) {
+	public String boardUpdateS(@RequestParam("boardno")int boardno,BoardDto dto) {
+		
 		boardservice.update(dto);
-		return "redirect:/board/search";
+		return "redirect:/board/no/"+boardno;
 	}
 	// ----------------------------------------
 	
@@ -190,16 +192,16 @@ public class JController {
 	    @RequestParam(value="size", defaultValue = "10") int size, // 한 페이지에 보여줄 게시글 수 (기본값)
 	    Model m) {
 
-	    List<BoardDto> searchResults;
+	    List<BoardJoinUserDto> searchResults;
 	    int totalCount;
 
 	    // 검색 조건이 없을 경우 전체 게시글 가져오기
 	    if (type == null && title == null || (type.trim().isEmpty() && title.trim().isEmpty())) {
-	    	System.out.println("if");
+	    	
 	        searchResults = boardservice.selectPage(page, size);
 	        totalCount = boardservice.selectTotalCount();
 	    } else {
-	    	System.out.println("else");
+	    	
 	        // 검색 조건이 있을 때 검색 결과 가져오기
 	        int offset = (page - 1) * size; // 페이징을 위한 오프셋 계산
 	        if (offset < 0) {
@@ -245,8 +247,7 @@ public class JController {
         }
 		else if (user.getBan().after(new Date())) {
             // 권한이 없는 경우, 접근 불가 메시지와 함께 다른 페이지로 리다이렉트
-            m.addAttribute("errorMessage", "너 벤당함");
-            return "ha_board/errorpage"; // 403 접근 금지 페이지로 리다이렉트
+            return "ha_board/errorpage(ban)"; // 403 접근 금지 페이지로 리다이렉트
         }
         else {
         	commservice.insertComm(dto);
@@ -266,8 +267,10 @@ public class JController {
 	//댓글 수정
 	@PostMapping("/comm/update")
 	public String commUpdate(@RequestParam("boardno")int boardno,@RequestParam(value="contents")String contents,@RequestParam(value="commno")int commno,@ModelAttribute("user") UserDto user) {
+		System.out.println("서비스:"+contents);
 		commservice.updateComm(contents, commno, user.getUserno());
 		return  "redirect:/board/no/"+boardno;
+		
 	}
 	
 	// --------------------------------------------신고기능-----------------------------------------------------------------
@@ -296,9 +299,6 @@ public class JController {
         return "redirect:/board/no/" + boardno; // 신고 후 해당 게시글로 리다이렉트
     }
 	
-    @GetMapping("/comm/test123")
-    public void asd() {
-    	blacklistService.updateBlacklistUserBanNull();
-    }
+    
 	
 }

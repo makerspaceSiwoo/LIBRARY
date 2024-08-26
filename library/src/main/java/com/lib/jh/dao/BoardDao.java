@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.lib.dto.BoardDto;
+import com.lib.dto.BoardJoinUserDto;
 
 @Mapper
 public interface BoardDao {
@@ -34,9 +35,19 @@ public interface BoardDao {
 	@Select("select * from board where boardno = #{boardno}")
 	BoardDto selectOne(int boardno);
 	
+	 // board에서 state값 1개 확인 
+    @Select("SELECT state FROM board where boardno = #{boardno}")
+    String boardStateOne(int boardno);
+	
 	//게시글 리스트(페이징)
-    @Select("select * from board order by write_date desc limit #{offset}, #{limit}")
-    List<BoardDto> selectPage(@Param("offset") int offset, @Param("limit") int limit);
+	@Select("""
+		    SELECT b.*, u.*
+		    FROM board b
+		    INNER JOIN user u ON b.userno = u.userno
+		    ORDER BY b.write_date DESC
+		    LIMIT #{offset}, #{limit}
+		""")
+    List<BoardJoinUserDto> selectPage(@Param("offset") int offset, @Param("limit") int limit);
    
     @Select("select count(*) from board") // 게시글 총 갯수 
     int selectTotalCount();
@@ -61,8 +72,16 @@ public interface BoardDao {
 	int getSearchTotalCount(@Param("type") String type, @Param("title") String title);
 	
 	// BoardSearch 게시판 검색기능 
-	@Select("SELECT * FROM board WHERE (type = #{type} OR #{type} IS NULL) AND (title LIKE CONCAT('%', #{title}, '%') OR #{title} IS NULL) LIMIT #{offset}, #{limit}")
-	List<BoardDto> BoardSearch(@Param("type") String type, @Param("title") String title, @Param("offset") int offset, @Param("limit") int limit);
+	@Select("""
+		    SELECT b.*, u.*
+		    FROM board b
+		    INNER JOIN user u ON b.userno = u.userno
+		    WHERE (b.type = #{type} OR #{type} IS NULL)
+		    AND (b.title LIKE CONCAT('%', #{title}, '%') OR #{title} IS NULL)
+		    ORDER BY b.write_date DESC
+		    LIMIT #{offset}, #{limit}
+		""")
+	List<BoardJoinUserDto> BoardSearch(@Param("type") String type, @Param("title") String title, @Param("offset") int offset, @Param("limit") int limit);
 	
 
 }
