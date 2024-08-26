@@ -1,9 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
     <title>비밀번호 찾기</title>
+    <link rel="stylesheet" type="text/css" href="/css/ho/login.css">
 </head>
 <body>
+<div class="container">
     <h2>비밀번호 찾기</h2>
     <form action="${pageContext.request.contextPath}/findpwform" method="post">
         <label for="userID">User ID:</label>
@@ -18,5 +21,6 @@
     <c:if test="${not empty message}">
         <p style="color:red;">${message}</p>
     </c:if>
+</div>
 </body>
 </html>

@@ -19,8 +19,13 @@ public class SearchResultController {
 	// 검색 리스트에서 선택한 책 페이지로 이동시키는 컨트롤러
 	@GetMapping("/search/no={callno}")
 	public String searchResult(@PathVariable("callno") String callno, Model m) {
+	
+		
 		List<UnreturnedBookDto> blist = bservice.searchResult(callno);
+		System.out.println(blist);
+		List<BookDto> otherbooks = bservice.sameAuthor(blist.get(0).getAuthor(),callno);
 		m.addAttribute("blist",blist);
+		m.addAttribute("otherbooks", otherbooks);
 		return "user/searchResult";
 	}
 

@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.lib.dto.UserDto;
+import com.lib.ho.dto.UnretDto;
 
 @Mapper
 public interface UserDao {
@@ -43,5 +44,20 @@ public interface UserDao {
     
     @Select("SELECT COUNT(*) FROM users WHERE email = #{email}")
     boolean existsByEmail(String email);
-
+    
+    @Select("SELECT b.booktitle, b.author, b.publisher, b.category, " +
+            "DATE_FORMAT(u.end, '%Y-%m-%d') as end " +
+            "FROM book b " +
+            "JOIN unreturned u ON b.bookno = u.bookno " +
+            "WHERE u.userno = #{userno}")
+    List<UnretDto> unretbook(@Param("userno") int userno);
+    
+    @Select("SELECT b.booktitle, b.publisher, b.author, MAX(r.end) AS end_date, b.bookno, b.category "
+    		+ "FROM book b "
+    		+ "JOIN record r ON b.bookno = r.bookno "
+    		+ "WHERE r.userno = #{userno} AND r.type = '반납' "
+    		+ "GROUP BY b.booktitle, b.publisher, b.author, b.bookno "
+    		+ "HAVING MAX(r.end) IS NOT NULL "
+    		+ "ORDER BY end_date DESC limit 10")
+    List<UnretDto> recodbook(@Param("userno") int userno);
 }

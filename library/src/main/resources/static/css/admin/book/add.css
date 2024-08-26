@@ -1,278 +1,381 @@
-/* Header Styling */
-#header {
-    background-color: #f8f8f8; /* 헤더 배경색 */
-    padding: 1% 2%; /* 헤더 내부 패딩 */
-    display: flex; /* 플렉스 박스 레이아웃 사용 */
-    align-items: center; /* 아이템을 수직으로 중앙 정렬 */
-    justify-content: space-between; /* 아이템 간격 조정 */
-}
-
-#header img {
-    max-height: 3vw; /* 이미지의 최대 높이 설정 */
-    width: auto; /* 너비는 자동으로 설정 */
-    margin-right: 2%; /* 로고와 링크 사이의 간격 */
-    object-fit: contain; /* 이미지 비율을 유지하며, 셀 안에 맞춤 */
-}
-
-#header a {
-    text-decoration: none;
-    color: #333;
-    margin: 0 1.5%;
-    font-size: 1.2vw;
-    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
-}
-
-#header a:hover {
-    color: #6FBA82; /* 링크에 마우스를 올렸을 때 색상 */
-}
-
-#header div {
-    display: flex;
-    align-items: center;
-}
-
-
-/* General Layout */
+/* 공통 스타일 */
 body {
     font-family: Arial, sans-serif;
-    background-color: #FFFFFF;
     margin: 0;
     padding: 0;
+    width: 100%;
 }
 
-a {
+nav, header, aside, main, footer {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+hr {
+    border: none; /* 기본 테두리를 제거 */
+    height: 5px; /* 라인의 두께를 설정 */
+    background-color: #3C33A4; /* 라인의 색상을 초록색으로 설정 */
+    margin: 0 0; /* 상하 여백을 추가 (필요에 따라 조정 가능) */
+    padding: none;
+}
+
+
+main {
+    margin-left: 2.1vw;
+    margin-bottom: 3.5vw;
+}
+
+/* 공통 스타일: #usermenu와 #adminmenu에 동일하게 적용 */
+.menu {
+    position: relative;
+    width: 100%;
+    height: 3vw; /* 상대값으로 비율 조정 */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* a 태그들을 가운데 정렬 */
+    padding: 0.5vw 0;
+    background-color: white;
+    margin-right: 7%;
+
+}
+
+.menu a, .menu p {
+    flex-shrink: 1;
+    display: inline-block;
+    margin: 0 0.3vw; /* 간격 조정 */
     text-decoration: none;
+    color: black;
+    font-size: 1.4vw;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.menu a img {
+    height: 3vw;
+    margin-right: 0px;
+}
+
+/* 메뉴 리스트를 중앙에 배치 */
+.menulist {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1; /* 중앙에 위치하도록 flex-grow 사용 */
+    gap: 0.3vw; /* 메뉴 항목들 간의 간격 조정 */
+}
+
+.menulist a {
+	    margin: 0 2vw; /* 간격 조정 */
+}
+
+/* 버튼 컨테이너: 버튼들을 오른쪽에 정렬 */
+.button-container {
+    margin-left: auto; /* 왼쪽 마진 자동으로 설정해 버튼들이 오른쪽에 정렬 */
+    display: flex;
+    align-items: center;
+    gap: 0.2vw; /* 버튼 간의 간격 */
+}
+
+.button-container button {
+    padding: 0.5vw 1vw;
+    font-size: 1vw;
+    border-radius: 0.35vw;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    white-space: nowrap;
+    margin-right: 1vw;
+}
+.button-container p {
+	margin-right: 1vw;
+}
+
+#joinbutton {
+    background-color: #f2f2f2;
+}
+
+#loginbutton {
+    background-color: #3C33A4;
+    color: white;
+}
+
+#logoutbutton {
+    background-color: red;
+    color: white;
+}
+
+
+#joinbutton:hover, #loginbutton:hover, #logoutbutton:hover {
+    font-weight: bold;
+}
+
+#joinbutton:hover {
+    background-color: #e0e0e0;
+}
+
+#loginbutton:hover {
+    background-color: #2c2578;
+}
+
+#logoutbutton:hover {
+    background-color: #cc0000;
+}
+
+
+
+/* 페이지를 부드럽게 스크롤 */
+html {
+    scroll-behavior: smooth;
+}
+
+
+main {
+    width: 90%; /* 화면의 90%만 차지하도록 설정 */
+    margin: 0 auto; /* 중앙 정렬 */
+    padding: 2vh 0; /* 위아래 여백 설정 */
+}
+
+section {
+    margin-bottom: 4vh; /* 각 섹션 간의 여백 설정 */
+}
+
+section h2, section h3 {
+    font-size: 2vw; /* 반응형 텍스트 크기 */
+    margin-bottom: 2vh; /* 제목 아래 여백 */
     color: #333;
-    margin: 0 1.5%;
-    font-size: 1.5vw;
 }
 
-a:hover {
-    color: #6FBA82;
+section p {
+    font-size: 1.5vw; /* 반응형 텍스트 크기 */
+    margin-bottom: 2vh; /* 텍스트 아래 여백 */
+    color: #555;
 }
 
-div {
-    margin: 2%;
-}
-
-/* 이미지 크기 조정 */
-div img {
-    width: auto; /* 너비를 자동으로 설정 */
-    height: 4vw; /* a 태그의 폰트 크기와 동일하게 높이 설정 */
-    vertical-align: middle; /* 텍스트와 이미지의 수직 정렬을 맞춤 */
-}
-
+/* 도서 추가 페이지 스타일 */
 h1 {
-    font-size: 2.5vw;
-    color: #3D3D3D;
-    margin-bottom: 1%;
-    border-bottom: 0.4vw solid #A084CA;
-    padding-bottom: 1%;
+    font-size: 2.5vw; /* 큰 제목의 크기 */
+    color: #333;
+    margin-bottom: 2vh; /* 제목 아래 여백 */
 }
 
 h3 {
-    font-size: 1.8vw;
-    color: #555555;
+    font-size: 2vw; /* 소제목의 크기 */
+    color: #333;
+    margin-bottom: 1.5vh; /* 소제목 아래 여백 */
 }
 
-/* Form Layout */
+/* 입력 폼을 한 줄로 배치 */
 #bookform div {
     display: flex;
-    gap: 1%;
-    margin-bottom: 2%;
+    flex-wrap: nowrap; /* 모든 입력 필드를 한 줄로 배치 */
+    align-items: center; /* 수직 가운데 정렬 */
+    gap: 0.5vw; /* 입력 필드와 버튼 사이에 간격 추가 */
+
 }
 
-#bookform input {
-    width: 15%;
-    padding: 1%;
-    border: 0.1vw solid #ddd;
-    border-radius: 0.5vw;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+#bookform input{
+    padding: 0.5vw; /* 안쪽 여백 설정 */
+    font-size: 1vw; /* 텍스트 크기 설정 */
+    border: 1px solid #ccc; /* 테두리 색상 설정 */
+    border-radius: 0.5vw; /* 모서리를 둥글게 설정 */
+    box-sizing: border-box; /* padding 포함하여 너비 계산 */
+    min-width: 0; /* flexbox 안에서 잘리지 않도록 최소 너비 설정 */
+    width: auto;
 }
-
 
 #bookform button {
-    background-color: #4CAF50;
+    flex: 0 0 auto; /* 버튼이 고정된 크기를 가지도록 설정 */
+    padding: 0.5vw 1vw; /* 버튼의 안쪽 여백 설정 */
+    font-size: 1.2vw; /* 버튼 텍스트 크기 */
+    border-radius: 0.5vw; /* 버튼의 모서리를 둥글게 설정 */
+    background-color: #007bff; /* 버튼 배경색 설정 */
     color: white;
     border: none;
-    padding: 1% 2%;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 1.2vw;
-    border-radius: 0.5vw;
     cursor: pointer;
-    width: 10%; /* 동일한 너비 설정 */
+}
+
+#bookform button[type="reset"] {
+    flex: 0 0 auto; /* 버튼이 고정된 크기를 가지도록 설정 */
+    padding: 0.5vw 1vw; /* 버튼의 안쪽 여백 설정 */
+    font-size: 1.2vw; /* 버튼 텍스트 크기 */
+    border-radius: 0.5vw; /* 버튼의 모서리를 둥글게 설정 */
+    background-color: red; /* 버튼 배경색 설정 */
+    color: white;
+    border: none;
+    cursor: pointer;
+
 }
 
 #bookform button:hover {
-    background-color: #45a049;
+    background-color: #0056b3; /* 버튼에 마우스를 올렸을 때 배경색 변경 */
+    color: white;
+}
+#bookform button[type="reset"]:hover {
+    background-color: #cc0000; /* 버튼에 마우스를 올렸을 때 배경색 변경 */
+    color: white;
 }
 
-#bookform input[type="reset"] {
-    background-color: #f44336;
+#bookform  .modify-button {
+	flex: 0 0 auto; /* 버튼이 고정된 크기를 가지도록 설정 */
+    padding: 0.5vw 1vw; /* 버튼의 안쪽 여백 설정 */
+    font-size: 1.2vw; /* 버튼 텍스트 크기 */
+    border-radius: 0.5vw; /* 버튼의 모서리를 둥글게 설정 */
+    background-color: #CCC; /* 버튼 배경색 설정 */
     color: white;
     border: none;
-    padding: 1% 2%;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 1.2vw;
-    border-radius: 0.5vw;
     cursor: pointer;
-    width: 10%; /* 동일한 너비 설정 */
+    margin-top: 1vh;
 }
 
-#bookform input[type="reset"]:hover {
-    background-color: #e53935;
+#bookform  .delete-button{
+	flex: 0 0 auto; /* 버튼이 고정된 크기를 가지도록 설정 */
+    padding: 0.5vw 1vw; /* 버튼의 안쪽 여백 설정 */
+    font-size: 1.2vw; /* 버튼 텍스트 크기 */
+    border-radius: 0.5vw; /* 버튼의 모서리를 둥글게 설정 */
+    background-color: red; /* 버튼 배경색 설정 */
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 1vh;
 }
 
-/* Table Styles */
+#bookform  .modify-button:hover {
+	background-color: gray; /* 버튼에 마우스를 올렸을 때 배경색 변경 */
+    color: white;
+}
+
+#bookform  .delete-button:hover{
+	background-color: #cc0000; /* 버튼에 마우스를 올렸을 때 배경색 변경 */
+    color: white;
+}
+
 #booklist, #failedlist {
     width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 2%;
-}
-
-#booklist th, #failedlist th {
-    padding: 1%;
-    text-align: center;
-    background-color: #4CAF50;
-    color: white;
-    white-space: nowrap;
-    overflow: visible;
+    border-collapse: collapse; /* 테두리 겹침 제거 */
+    margin-top: 2vh;
+    margin-bottom: 2vh;
     font-size: 1.2vw;
-}
-
-#booklist td, #failedlist td {
-    border: 0.1vw solid #ddd;
-    padding: 0.8%;
-    text-align: center;
-    width: 15%; /* 기본적으로 각 칼럼의 너비를 더 좁게 설정 */
-    white-space: nowrap;
+    table-layout: fixed; /* 열의 너비를 고정 */
     overflow: hidden;
-    text-overflow: ellipsis;
-    position: relative;
 }
 
-
-
-/* 버튼이 포함된 마지막 두 칼럼에 대한 스타일 조정 */
-#booklist td:last-child, #booklist td:nth-last-child(2),
-#failedlist td:last-child, #failedlist td:nth-last-child(2) {
-    width: auto;
-    white-space: nowrap;
+#booklist th, #booklist td, #failedlist th, #failedlist td {
+    padding: 1vw; /* 셀 안쪽 여백 */
+    border: 1px solid #ccc; /* 셀 테두리 색상 */
+    text-align: center;
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+    overflow: hidden; /* 넘치는 내용 숨김 처리 */
+    text-overflow: ellipsis; /* 넘치는 텍스트를 말줄임표(...)로 표시 */
 }
-
-#booklist td button, #failedlist td button {
-    padding: 0.5vw;
-    font-size: 1vw;
-    border-radius: 0.3vw;
-     width: auto;
-}
-
-/* 수정 버튼 스타일 (회색) */
-.modify-button {
-    background-color: #808080 !important; /* 회색 */
-    color: white;
-    border: none;
-}
-
-.modify-button:hover {
-    background-color: #696969 !important; /* 어두운 회색으로 변경 */
-}
-
-/* 삭제 버튼 스타일 (빨간색) */
-.delete-button {
-    background-color: #f44336 !important; /* 빨간색 */
-    color: white;
-    border: none;
-}
-
-.delete-button:hover {
-    background-color: #e53935 !important; /* 어두운 빨간색으로 변경 */
-}
-
 
 #booklist tr:first-child, #failedlist tr:first-child {
-    background-color: #f9f9f9; /* 첫 번째 줄의 배경색을 회색으로 설정 */
-}
-#booklist tr:nth-child(2), #failedlist tr:nth-child(2) {
-    background-color: #f9f9f9; /* 두 번째 줄의 배경색을 회색으로 설정 */
-}
-#booklist tr, #failedlist tr {
-    background-color: #ffffff; /* 모든 줄의 배경색을 하얀색으로 설정 */
+    background-color: #f2f2f2; /* 첫 번째 행의 배경색 */
+    font-weight: bold;
 }
 
+#booklist td[colspan="7"], #failedlist td[colspan="7"] {
+    background-color: #eee;
+    font-size: 1.5vw;
+}
 
-/* Failed List and Excel Section */
 #failedbox {
-    margin-top: 2%;
+    margin-top: 4vh;
 }
 
-#failedbox button {
-    background-color: #f44336;
+#failedbox button{
+	flex: 0 0 auto; /* 버튼이 고정된 크기를 가지도록 설정 */
+    padding: 0.5vw 1vw; /* 버튼의 안쪽 여백 설정 */
+    font-size: 1.2vw; /* 버튼 텍스트 크기 */
+    border-radius: 0.5vw; /* 버튼의 모서리를 둥글게 설정 */
+    background-color: red; /* 버튼 배경색 설정 */
     color: white;
     border: none;
-    padding: 1% 2%;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 1.2vw;
-    border-radius: 0.5vw;
     cursor: pointer;
+    margin-top: 1vh;
+}
+#failedbox  .modify-button {
+	flex: 0 0 auto; /* 버튼이 고정된 크기를 가지도록 설정 */
+    padding: 0.5vw 1vw; /* 버튼의 안쪽 여백 설정 */
+    font-size: 1.2vw; /* 버튼 텍스트 크기 */
+    border-radius: 0.5vw; /* 버튼의 모서리를 둥글게 설정 */
+    background-color: #CCC; /* 버튼 배경색 설정 */
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 1vh;
 }
 
-#failedbox button:hover {
-    background-color: #e53935;
+#failedbox  .delete-button{
+	flex: 0 0 auto; /* 버튼이 고정된 크기를 가지도록 설정 */
+    padding: 0.5vw 1vw; /* 버튼의 안쪽 여백 설정 */
+    font-size: 1.2vw; /* 버튼 텍스트 크기 */
+    border-radius: 0.5vw; /* 버튼의 모서리를 둥글게 설정 */
+    background-color: red; /* 버튼 배경색 설정 */
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 1vh;
+}
+
+#failedbox  .modify-button:hover {
+	background-color: gray; /* 버튼에 마우스를 올렸을 때 배경색 변경 */
+    color: white;
+}
+
+#failedbox  .delete-button:hover{
+	background-color: #cc0000; /* 버튼에 마우스를 올렸을 때 배경색 변경 */
+    color: white;
+}
+
+
+#excel {
+    margin-top: 4vh;
 }
 
 #excel p {
-    margin: 0;
-    font-size: 1.2vw;
-    color: #333333;
-    margin-bottom: 1%;
+    font-size: 1.5vw; /* 설명 텍스트 크기 */
+    margin-bottom: 1.5vh;
 }
 
 #excel button {
-    background-color: #2196F3;
+    padding: 1vw 2vw; /* 버튼의 안쪽 여백 설정 */
+    font-size: 1.5vw; /* 버튼 텍스트 크기 */
+    border-radius: 0.5vw; /* 버튼의 모서리를 둥글게 설정 */
+    background-color: #4CAF50; /* 버튼 배경색 설정 */
     color: white;
     border: none;
-    padding: 1% 2%;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 1.2vw;
-    border-radius: 0.5vw;
     cursor: pointer;
-    margin-top: 1%; /* 위쪽에 약간의 간격 추가 */
+    margin-top: 1vh;
 }
 
 #excel button:hover {
-    background-color: #0b7dda;
+    background-color: #45a049; /* 버튼에 마우스를 올렸을 때 배경색 변경 */
 }
 
- /* 기본 파일 입력 요소를 숨깁니다 */
-    #file-upload {
-        display: none;
-    }
+#excel #file-upload-button {
+	 background-color: #007bff;
+}
 
-    /* 커스텀 버튼 스타일링 */
-    .custom-file-upload {
-        background-color: #2196F3;
-        color: white;
-        border: none;
-        padding: 1% 2%;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 1.2vw;
-        border-radius: 0.5vw;
-        cursor: pointer;
-    }
 
-    .custom-file-upload:hover {
-        background-color: #0b7dda;
-    }
+#excel #file-upload-button:hover {
+    background-color: #0056b3; /* 버튼에 마우스를 올렸을 때 배경색 변경 */
+}
+
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 1vw 2vw; /* 업로드 버튼의 안쪽 여백 설정 */
+    font-size: 1.5vw; /* 텍스트 크기 */
+    border-radius: 0.5vw; /* 모서리를 둥글게 설정 */
+    background-color: #007bff; /* 배경색 설정 */
+    color: white;
+    cursor: pointer;
+    margin-top: 1vh;
+}
+
+.custom-file-upload:hover {
+    background-color: #0056b3; /* 버튼에 마우스를 올렸을 때 배경색 변경 */
+}
+

@@ -24,6 +24,8 @@ public class SearchController {
 			@RequestParam(name = "p", defaultValue = "1") int page,
 			@RequestParam(name = "cate", defaultValue = "") String cate, Model m) {
 
+		search = search.trim();
+		
 		int count = service.countBook(searchn, search, cate);
 		System.out.println(count);
 		

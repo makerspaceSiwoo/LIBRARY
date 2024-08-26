@@ -68,17 +68,17 @@ public class BookManageController {
 	
 	// 수정/삭제할 책 검색 - 청구 기호로
 	@GetMapping("/book/manage")
-	public String targetBookList(@RequestParam(required = true, defaultValue = "", name="callno") String callno,
+	public String targetBookList(@RequestParam(required = true, defaultValue = "", name="booktitle") String booktitle,
 			@RequestParam(name = "p", defaultValue = "1") int page,
 			Model m) {
-		if(callno != null) { // 청구기호를 입력하지 않으면 리스트를 가져오지 않음
-			int count = bservice.targetcount(callno);
+		if(booktitle != null) { // 청구기호를 입력하지 않으면 리스트를 가져오지 않음
+			int count = bservice.targetcount(booktitle);
 			if (count > 0) {
 				int perPage = 10; // 한 페이지에 보일 글의 갯수
 				int startRow = (page - 1) * perPage;
 				int endRow = page * perPage;
 
-				List<BookDto> bookList = bservice.targetbook(callno, startRow, perPage);
+				List<BookDto> bookList = bservice.targetbook(booktitle, startRow, perPage);
 				m.addAttribute("blist", bookList);
 
 				int pageNum = 5;
@@ -90,12 +90,13 @@ public class BookManageController {
 					end = totalPages;
 				}
 				m.addAttribute("begin", begin);
+				m.addAttribute("current",page);
 				m.addAttribute("pageNum", pageNum);
 				m.addAttribute("totalPages", totalPages);
 				m.addAttribute("end", end);
 			}
 			m.addAttribute("count", count);
-			m.addAttribute("callno", callno);
+			m.addAttribute("booktitle", booktitle);
 		}
 		return "admin/manage/book2";
 	}

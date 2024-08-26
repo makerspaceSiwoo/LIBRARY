@@ -7,8 +7,113 @@
     <meta charset="UTF-8">
     <title>회원 정보 수정</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+    /* 전체 컨테이너 스타일 */
+.container {
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center; /* 컨테이너 내부 요소 가운데 정렬 */
+}
+
+/* 제목 스타일 */
+.container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* 테이블 스타일 */
+form table {
+    width: 100%; /* 테이블을 100% 너비로 변경 */
+    border-collapse: collapse;
+    margin: 0 auto 20px auto; /* 테이블 자체 가운데 정렬 */
+}
+
+/* 테이블 행 스타일 */
+form table tr {
+    margin-bottom: 15px;
+}
+
+/* 테이블 데이터 셀 스타일 */
+form table td {
+    padding: 10px;
+    vertical-align: middle;
+    text-align: center; /* 테이블 셀 내부 내용 가운데 정렬 */
+}
+
+/* 입력 필드 스타일 */
+form input[type="text"],
+form input[type="password"],
+form input[type="email"],
+form input[type="date"] {
+    width: 100%; /* 입력 필드 너비를 100%로 설정 */
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 20px;
+}
+
+/* 버튼 스타일 */
+form button {
+    background-color: #3C33A4;
+    color: white;
+    padding: 2px 40px; /* 버튼 크기 증가 */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background-color 0.3s ease;
+    margin: 0 auto; /* 가운데 정렬 */
+    display: block; /* 버튼을 블록 요소로 변경 */
+}
+
+/* 버튼 호버 효과 */
+form button:hover {
+    background-color: #3C33A4;
+}
+
+/* 입력 그룹 스타일 */
+.input-group {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* 입력 그룹 가운데 정렬 */
+}
+
+.input-group button {
+    margin-left: 10px;
+}
+
+/* 에러 메시지 스타일 */
+div[style*="color: red;"] {
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* 인증 코드 결과 및 아이디 중복 체크 결과 스타일 */
+#userIDCheckResult,
+#emailVerificationResult {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+/* 인증 코드 입력 필드 스타일 */
+#verificationCode {
+    width: 100%; /* 입력 필드 너비를 100%로 설정 */
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-align: center; /* 입력 내용 가운데 정렬 */
+}
+    </style>
 </head>
 <body>
+<div class="container">
     <h2>회원 정보 수정</h2>
 
     <!-- 에러 메시지 표시 -->
@@ -24,13 +129,15 @@
         </script>
     </c:if> -->
 
-    <form id="editForm" action="${pageContext.request.contextPath}/admin/mod/info" method="post">
+    <form id="editForm" action="${pageContext.request.contextPath}/user/mod/info" method="post">
         <table>
             <tr>
                 <td>아이디:</td>
                 <td>
+                <div class="input-group">
                     <input type="text" name="userID" id="userID" value="${user.userID}">
-                    <button type="button" id="checkUserID">중복 체크</button>
+                    <button type="button" id="checkUserID"> 중복 체크</button>
+                </div>
                     <span id="userIDCheckResult"></span>
                 </td>
             </tr>
@@ -54,16 +161,18 @@
                 <td><input type="text" name="phone" value="${user.phone}"></td>
             </tr>
             <tr>
-                <td>이메일:</td>
-                <td>
-                    <input type="email" name="email" id="email" value="${user.email}">
-                    <button type="button" id="sendCode">인증 코드 발송</button>
-                    <span id="emailVerificationResult"></span>
-                </td>
-            </tr>
-            <tr>
                 <td>주소:</td>
                 <td><input type="text" name="address" value="${user.address}"></td>
+            </tr>
+            <tr>
+                <td>이메일:</td>
+                <td>
+                <div class="input-group">
+                    <input type="email" name="email" id="email" value="${user.email}">
+                    <button type="button" id="sendCode">인증코드발송</button>
+                </div>
+                    <span id="emailVerificationResult"></span>
+                </td>
             </tr>
             <tr>
                 <td>인증 코드:</td>
@@ -76,6 +185,7 @@
             </tr>
         </table>
     </form>
+</div>
 
     <script>
         let isUserIDChecked = false;
@@ -128,10 +238,10 @@
                     data: { userID: userID },
                     success: function(data) {
                         if (data === "사용 가능") {
-                            $("#userIDCheckResult").text("사용 가능한 아이디입니다.").css("color", "green");
+                        	alert("사용 가능한 아이디 입니다.")
                             isUserIDChecked = true;
                         } else {
-                            $("#userIDCheckResult").text("이미 사용 중인 아이디입니다.").css("color", "red");
+                            alert("이미 사용 중인 아이디입니다")
                             isUserIDChecked = false;
                         }
                     },
@@ -159,14 +269,10 @@
                     data: { email: email },
                     success: function(data) {
                         alert("인증 코드가 발송되었습니다.");
-                        $("#emailVerificationResult").text("인증 코드가 발송되었습니다.").css("color", "green");
                         isEmailVerified = true; // 인증 코드 발송 후 확인
                     },
                     error: function(xhr, status, error) {
                         alert("인증 코드 발송에 실패했습니다.");
-                        console.error("Error:", error);
-                        console.error("Status:", status);
-                        console.error("XHR:", xhr);
                     }
                 });
             });

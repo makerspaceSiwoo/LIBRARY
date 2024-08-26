@@ -6,6 +6,7 @@ import com.lib.pjh.service.CodeGenerator;
 import com.lib.pjh.service.JoinService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -28,20 +29,14 @@ public class JoinController {
 	public String joinform() {
 		return "parkjae/join";
 	}
-
-	@PostMapping("/join/id_check")
-	@ResponseBody
-	public Map<String, String> checkId(@RequestParam("userID") String userID) {
-		boolean isDuplicate = joinService.checkUserIdDuplicate(userID);
-
-		Map<String, String> response = new HashMap<>();
-		if (isDuplicate) {
-			response.put("status", "duplicate");
-		} else {
-			response.put("status", "available");
-		}
-		return response;
-	}
+	
+	@PostMapping("/checkID")
+    @ResponseBody
+    public String checkUserID(@RequestParam("userID") String userID) {
+        boolean isAvailable = joinService.isUserIDAvailable(userID);
+        return isAvailable ? "1" : "0"; // 1: 사용 가능, 0: 사용 불가
+    }
+	
 
 	@PostMapping("/user/register")
 	public String registerUser(@ModelAttribute UserDto user, @RequestParam("year") String year,

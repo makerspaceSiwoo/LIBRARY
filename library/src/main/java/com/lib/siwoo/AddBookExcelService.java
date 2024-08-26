@@ -62,7 +62,7 @@ public class AddBookExcelService {
 	public byte[] uploadExcel(MultipartFile file) { // 임시 경로에 업로드 된 파일에 접근 가능
 		int done= 0;
 //		, fail = 0;
-		int max = 1000; // 최대 저장 가능 행 개수
+		int max = 2000; // 최대 저장 가능 행 개수
 		System.out.println(file.getOriginalFilename());
 		String extension = FilenameUtils.getExtension(file.getOriginalFilename());
 
@@ -81,7 +81,7 @@ public class AddBookExcelService {
 				workbook = new HSSFWorkbook(file.getInputStream());
 			}
 			Sheet sheet = workbook.getSheetAt(0);
-			rownum = sheet.getPhysicalNumberOfRows() - 3; // 행 개수 -2 (가이드란) -1(빈cell)
+			rownum = sheet.getPhysicalNumberOfRows() - 2; // 행 개수 -2 (가이드란)
 ////////////////////////////////////// max 행 개수 변환
 			rownum = Math.min(max, rownum); // 최대 1000개만
 ////////////////////////////////////// 		
@@ -103,7 +103,7 @@ public class AddBookExcelService {
 							valid = false;
 						}
 					}
-					if (row.getCell(4).getCellType() != CellType.NUMERIC) { // 마지막 cell은 숫자 값
+					if (valid==true && row.getCell(4).getCellType() != CellType.NUMERIC) { // 마지막 cell은 숫자 값
 						valid = false; // 숫자 값이 아닌 경우
 					}
 				}

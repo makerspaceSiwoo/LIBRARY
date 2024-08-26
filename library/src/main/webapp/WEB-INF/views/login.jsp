@@ -2,24 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-    <title>Login</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            width: 300px;
-            margin: 0 auto;
-            padding: 50px;
-            text-align: center;
-        }
-        .error-message {
-            color: red;
-            margin-bottom: 20px;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 페이지</title>
+<link rel="stylesheet" type="text/css" href="/css/ho/login.css">
     
     <script>
         window.onload = function() {
@@ -54,27 +41,23 @@
                 <button type="submit">로그인</button>
             </div>
         </form>
+
+    <div class="link-container">
+    <a id="searchid" href="/find/search/id">아이디 찾기</a>
+    <a id="searchpw" href="/find/search/pw">비밀번호 찾기</a>
+    <a id="join" href="/join">회원가입</a>
+	</div>
+	</div>
     
-    <form action="/find/search/id" method="get">
-    
-    <button>아이디 찾기</button>
-    
-    </form>
-    
-    <form action="/find/search/pw" method="get">
-    
-    <button>비밀번호 찾기</button>
-    
-    </form>
     
     <!--  my페이지 아직 안만들어서 임시로 넣어놓음, -->
     
-    <h3>이메일 발송(임시)</h3>
+    <!-- <h3>이메일 발송(임시)</h3>
     <form action="/admin/new" method="post">
         <label for="email">이메일을 입력하세요</label>
         <input type="email" id="email" name="email" required>
         <button type="submit">발송</button>
     </form>
-    </div>
+    </div> !-->
 </body>
 </html>

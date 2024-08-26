@@ -39,18 +39,23 @@ public class LoginController {
 	@Autowired
     UserService userService;
 	
+	@GetMapping("/admin/new/form")
+		public String adminnewform(){
+			return "/ho_find/adminnew";
+	}
+	
 	// 변경하거나 삭제해야함, 테스트용 매핑
 	@GetMapping("/testmod12")
 	public String testmod() {
 		return "test12345/testmod12";
 	}
 	
-	// 세션
-	@ModelAttribute("user")
-	    public UserDto getDto() {
-	     return new UserDto();
-	      
-	}
+//	// 세션
+//	@ModelAttribute("user")
+//	    public UserDto getDto() {
+//	     return new UserDto();
+//	      
+//	}
 	
 	@GetMapping("/login")
     public String loginPage() {
@@ -80,12 +85,8 @@ public class LoginController {
 	            // 로그인 성공: 세션에 사용자 정보 저장
 	            m.addAttribute("user", user);
 	            
-	            boolean admin = user.getAdmin().equals("1");
-	            if (admin) {
-	                return new ModelAndView("redirect:/admin/home");
-	            } else {
-	                return new ModelAndView("redirect:/home");
-	            }
+//	            boolean admin = user.getAdmin().equals("1");
+	            return new ModelAndView("redirect:/home");
 
 	        }
 	        
@@ -114,7 +115,7 @@ public class LoginController {
     // 랜덤값 만들어서 사서 아이디 비밀번호 발송
     
     @PostMapping("/admin/new")
-    public ModelAndView generateCredentials(@RequestParam("email") String email) {
+    public ModelAndView generateCredentials(@RequestParam("email") String email, RedirectAttributes redirectAttributes) {
         String userID = Random(12);
         String userPW = Random(12);
 
@@ -149,9 +150,11 @@ public class LoginController {
         // 사서 아이디 이메일 발송
         String subject = "새로운 아이디";
         String text = "당신의 아이디 " + userID + "\n당신의 비밀번호 " + userPW;
-        emailService.sendSimpleMessage(email, subject, text); 
+        emailService.sendSimpleMessage(email, subject, text);
+        
+        redirectAttributes.addFlashAttribute("message", "이메일이 성공적으로 발송되었습니다.");
 
-        return new ModelAndView("/home");
+        return new ModelAndView("/ho_find/adminmypage");
     }
     
  // 인증 코드 생성
