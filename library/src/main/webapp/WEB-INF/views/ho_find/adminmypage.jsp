@@ -70,9 +70,8 @@ function withdrawUser() {
 		</c:choose>
 		<hr>
 	</nav>
-
+	<h3 class="tit" id="all">최근 6개월 대여 상위 도서</h3>
 	<div class="section">
-    <h3 class="tit" id="all">최근 6개월간 가장많이 대여된 도서</h3>
     <hr id="smallline">
     <div class="book-list">
         <c:forEach var="all" items="${allrc}" varStatus="status">
@@ -85,7 +84,10 @@ function withdrawUser() {
                     <div class="title">${all.booktitle}</div>
                     <div class="author">${all.author}</div>
                     <div class="publisher">${all.publisher}</div>
+                    
                 </div>
+                <div class="ct">대여 횟수<br>
+                    ${all.ct}회</div>
             </div>
         </c:forEach>
     </div>

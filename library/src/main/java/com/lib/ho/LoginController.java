@@ -115,7 +115,7 @@ public class LoginController {
     // 랜덤값 만들어서 사서 아이디 비밀번호 발송
     
     @PostMapping("/admin/new")
-    public ModelAndView generateCredentials(@RequestParam("email") String email, RedirectAttributes redirectAttributes) {
+    public String generateCredentials(@RequestParam("email") String email, RedirectAttributes redirectAttributes) {
         String userID = Random(12);
         String userPW = Random(12);
 
@@ -154,7 +154,7 @@ public class LoginController {
         
         redirectAttributes.addFlashAttribute("message", "이메일이 성공적으로 발송되었습니다.");
 
-        return new ModelAndView("/ho_find/adminmypage");
+        return "redirect:/admin/mypage";
     }
     
  // 인증 코드 생성
