@@ -32,7 +32,6 @@
 </head>
 <body>
 <nav>
-<hr>
    <c:choose>
       <c:when test="${user.admin == 1 }">
          <div id="adminmenu" class="menu">
@@ -71,6 +70,7 @@
 <input type="text" name="booktitle" placeholder="제목을 입력하세요...">
 <button type="submit" >검색</button>
 </form>
+
 <table border="1">   
 	<tr>
 		<td colspan="5">"제목"검색결과</td><br>
@@ -162,7 +162,6 @@
 </section>
 </main>
 <script>
-
 
 </script>
 </body>
