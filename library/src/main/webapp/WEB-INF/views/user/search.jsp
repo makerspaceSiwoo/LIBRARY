@@ -5,32 +5,40 @@
 <head>
     <meta charset="UTF-8">
     <title>도서 검색</title>
+    <link rel="stylesheet" type="text/css" href="/css/header.css">
 	<link rel="stylesheet" type="text/css" href="/css/mo/search.css">
 </head>
 <body>
     <nav>
-    	<div id="usermenu">
+
+         <div id="usermenu" class="menu">
             <a href="/home"><img src="/logo/logo.png"></a>
-            <a href="/home">도서관 홈</a>
-            <a href="/search">도서 검색</a>
-            <a href="/recomm">추천 도서</a>
-            <a href="/board/search">게시판</a>
-            <a href="/mypage">마이 페이지</a>
-            <c:choose>
-               <c:when test="${empty user }">
-                  <button id="joinbutton" onclick="location.href='/join';">회원 가입</button>
-                  <button id="loginbutton" onclick="location.href='/login';">로그인</button>
-               </c:when>
-               <c:otherwise>
-                  <p>${user.userID }님</p>
-                  <form action="/logout" method="post">
-                     <button id="logoutbutton">로그아웃</button>
-                  </form>
-               </c:otherwise>
-            </c:choose>
+            <div class="menulist">
+	            <a href="/home">도서관 홈</a>
+	            <a href="/search">도서 검색</a>
+	            <a href="/recomm">추천 도서</a>
+	            <a href="/board/search">게시판</a>
+	            <a href="/mypage">마이 페이지</a>
+            </div>
+            <div class="button-container">
+	            <c:choose>
+	               <c:when test="${empty user or empty user.userID}">
+	                  <button id="joinbutton" onclick="location.href='/join';">회원 가입</button>
+	                  <button id="loginbutton" onclick="location.href='/login';">로그인</button>
+	               </c:when>
+	               <c:otherwise>
+	                  <p>${user.userID }님</p>
+	                  <form action="/logout" method="post">
+	                     <button id="logoutbutton">로그아웃</button>
+	                  </form>
+	               </c:otherwise>
+	            </c:choose>
+	        </div>
          </div>
-	</nav>
-	<h2 class="title">도서 검색</h2>
+
+   <hr>
+</nav>
+	<h3 class="title">도서 검색</h3>
 	
 	
     <form action="search">
