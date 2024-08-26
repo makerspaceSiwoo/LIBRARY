@@ -20,7 +20,7 @@
 	            <a href="/book/add">도서 추가</a>
 	            <a href="/book/manage">도서 수정/삭제</a>
 	            <a href="/board/search">게시판</a>
-	            <a href="/mypage">마이 페이지</a>
+	            <a href="/admin/mypage">사서 페이지</a>
 	            <a href="/admin/blacklist">유저 관리</a>
             </div>
             <div class="button-container">
@@ -111,11 +111,9 @@
     	<button type="button" onclick="return location.href='/book/add/downform';" >엑셀 양식 다운로드</button>
     	<br>
 		<form id="excelupload" action="/book/add/excel" method="post" enctype="multipart/form-data" onsubmit="return validateAndSubmit();">
-			<label for="file-upload" class="custom-file-upload">
-	    		파일 선택
-			</label>
+
 			<input id="file-upload" type="file" name="booklistexcel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
-			<button type="submit">업로드</button>
+			<button id="file-upload-button" type="submit">업로드</button>
 		</form>
 	</div>
 	</section>
@@ -131,11 +129,11 @@ let currentIndex = 0; // 현재 인덱스를 추적
 
 /* 파일용량 제한*/
 $("input[name=booklistexcel").on("change", function(){
-  let maxSize = 5 * 1024 * 1024; //* 5MB 사이즈 제한
+  let maxSize = 1 * 1024 * 1024; //* 1MB 사이즈 제한
 	let fileSize = this.files[0].size; //업로드한 파일용량
 
   if(fileSize > maxSize){
-		alert("파일첨부 사이즈는 5MB 이내로 가능합니다.");
+		alert("파일첨부 사이즈는 1MB 이내로 가능합니다.");
 		$(this).val(''); //업로드한 파일 제거
 		return; 
 	}
