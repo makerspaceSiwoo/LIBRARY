@@ -1,59 +1,8 @@
-
-    	/* 공통 스타일 */
-body {
-		    font-family: Arial, sans-serif;
-		    margin: 0;
-		    padding: 0;
-		    width: 100%;
-		}
-		
-		nav, header, aside, main, footer {
-		    width: 100%;
-		    margin: 0 auto;
-		    padding: 0;
-		    box-sizing: border-box;
-		}
-		
-		main{
-		   margin-left: 2.4vw;
-		   margin-bottom: 4vw;
-		}
-		
-		
-		#usermenu {
-		   position: relative;
-		   width: 100%;
-		    height: 4.8vw; /* 헤더의 높이를 80%로 줄임 */
-		    overflow: hidden;
-		    display: flex;
-		    align-items: center;
-		    justify-content: space-between;
-		    padding: 0.8vw 0vw;
-		    background-color: white;
-		    margin-right: 8%;
-		}
-		
-		#usermenu a, p {
-		   flex-shrink: 1;
-		   display: inline-block;
-		    margin: 0 1.2vw; /* 각 링크 사이의 좌우 여백을 80%로 줄임 */
-		    text-decoration: none;
-		    color: black;
-		    font-size: 1.28vw; /* 텍스트 크기를 80%로 줄임 */
-		    font-weight: 500;
-		    white-space: nowrap;
-		}
-		
-		#usermenu a img {
-		    height: 4.8vw; /* 로고 이미지의 높이를 80%로 줄임 */
-		    margin-right: 0px;
-		}
-    	
-    	.title {
+.title {
 		    margin-top: 32px;
 		    margin-bottom: 3vw;
 		    font-size: 2.4vw; /* 텍스트 크기를 80%로 줄임 */
-			margin-left: 3vw;
+			margin-left: 10vw;
 		}
 
 
