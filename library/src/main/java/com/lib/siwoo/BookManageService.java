@@ -1,6 +1,8 @@
 package com.lib.siwoo;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,14 +30,28 @@ public class BookManageService {
 		int imgdone, locdone=0, categorydone = 0;
 		try {
 			if(dao.checkDuplicate(dto.getCallno()) == 0) { // 청구 기호로 검색해서 이미 존재하는지 확인
-				success = dao.insertBook(dto);
+				
 				imgdone = imgservice.addBookImgone(dto); // 새로 추가하는 책에 대해서만 - 중간에 실패 -> noimg
-				locdone = metaservice.addBookLocOne(dto); // 해당 책의 서가 위치 입력
-				categorydone = metaservice.addBookCategoryOne(dto); // 해당 책의 카테고리 입력
+				
+				// 유효성 검사 - 청구기호 유효성 검사
+				String pattern = "([가-힣a-zA-Z]*)(\\d+(\\.\\d+)?)-([가-힣a-zA-Z])\\d+([가-힣ㄱ-ㅎa-zA-Z])\\d*(v\\.\\d+(\\.\\d+)?+(c\\.\\d+)?)?=(\\d+)";		        
+				Pattern r = Pattern.compile(pattern);
+		        Matcher m = r.matcher(dto.getCallno());
+				if(!m.matches()) { // 청구 기호가 형식에 맞지 않는 경우
+					System.out.println("잘못된 청구기호 형식");
+					System.out.println(dto.getCallno());
+					return 0; // 책 삽입 실패
+				}
+
+				locdone = metaservice.addBookLocOne(dto); // 해당 책의 서가 위치 dto에 입력
+				categorydone = metaservice.addBookCategoryOne(dto); // 해당 책의 카테고리 dto에 입력
+				
+				success = dao.insertBook(dto); // 책 삽입
 				
 				System.out.printf("이미지 삽입 성공 : %d,  서가위치 삽입 성공 : %d, 분류 삽입 성공 : %d\n",imgdone,locdone,categorydone);
 				return success;
 			}else {
+				return 0;
 //				System.out.println("이미 존재하는 도서 입니다.");
 			}
 		} catch(Exception e) {
