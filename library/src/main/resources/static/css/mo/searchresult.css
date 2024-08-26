@@ -57,10 +57,12 @@ form input[type="submit"]:hover {
     border: 5px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height : 276px;
+    width : auto;
 }
 
 #bookinfo {
-	margin-top: 3.8vw;
+	margin-top: 4.8vw;
     margin-left: 20px;
     display: inline-block;
     vertical-align: top;
