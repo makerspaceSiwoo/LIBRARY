@@ -29,12 +29,20 @@ public interface BlackListDao {
     
     // 사서가 게시글 STATE 업데이트 ( 신고시 BLIND로 STATE변경) 
     @Update("UPDATE board SET state = 'BLIND' WHERE boardno = #{boardno}")
-    int updateBoardStateToReported(int boardno);
+    int updateBoardStateToReported1(int boardno);
     
+    // 사서가 게시글 STATE 업데이트 ( 신고시 null로 STATE변경) 
+    @Update("UPDATE board SET state = null WHERE boardno = #{boardno}")
+    int updateBoardStateToReported2(int boardno);
+    
+
     // 사서가 댓글 STATE 업데이트 (신고시 BLIND로 상태로 변경)
     @Update("UPDATE comm SET state = 'BLIND' WHERE commno = #{commno}")
-    int updateCommStateToReported(int commno);
- 
+    int updateCommStateToReported1(int commno);
+    // 사서가 댓글 STATE 업데이트 (신고시 null로 상태로 변경)
+    @Update("UPDATE comm SET state = null WHERE commno = #{commno}")
+    int updateCommStateToReported2(int commno);
+    
     // 사서가 블랙리스트 확인후 블랙리스트에서 삭제하기
     @Delete("DELETE FROM BLACKLIST WHERE BLACKLISTNO = #{blacklistno}")
     int deleteBlackList(int blacklistno);
@@ -42,6 +50,9 @@ public interface BlackListDao {
     // 사서가 블랙리스트 forbid_end 설정
     @Update("UPDATE blacklist SET forbid_end = #{forbid_end} WHERE blacklistno=#{blacklistno}")
     int updateBlacklistForbit_end(@Param("forbid_end")Date forbid_end ,@Param("blacklistno")int blacklistno);
+    
+    @Select("SELECT forbid_end FROM blacklist WHERE blacklistno = #{blacklistno}")
+    Date SelectOneForbidEnd(int blacklistno);
     
     //count가 0일떄 boardno가 없는것.
     @Select("SELECT COUNT(*) FROM blacklist WHERE boardno = #{boardno}")

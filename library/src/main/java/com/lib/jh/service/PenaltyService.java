@@ -44,7 +44,7 @@ public class PenaltyService {
     }
     
  // 사용자 ban 상태를 업데이트하는 메서드
-    public void updateUserBanStatus(int userno, int boardno, Date forbid_end,int blacklistno) {
+    public void updateUserBanStatusPlus(int userno, int boardno, Date forbid_end,int blacklistno) {
         
     	// 현재 시간
         Date now = new Date();
@@ -57,7 +57,43 @@ public class PenaltyService {
         
         
       
-        blacklistService.updateBlacklistForbid_end(blacklistno); //
+        blacklistService.updateBlacklistForbid_end_plus(blacklistno); //
+        
+        if (currentBanEnd == null) {  //기존 벤이 없는경우 
+            
+        	userdao.updateUserBan(userno, forbid_end);
+        	
+            
+        }
+        else { //기존 벤이 있으면
+            long additionalBanTime = forbid_end.getTime() - now.getTime();
+            Date newBanEnd = new Date(currentBanEnd.getTime() + additionalBanTime);
+            System.out.println("currentBanEnd"+currentBanEnd);
+            System.out.println(newBanEnd);
+            userdao.updateUserBan(userno, newBanEnd); // 사용자 ban 업데이트
+            
+            
+        }
+        
+       }
+    
+    
+ // 사용자 ban 상태를 업데이트하는 메서드
+    public void updateUserBanStatusMinus(int userno, int boardno, Date forbid_end,int blacklistno) {
+        
+    	// 현재 시간
+        Date now = new Date();
+
+        // 사용자 정보 조회
+        UserDto user = userdao.selectUserById(userno);
+
+        // 사용자의 현재 Ban상태
+        Date currentBanEnd = user.getBan();
+        
+        
+      
+        blacklistService.updateBlacklistForbid_end_minus(blacklistno); //
+        
         if (currentBanEnd == null) {  //기존 벤이 없는경우 
             
         	userdao.updateUserBan(userno, forbid_end);

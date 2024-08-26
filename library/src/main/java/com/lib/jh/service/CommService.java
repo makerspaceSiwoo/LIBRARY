@@ -26,6 +26,7 @@ public class CommService {
 	}
 	
 	public int updateComm(String contents,int commno,int userno ) {
+		System.out.println(contents);
 		return dao.updateComm(contents, commno, userno);
 	}
 }
