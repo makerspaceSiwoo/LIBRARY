@@ -38,6 +38,11 @@
     	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
     }
 	</style>
+	<c:if test="${not empty message}">
+    <script type="text/javascript">
+        alert("${message}");
+    </script>
+</c:if>
 </head>
 <body>
 <nav>
