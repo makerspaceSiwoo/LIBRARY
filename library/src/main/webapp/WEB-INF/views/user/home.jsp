@@ -181,7 +181,7 @@
 	<nav>
 	    <div class="navbar">
 	        <a href="#locate">도서관 위치</a>
-	        <a href="#schedule">도서관 이용시간</a>
+	        <a href="#schedule">이용시간</a>
 	        <a href="#notice">공지사항</a>
 	        <a href="#quantity">소장자료 현황</a>
 	    </div>
