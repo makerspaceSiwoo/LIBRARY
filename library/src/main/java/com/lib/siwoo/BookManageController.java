@@ -111,7 +111,7 @@ public class BookManageController {
 	
 	@PostMapping("/book/mod")
 	@ResponseBody
-	public int modBook(BookDto dto, Model m) {
+	public int modBook(@RequestBody BookDto dto, Model m) {
 		int done = bservice.modBook(dto);
 		System.out.println(done);
 		return done;
