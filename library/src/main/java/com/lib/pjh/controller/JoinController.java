@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+@SessionAttributes("user")
 @Controller
 public class JoinController {
 

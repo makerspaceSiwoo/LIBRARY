@@ -1,10 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" type="text/css" href="/css/admin/book/add.css">
+<link rel="stylesheet" type="text/css" href="/css/header.css">
 <style>
 /* 회원가입 h1 태그 중앙 정렬 */
 .center-title {
@@ -220,19 +221,30 @@ div[style*="color: red;"] {
 </head>
 <body>
 <nav>
-   <c:choose>
-         <div id="adminmenu" class="menu">
+         <div id="usermenu" class="menu">
             <a href="/home"><img src="/logo/logo.png"></a>
             <div class="menulist">
-	            <a href="/home">도서관 홈</a>
-	            <a href="/search">도서 검색</a>
-	            <a href="/recomm">추천 도서</a>
-	            <a href="/board/search">게시판</a>
-	            <a href="/mypage">마이 페이지</a>
+               <a href="/home">도서관 홈</a>
+               <a href="/search">도서 검색</a>
+               <a href="/recomm">추천 도서</a>
+               <a href="/board/search">게시판</a>
+               <a href="/user/mypage">마이 페이지</a>
             </div>
-            
+            <div class="button-container">
+               <c:choose>
+                  <c:when test="${empty user or empty user.userID}">
+                     <button id="joinbutton" onclick="location.href='/join';">회원 가입</button>
+                     <button id="loginbutton" onclick="location.href='/login';">로그인</button>
+                  </c:when>
+                  <c:otherwise>
+                     <p>${user.userID }님</p>
+                     <form action="/logout" method="post">
+                        <button id="logoutbutton">로그아웃</button>
+                     </form>
+                  </c:otherwise>
+               </c:choose>
+           </div>
          </div>
-   </c:choose>
    <hr>
 </nav>
 <!-- 회원가입 h1 태그 -->
