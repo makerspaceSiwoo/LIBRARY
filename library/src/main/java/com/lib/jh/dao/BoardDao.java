@@ -83,6 +83,24 @@ public interface BoardDao {
 		""")
 	List<BoardJoinUserDto> BoardSearch(@Param("type") String type, @Param("title") String title, @Param("offset") int offset, @Param("limit") int limit);
 	
+	// title로 검색하는 쿼리
+    @Select("""
+        SELECT b.*, u.*
+        FROM board b
+        INNER JOIN user u ON b.userno = u.userno
+        WHERE b.title LIKE CONCAT('%', #{title}, '%')
+        ORDER BY b.write_date DESC
+        LIMIT #{offset}, #{limit}
+    """)
+    List<BoardJoinUserDto> BoardSearchByTitle(@Param("title") String title, @Param("offset") int offset, @Param("limit") int limit);
+
+    // title로 검색된 게시글 수를 가져오는 쿼리
+    @Select("""
+        SELECT COUNT(*)
+        FROM board
+        WHERE title LIKE CONCAT('%', #{title}, '%')
+    """)
+    int getSearchTotalCountByTitle(@Param("title") String title);
 
 }
 

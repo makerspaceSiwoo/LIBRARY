@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="/css/header.css">
 <meta charset="UTF-8">
 <title>게시글 상세 보기</title>
 <style>
@@ -111,6 +112,7 @@ button {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+
 
 button:hover {
     background-color: #0056b3;
@@ -280,6 +282,65 @@ a:hover {
 </script>
 </head>
 <body>
+<nav>
+
+   <c:choose>
+      <c:when test="${user.admin == 1 }">
+         <div id="adminmenu" class="menu">
+            <a href="/home"><img src="/logo/logo.png"></a>
+            <div class="menulist">
+               <a href="/home">도서관 홈</a>
+               <a href="/book/record">대출/반납</a>
+               <a href="/book/add">도서 추가</a>
+               <a href="/book/manage">도서 수정/삭제</a>
+               <a href="/board/search">게시판</a>
+               <a href="/admin/mypage">사서 페이지</a>
+               <a href="/admin/blacklist">유저 관리</a>
+            </div>
+            <div class="button-container">
+               <c:choose>
+                  <c:when test="${empty user or empty user.userID}">
+                     <button id="loginbutton" onclick="location.href='/login';">로그인</button>
+                  </c:when>
+                  <c:otherwise>
+                     <p>${user.userID }님</p>
+                     <form action="/logout" method="post">
+                        <button style= "color: black;" "id="logoutbutton" >로그아웃</button>
+                     </form>
+                  </c:otherwise>
+               </c:choose>
+           </div>
+         </div>
+      </c:when>
+      <c:otherwise>
+         <div id="usermenu" class="menu">
+            <a href="/home"><img src="/logo/logo.png"></a>
+            <div class="menulist">
+               <a href="/home">도서관 홈</a>
+               <a href="/search">도서 검색</a>
+               <a href="/recomm">추천 도서</a>
+               <a href="/board/search">게시판</a>
+               <a href="/mypage">마이 페이지</a>
+            </div>
+            <div class="button-container">
+               <c:choose>
+                  <c:when test="${empty user or empty user.userID}">
+                     <button id="joinbutton" onclick="location.href='/join';">회원 가입</button>
+                     <button id="loginbutton" onclick="location.href='/login';">로그인</button>
+                  </c:when>
+                  <c:otherwise>
+                     <p>${user.userID }님</p>
+                     <form action="/logout" method="post">
+                        <button style= "color: black;"  id="logoutbutton">로그아웃</button>
+                     </form>
+                  </c:otherwise>
+               </c:choose>
+           </div>
+         </div>
+      </c:otherwise>
+   </c:choose>
+   <hr>
+</nav>
 <div class="text-container">
     <div class="post-header">
         <h2>${bcontent.title}</h2>
@@ -299,11 +360,11 @@ a:hover {
 			<c:if test="${ user.userno == bcontent.userno && bcontent.state != 'BLIND'}"> 
   		  <!-- 게시글 수정 버튼 -->
    		 	<form action="/board/mod/${bcontent.boardno}" method="get" onsubmit="return confirmAction('게시글을 수정하시겠습니까?')">
-   		    	<button type="submit">게시글 수정</button>
+   		    	<button style= "color: white; "type="submit">게시글 수정</button>
   		  	</form>
   		  <!-- 게시글 삭제 버튼 -->
   		  	<form action="/board/delete/${bcontent.boardno}" method="get" onsubmit="return confirmAction('게시글을 삭제하시겠습니까?')">
-  		     	 <button type="submit">게시글 삭제</button>
+  		     	 <button style= "color: white; type="submit">게시글 삭제</button>
    		 	</form>
 			</c:if>	
 			<c:if test="${ user.userno != bcontent.userno && bcontent.state != 'BLIND'}"> 
@@ -338,9 +399,9 @@ a:hover {
                                     
                                     <c:if test="${ user.userno == comment.userno && comment.state != 'BLIND'}"> 
                                         <div class="edit-delete-btns">
-                                            <button type="button" class="comment-button" onclick="editComment(this, ${comment.commno})">댓글수정</button>
+                                            <button style ="background-color: #007bff; color: white;"type="button" class="comment-button" onclick="editComment(this, ${comment.commno})">댓글수정</button>
                                             <form action="/comm/delete/${bcontent.boardno}/${comment.commno}" method="post" onsubmit="handleDelete(event)">
-                                                <button type="submit" class="report-btn">댓글삭제</button>
+                                                <button style="color: white;" type="submit" class="report-btn">댓글삭제</button>
                                             </form>
                                             
                                         </div>
@@ -371,7 +432,7 @@ a:hover {
             <input type="hidden" name="boardno" value="${bcontent.boardno}">
             <input type="hidden" name="userno" value="${user.userno}">
             <textarea name="contents" placeholder="새로운 댓글 내용을 입력하세요." required oninput="checkCommentInput()"></textarea>
-            <div style= margin-left:20px;><button type="submit">댓글 작성</button></div>
+            <div style= margin-left:20px;><button type="submit" style= "color:white;">댓글 작성</button></div>
         </form>
     </div>
     <%-- 댓글 작성 섹션 끝 --%>

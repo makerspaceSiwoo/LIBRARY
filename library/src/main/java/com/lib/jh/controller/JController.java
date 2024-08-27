@@ -195,15 +195,23 @@ public class JController {
 	    List<BoardJoinUserDto> searchResults;
 	    int totalCount;
 
+	    // title로만 검색하는 경우
+	    if ((type == null || type.trim().isEmpty()) && title != null && !title.trim().isEmpty()) {
+	        int offset = (page - 1) * size;
+	        if (offset < 0) {
+	            offset = 0; // offset이 음수일 경우 0으로 설정 
+	        }
+	        searchResults = boardservice.BoardSearchByTitle(title, offset, size);
+	        totalCount = boardservice.getSearchTotalCountByTitle(title);
+	    } 
 	    // 검색 조건이 없을 경우 전체 게시글 가져오기
-	    if (type == null && title == null || (type.trim().isEmpty() && title.trim().isEmpty())) {
-	    	
+	    else if (type == null && title == null || (type.trim().isEmpty() && title.trim().isEmpty())) {
 	        searchResults = boardservice.selectPage(page, size);
 	        totalCount = boardservice.selectTotalCount();
-	    } else {
-	    	
-	        // 검색 조건이 있을 때 검색 결과 가져오기
-	        int offset = (page - 1) * size; // 페이징을 위한 오프셋 계산
+	    } 
+	    // type과 title이 모두 있는 경우
+	    else {
+	        int offset = (page - 1) * size;
 	        if (offset < 0) {
 	            offset = 0; // offset이 음수일 경우 0으로 설정 
 	        }
@@ -227,15 +235,16 @@ public class JController {
 	    m.addAttribute("endPage", endPage);
 
 	    // 페이지 유효성 검사
-	    if (page < 1) {	
+	    if (page < 1) {    
 	        return "redirect:/board/search?p=1"; // 1페이지로 리다이렉트
 	    }
 	    if(page > totalPages)
 	    {
-	    	return "redirect:/board/search?p="+totalPages;
+	        return "redirect:/board/search?p="+totalPages;
 	    }
 	    return "ha_board/boardsearch"; // JSP 파일로 이동
 	}
+
 	
 	// 댓글 작성 기능
 	@PostMapping("/comm/write")

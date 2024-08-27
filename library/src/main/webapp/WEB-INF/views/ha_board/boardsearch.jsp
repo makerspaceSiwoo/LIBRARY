@@ -2,50 +2,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<link rel="stylesheet" type="text/css" href="/css/header.css">
     <meta charset="UTF-8">
     <title>게시판 검색</title>
     <style>
+        /* 전체 페이지 스타일 */
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffffff;
             margin: 0;
             padding: 0;
-            background-color: #f4f6f9;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100vh;
-        }
-
-        header {
-            padding: 20px;
-            width: 100%;
-            position: fixed;
-            top: 0;
-            background-color: #343a40;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-        }
-
-        #logo {
-            display: flex;
-            align-items: center;
-        }
-
-        #logo img {
-            max-width: 120px;
-            height: auto;
         }
 
         nav a {
-            color: white;
+            color: #333;
             margin: 0 15px;
             text-decoration: none;
             font-weight: 500;
@@ -53,26 +26,15 @@
         }
 
         nav a:hover {
-            color: #adb5bd;
-        }
-
-        #menu {
-            background-color: white;
-            padding: 100px 30px 30px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            width: 80%;
-            margin-top: 80px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            color: #555;
         }
 
         h1 {
             margin-bottom: 30px;
             color: #343a40;
-            font-size: 28px;
-            font-weight: bold;
+            font-size: 32px;
+            font-weight: 700;
+            text-align: center;
         }
 
         .search-form {
@@ -92,61 +54,96 @@
         .search-form select, 
         .search-form input[type="text"],
         .search-form button {
-            padding: 10px;
-            border-radius: 5px;
+            padding: 10px 15px;
+            border-radius: 8px;
             border: 1px solid #ced4da;
             font-size: 16px;
+            transition: all 0.3s ease;
         }
 
         .search-form select, 
         .search-form input[type="text"] {
-            width: 200px;
+            width: 220px;
+            background-color: #fff;
         }
 
         .search-form button {
-            background-color: #007bff;
+            background-color: #3C33A4; /* 하늘색 진하게 */
             color: white;
             border: none;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .search-form button:hover {
-            background-color: #0056b3;
+            background-color: #2D2489; /* 하늘색 진하게 */
+        }
+
+        .results {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .results h2 {
+            font-size: 24px;
+            color: #495057;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 20px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            background-color: #ffffff;
         }
 
         .table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            table-layout: fixed; /* 고정된 테이블 레이아웃을 사용하여 크기 변화 방지 */
+            background-color: white;
         }
 
         .table th, .table td {
-            padding: 12px;
-            border: 1px solid #dee2e6;
+            padding: 16px;
             text-align: center;
+            white-space: nowrap; /* 텍스트 줄 바꿈 방지 */
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .table th {
-            background-color: #f8f9fa;
-            font-weight: bold;
-            color: #495057;
+            background-color: #3C33A4; /* 하늘색으로 변경 */
+            color: white;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        .table td {
+            background-color: #f9f9f9;
+            border-bottom: 1px solid #e0e0e0;
+            color: #333;
+            transition: background-color 0.3s ease;
         }
 
         .table td a {
-            color: #007bff;
+            color: #333;
             text-decoration: none;
+            font-weight: 500;
             transition: color 0.3s ease;
         }
 
-        .table td a:hover {
-            color: #0056b3;
+        .table td:hover {
+            background-color: #f1f1f1;
         }
 
-        .results h2 {
-            font-size: 22px;
-            color: #495057;
-            margin-bottom: 20px;
+        .table td a:hover {
+            color: #2D2489; /* 하늘색 진하게 */
         }
 
         .pagination {
@@ -163,75 +160,111 @@
 
         .pagination a {
             text-decoration: none;
-            padding: 8px 16px;
+            padding: 10px 20px;
             border: 1px solid #ced4da;
             border-radius: 5px;
-            color: #6c757d;
+            color: #333;
             transition: background-color 0.3s ease, color 0.3s ease;
+            background-color: #ffffff;
         }
 
         .pagination li.active a {
-            background-color: #007bff;
+            background-color: #3C33A4; /* 하늘색으로 변경 */
             color: white;
-            border: 1px solid #007bff;
+            border: 1px solid #333;
         }
 
         .pagination li.disabled a {
             color: #adb5bd;
             pointer-events: none;
+            background-color: #f1f1f1;
         }
 
         .pagination a:hover {
-            background-color: #e9ecef;
-            color: #007bff;
+            background-color: #CCF2FF;
+            color: #555;
         }
 
         .write-button {
-            background-color: #28a745;
+            background-color: #3C33A4; /* 하늘색으로 변경 */
             color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: 5px;
+            padding: 15px 30px;
+            border-radius: 8px;
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s ease;
             margin-top: 20px;
             display: inline-block;
             text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .write-button:hover {
-            background-color: #218838;
+            background-color: #2D2489; /* 하늘색 진하게 */
         }
     </style>
 </head>
 <body>
 
-<header>
-    <div id="logo">
-        <a href="/home"><img src="/logo/logo.png" alt="Logo"></a>
-        <span>도서관</span>
-    </div>
-    <nav>
-        <a href="/home">도서관 홈</a>
-        <a href="/search">도서 검색</a>
-        <a href="/recomm">추천 도서</a>
-        <a href="/board/search">게시판</a>
-        <a href="/mypage">마이 페이지</a>
-        <c:choose>
-            <c:when test="${empty user}">
-                <a href="/login">로그인</a>
-                <a href="/join">회원 가입</a>
-            </c:when>
-            <c:otherwise>
-                <span>${user.userID}</span>
-                <form action="/logout" method="post" style="display:inline;">
-                    <button type="submit" style="background-color: #dc3545; color: white; border: none; border-radius: 4px; padding: 5px 10px;">로그아웃</button>
-                </form>
-            </c:otherwise>
-        </c:choose>
-    </nav>
-</header>
+<nav>
+   <c:choose>
+      <c:when test="${user.admin == 1 }">
+         <div id="adminmenu" class="menu">
+            <a href="/home"><img src="/logo/logo.png"></a>
+            <div class="menulist">
+               <a href="/home">도서관 홈</a>
+               <a href="/book/record">대출/반납</a>
+               <a href="/book/add">도서 추가</a>
+               <a href="/book/manage">도서 수정/삭제</a>
+               <a href="/board/search">게시판</a>
+               <a href="/admin/mypage">사서 페이지</a>
+               <a href="/admin/blacklist">유저 관리</a>
+            </div>
+            <div class="button-container">
+               <c:choose>
+                  <c:when test="${empty user or empty user.userID}">
+                     <button id="loginbutton" onclick="location.href='/login';">로그인</button>
+                  </c:when>
+                  <c:otherwise>
+                     <p>${user.userID }님</p>
+                     <form action="/logout" method="post">
+                        <button id="logoutbutton">로그아웃</button>
+                     </form>
+                  </c:otherwise>
+               </c:choose>
+           </div>
+         </div>
+      </c:when>
+      <c:otherwise>
+         <div id="usermenu" class="menu">
+            <a href="/home"><img src="/logo/logo.png"></a>
+            <div class="menulist">
+               <a href="/home">도서관 홈</a>
+               <a href="/search">도서 검색</a>
+               <a href="/recomm">추천 도서</a>
+               <a href="/board/search">게시판</a>
+               <a href="/mypage">마이 페이지</a>
+            </div>
+            <div class="button-container">
+               <c:choose>
+                  <c:when test="${empty user or empty user.userID}">
+                     <button id="joinbutton" onclick="location.href='/join';">회원 가입</button>
+                     <button id="loginbutton" onclick="location.href='/login';">로그인</button>
+                  </c:when>
+                  <c:otherwise>
+                     <p>${user.userID }님</p>
+                     <form action="/logout" method="post">
+                        <button id="logoutbutton">로그아웃</button>
+                     </form>
+                  </c:otherwise>
+               </c:choose>
+           </div>
+         </div>
+      </c:otherwise>
+   </c:choose>
+   <hr>
+</nav>
 
 <div id="menu">
     <h1>게시판 검색</h1>
@@ -254,37 +287,38 @@
         <c:choose>
             <c:when test="${not empty searchResults}">
                 <h2>검색 결과</h2>
-                <table class="table">
-                    <thead>
-                        <tr>
-                        	<th>분류</th>
-                            <th>제목</th>
-                            <th>작성자</th>
-                            <th>작성일</th>
-                            <th>조회</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach items="${searchResults}" var="result">
+                <div class="table-wrapper">
+                    <table class="table">
+                        <thead>
                             <tr>
-                            	<td>
-    								<c:choose>
-        								<c:when test="${result.type == 'announcement'}">공지사항</c:when>
-        								<c:when test="${result.type == 'free'}">자유</c:when>
-        								<c:when test="${result.type == 'recommend'}">추천</c:when>
-        								<c:when test="${result.type == 'review'}">리뷰</c:when>
-        								<c:otherwise>기타</c:otherwise> 
-    								</c:choose>
-								</td>
-                                <td><a href="/board/no/${result.boardno}">${result.title}</a></td>
-                                <td>${result.userID}</td>
-                                <td><fmt:formatDate value="${result.write_date}" pattern="yyyy-MM-dd HH:mm" /></td>
-                                <td>${result.view}</td>
+                                <th>분류</th>
+                                <th>제목</th>
+                                <th>작성자</th>
+                                <th>작성일</th>
+                                <th>조회</th>
                             </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${searchResults}" var="result">
+                                <tr>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${result.type == 'announcement'}">공지사항</c:when>
+                                            <c:when test="${result.type == 'free'}">자유</c:when>
+                                            <c:when test="${result.type == 'recommend'}">추천</c:when>
+                                            <c:when test="${result.type == 'review'}">리뷰</c:when>
+                                            <c:otherwise>기타</c:otherwise> 
+                                        </c:choose>
+                                    </td>
+                                    <td><a href="/board/no/${result.boardno}">${result.title}</a></td>
+                                    <td>${result.userID}</td>
+                                    <td><fmt:formatDate value="${result.write_date}" pattern="yyyy-MM-dd HH:mm" /></td>
+                                    <td>${result.view}</td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
                 <ul class="pagination">
                     <li class="${currentPage <= 1 ? 'disabled' : ''}">
                         <a href="/board/search?type=${type}&title=${title}&p=${currentPage - 1}" onclick="return prepage(event)">이전</a>
