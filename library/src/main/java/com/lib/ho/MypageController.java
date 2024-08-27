@@ -31,7 +31,7 @@ public class MypageController {
 	return new UserDto();
 	}
 	
-	@GetMapping("/mypage")
+	@GetMapping("/user/mypage")
 	public String unret(@ModelAttribute("user") UserDto user, Model m) {
 		
 		List<UnretDto> unretbook = userService.unret(user.getUserno());
