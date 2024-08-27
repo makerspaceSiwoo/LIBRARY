@@ -7,29 +7,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" type="text/css" href="/css/header.css">
-<link rel="stylesheet" type="text/css" href="/css/admin/book/manage.css">
-<link rel="stylesheet" type="text/css" href="/css/admin/book/add.css">
-<style>
-#returnbutton {
-    background-color: red;
-    color: white;
-    border: none;
-    padding: 0.5vw 1vw;
-    font-size: 1vw;
-    border-radius: 0.5vw;
-    cursor: pointer;
-    width: 100%; /* 버튼이 셀의 전체 너비를 차지하도록 설정 */
-    box-sizing: border-box; /* 패딩과 테두리를 포함한 전체 너비 계산 */
-    overflow: hidden; /* 버튼 내부 텍스트가 넘칠 경우 숨김 */
-    text-overflow: ellipsis; /* 버튼 텍스트 넘침 시 말줄임 표시 (...) */
-    white-space: nowrap; /* 버튼 텍스트 줄바꿈 방지 */
-}
-
-#returnbutton:hover {
-    background-color: #cc0000;
-}
-</style>
+	<link rel="stylesheet" type="text/css" href="/css/header.css">
+	<link rel="stylesheet" type="text/css" href="/css/admin/book/manage.css">
+	<link rel="stylesheet" type="text/css" href="/css/admin/book/add.css">
+	<link rel="stylesheet" type="text/css" href="/css/pjh/borrow.css">
 </head>
 <body>
 <nav>
@@ -76,16 +57,26 @@
 	<tr>
 		<td colspan="5">"제목"검색결과</td><br>
 	</tr>
+	<tr>
+		 <td style="font-weight: bold;">책 이름</td>
+  		 <td style="font-weight: bold;">저자</td>
+    	 <td style="font-weight: bold;">청구기호</td>
+    	 <td style="font-weight: bold;">반납예정</td>
+    	 <td style="font-weight: bold;">반납/대출</td>
+	</tr>
 	<tr> 
-		<c:forEach items="${unreturned}" var="borrow">
+	 	<c:if test="${count == 0 }">
+			<tr><td colspan="5" align="center">검색 결과가 없습니다.</td></tr>
+		</c:if>
 		
+		<c:if test="${count != 0 }">	
+		<c:forEach items="${unreturned}" var="borrow">
 			<tr><td>${fn:substring(borrow.booktitle, 0, 10)}</td>
             <td>${fn:substring(borrow.author, 0, 10)}</td>
             <td>${fn:substring(borrow.callno, 0, 10)}</td>
             <%-- 검색결과 책이름, 저자, 주문번호 출력 --%>
-            
 			<c:if test="${borrow.userno != 0 }">
-			
+				<%----------------------------------------------------------------%>
 				<c:if test="${borrow.u_end.time <= now.time}">
 					<c:set var="formattedDate">
 					<fmt:formatDate value="${borrow.u_end}" pattern="yyyy-MM-dd"/>
@@ -97,7 +88,7 @@
 					<%-- 반납예정일자가 현재일자보다 낮다면(연체라면) 글자빨간색에 반납시 컨트롤러 latereturn 호출 --%>
 					</td>
 				</c:if>
-				
+				<%----------------------------------------------------------------%>
 				<c:if test="${borrow.u_end.time > now.time}">		
 					<c:set var="formattedDate">
 					<fmt:formatDate value="${borrow.u_end}" pattern="yyyy-MM-dd"/>
@@ -109,9 +100,8 @@
 					<%-- 반납예정일자가 현재일자보다 크다면(정상대출이라면) 반납시 컨트롤러 return호출  --%>
 					</td>
 				</c:if>
-			
+			    <%----------------------------------------------------------------%>
 			</c:if>
-			
 			
 			<c:if test="${borrow.userno == 0 }">
 			<td>대출 가능</td>
@@ -120,23 +110,22 @@
 				</td>
 			</c:if>
 			<%-- 대출버튼 클릭시 컨트롤러 lent호출 (유저번호 입력페이지 생성 예정) --%>
-		</tr>
+			</tr>
 		</c:forEach>
 		</tr>
 </table>
+	
  <!-- 페이지 네비게이션 -->
  <div id="page">
   <nav aria-label="Page navigation">
-
         <!-- 이전 5개 페이지로 이동 -->
         <c:if test='${startPage != 1}'>
 
         	<a class="page-link" href="?booktitle=${param.booktitle}&page=${startPage - 10 > 0 ? startPage - 10 : 1}&size=${pageSize}" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
             </a>
-
         </c:if>
-
+        
         <!-- 페이지 번호 출력 -->
         <c:forEach var="i" begin="${startPage}" end="${endPage}">
 			<c:choose>
@@ -159,12 +148,11 @@
         </c:if>
 
 </nav>
+
 </div>
+</c:if>
 </section>
 </main>
-<script>
-
-</script>
 </body>
 </html>
 

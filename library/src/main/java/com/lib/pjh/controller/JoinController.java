@@ -18,7 +18,7 @@ import java.util.Random;
 public class JoinController {
 
 	@Autowired
-	private final JoinService joinService;
+	private JoinService joinService;
 	//회원가입 서비스 호출
 
 	@Autowired

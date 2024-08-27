@@ -1,0 +1,18 @@
+#returnbutton {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 0.5vw 1vw;
+    font-size: 1vw;
+    border-radius: 0.5vw;
+    cursor: pointer;
+    width: 100%; /* 버튼이 셀의 전체 너비를 차지하도록 설정 */
+    box-sizing: border-box; /* 패딩과 테두리를 포함한 전체 너비 계산 */
+    overflow: hidden; /* 버튼 내부 텍스트가 넘칠 경우 숨김 */
+    text-overflow: ellipsis; /* 버튼 텍스트 넘침 시 말줄임 표시 (...) */
+    white-space: nowrap; /* 버튼 텍스트 줄바꿈 방지 */
+}
+
+#returnbutton:hover {
+    background-color: #cc0000;
+}
