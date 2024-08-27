@@ -9,7 +9,7 @@
 </head>
 <body>
 <nav>
-<hr>
+
    <c:choose>
       <c:when test="${user.admin == 1 }">
          <div id="adminmenu" class="menu">
@@ -87,25 +87,19 @@
 		</div>
 	 <div id="page">
 				<c:if test="${begin > pageNum }">
-					<a href="/book/manage?callno=${callno }&p=${begin-1 }" class="page prv">&lt;</a>
+					<a href="/book/manage?booktitle=${booktitle }&p=${begin-1 }" class="page prv">&lt;</a>
 				</c:if>
 				<c:forEach begin="${begin }" end="${end}" var="i">
-				
-				
-				
-				       
-			<c:choose>
-            <c:when test="${i == current}">
-                <a class="active" href="/book/manage?callno=${callno }&p=${i}">${i}</a>
-            </c:when>
-            <c:otherwise>
-                 <a href="/book/manage?callno=${callno }&p=${i}">${i}</a>
-            </c:otherwise>
-        </c:choose>
-        
-        
-        
-					
+	       
+					<c:choose>
+            			<c:when test="${i == current}">
+                		<a class="active" href="/book/manage?booktitle=${booktitle }&p=${i}">${i}</a>
+            			</c:when>
+            			<c:otherwise>
+                 		<a href="/book/manage?booktitle=${booktitle }&p=${i}">${i}</a>
+            			</c:otherwise>
+        			</c:choose>
+
 				</c:forEach>
 				<c:if test="${end < totalPages }">
 					<a href="/book/manage?callno=${callno }&p=${end+1}" class="page next">&gt;</a>

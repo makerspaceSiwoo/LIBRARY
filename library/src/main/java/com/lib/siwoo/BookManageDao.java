@@ -34,7 +34,7 @@ public interface BookManageDao {
 	@Select("select * from book where bookno=#{bookno}")
 	public BookDto selectBook(int bookno);
 	
-	@Update("update book set booktitle=#{booktitle}, author=#{author}, callno=#{callno}, publisher=#{publisher}, pubyear=#{pubyear} where bookno=#{bookno}")
+	@Update("update book set booktitle=#{booktitle}, author=#{author}, callno=#{callno}, publisher=#{publisher}, pubyear=#{pubyear}, img=#{img} where bookno=#{bookno}")
 	public int modBook(BookDto dto);
 	
 	@Delete("delete from book where bookno=#{bookno}")

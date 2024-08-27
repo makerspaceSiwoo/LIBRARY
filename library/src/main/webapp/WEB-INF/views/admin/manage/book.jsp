@@ -9,7 +9,7 @@
 </head>
 <body>
 <nav>
-<hr>
+
    <c:choose>
       <c:when test="${user.admin == 1 }">
          <div id="adminmenu" class="menu">
