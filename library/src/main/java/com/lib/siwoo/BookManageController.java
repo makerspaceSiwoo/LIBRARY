@@ -71,7 +71,7 @@ public class BookManageController {
 	public String targetBookList(@RequestParam(required = true, defaultValue = "", name="booktitle") String booktitle,
 			@RequestParam(name = "p", defaultValue = "1") int page,
 			Model m) {
-		if(booktitle != null) { // 청구기호를 입력하지 않으면 리스트를 가져오지 않음
+		if(booktitle != null) { //  제목을 입력하지 않으면 리스트를 가져오지 않음
 			int count = bservice.targetcount(booktitle);
 			if (count > 0) {
 				int perPage = 10; // 한 페이지에 보일 글의 갯수
