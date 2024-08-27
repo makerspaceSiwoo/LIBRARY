@@ -153,6 +153,9 @@
 </c:if>
 </section>
 </main>
+<footer>
+<p>© 2024. Soldesk도서관. all rights reserved.</p>
+</footer>
 </body>
 </html>
 
