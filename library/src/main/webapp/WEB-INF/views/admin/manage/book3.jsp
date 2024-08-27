@@ -4,9 +4,10 @@
 <html>
 <head>
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="/css/header.css">
+
 
 <link rel="stylesheet" type="text/css" href="/css/mo/searchresult.css">
+<link rel="stylesheet" type="text/css" href="/css/header.css">
 <style>
 /* 테이블 스타일 */
 .content-container table {

@@ -6,6 +6,7 @@
 <head>
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="/css/admin/book/manage.css">
+<link rel="stylesheet" type="text/css" href="/css/header.css">
 </head>
 <body>
 <nav>

@@ -5,6 +5,7 @@
 <head>
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="/css/admin/book/add.css">
+<link rel="stylesheet" type="text/css" href="/css/header.css">
 
 </head>
 <body>
