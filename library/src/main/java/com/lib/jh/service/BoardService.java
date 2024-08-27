@@ -74,6 +74,16 @@ public class BoardService {
 	    return dao.getSearchTotalCount(type, title);
 	}
 
+	
+	 // title로 검색하는 메서드 추가
+    public List<BoardJoinUserDto> BoardSearchByTitle(String title, int offset, int limit) {
+        return dao.BoardSearchByTitle(title, offset, limit);
+    }
+
+    // title로 검색된 게시글 수를 가져오는 메서드 추가
+    public int getSearchTotalCountByTitle(String title) {
+        return dao.getSearchTotalCountByTitle(title);
+    }
 }
 	
 	
