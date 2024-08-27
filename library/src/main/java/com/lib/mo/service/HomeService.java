@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lib.dto.BoardDto;
+import com.lib.dto.BookDto;
 import com.lib.mo.dao.HomeDao;
 
 @Service
@@ -61,5 +62,19 @@ public class HomeService {
 	public List<BoardDto>notice(){
 
 		return dao.notice();
+	}
+	
+	public List<BookDto>newBook(){
+		return dao.newBook();
+	}
+	
+	public int childBook(){
+		return dao.childBook();
+	}
+	public int foreignBook(){
+		return dao.foreignBook();
+	}
+	public int commonBook(){
+		return dao.commonBook();
 	}
 }
