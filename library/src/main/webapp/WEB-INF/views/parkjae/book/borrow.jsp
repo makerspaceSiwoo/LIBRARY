@@ -42,7 +42,7 @@
 	            <a href="/book/add">도서 추가</a>
 	            <a href="/book/manage">도서 수정/삭제</a>
 	            <a href="/board/search">게시판</a>
-	            <a href="/mypage">마이 페이지</a>
+	            <a href="/admin/mypage">사서 페이지</a>
 	            <a href="/admin/blacklist">유저 관리</a>
             </div>
             <div class="button-container">
