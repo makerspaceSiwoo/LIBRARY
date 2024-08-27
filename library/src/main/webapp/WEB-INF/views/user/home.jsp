@@ -38,6 +38,11 @@
     	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
     }
 	</style>
+	<c:if test="${not empty message}">
+    <script type="text/javascript">
+        alert("${message}");
+    </script>
+</c:if>
 </head>
 <body>
 <nav>
@@ -78,7 +83,7 @@
 	            <a href="/search">도서 검색</a>
 	            <a href="/recomm">추천 도서</a>
 	            <a href="/board/search">게시판</a>
-	            <a href="/mypage">마이 페이지</a>
+	            <a href="/user/mypage">마이 페이지</a>
             </div>
             <div class="button-container">
 	            <c:choose>
