@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +11,51 @@
     <link rel="stylesheet" type="text/css" href="/css/header.css">
     <link rel="stylesheet" type="text/css" href="/css/home2.css">
 
-    
+    <style>
+    	.book-list {
+		    display: grid;
+		    grid-template-columns: repeat(3, 1fr);
+		    gap: 2.4vw; /* 간격을 80%로 줄임 */
+		    justify-items: center;
+		    padding: 0 8vw; /* 좌우 공백을 80%로 줄임 */
+		}
+		
+		.book-img {
+		    display: flex;
+		    flex-direction: column;
+		    align-items: center;
+		    width: 80%; /* 너비를 80%로 줄임 */
+		    cursor: pointer;
+		    padding: 0.24vw;
+		    border-radius: 0.4vw;
+		    box-shadow: 0px 0.8px 2.4px rgba(0, 0, 0, 0.1);
+		    transition: transform 0.3s ease-in-out;
+		}
+		
+		.book-img:hover {
+		    transform: scale(1.05);
+		}
+		
+		.book-img img {
+		    width: 100%;
+		    height: auto;
+		    margin-bottom: 0.24vw;
+		}
+		.book-img .title,
+		.book-img .author,
+		.book-img .publisher {
+		    font-size: 1vw; /* 텍스트 크기를 80%로 줄임 */
+		    color: #333;
+		    margin: 0.04vw 0;
+		    text-align: center;
+		    line-height: 1.1;
+		}
+		
+		.book-img .title {
+		    font-weight: bold;
+		    font-size: 1.2vw; /* 제목 크기를 80%로 줄임 */
+		}
+    </style>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=75bada73f8c74910c3c69014a4957dd1"></script>
 	<script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -37,6 +83,10 @@
     	border-radius: 1vw; /* 둥근 테두리 */
     	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
     }
+    
+    
+    
+
 	</style>
 	<c:if test="${not empty message}">
     <script type="text/javascript">
@@ -131,39 +181,118 @@
 	<nav>
 	    <div class="navbar">
 	        <a href="#locate">도서관 위치</a>
-	        <a href="#schedule">도서관 일정</a>
+	        <a href="#schedule">도서관 이용시간</a>
 	        <a href="#notice">공지사항</a>
 	        <a href="#quantity">소장자료 현황</a>
 	    </div>
 	</nav>
 </aside>
 <main>
-	<section>
+<div style="white-space: nowrap; width:100%;">
+	<section style="display: inline-block; vertical-align: top; width:50%; margin-bottom: 0;">
 	    <div>
-	        <h2 id ="locate">Soldesk 도서관</h2>
+	        <h2 id ="locate" style="scroll-margin-top: 20vh;">Soldesk 도서관</h2>
 	        <div id="map"></div>
-	        <p>주소: 서울특별시 종로구 종로 12길 15 코아빌딩</p><br>
-	        <p>전화번호: 0507-1430-7001</p>
+	        <ul>
+	        	<li>주소: 서울특별시 종로구 종로 12길 15 코아빌딩</li>
+	        	<li>전화번호: 0507-1430-7001</li>
+	        </ul>
+	        
+	        
 	     </div>
      </section>
+     <section id="newbook" style="display: inline-block;vertical-align: top; width:50%; scroll-margin-top: 30vh;">
+     	<div style="padding:0;">
+		<h2>신간 도서</h2>
+     	<div class="book-list" style="padding:0; white-space:nowrap; width:100%;">
+	        <c:forEach var="gen" items="${newbook}">
+	            <div class="book-img" onclick="location.href='/search/no=${gen.callno}'" style="width:100%; padding:0;white-space:wrap;">
+	                <img alt="표지사진" src="${gen.img}">
+	                <div class="title">${gen.booktitle}</div><br>
+	                <div class="author">${gen.author}</div><br>
+	                <div class="publisher">${gen.publisher}</div>
+	            </div>
+	        </c:forEach>
+	    </div>
+	    </div>
+
+     </section>
+</div>
+	
      <section>
      <div>
-        <h2 id="schedule">매주 월요일 및 법정 공휴일 휴관(일요일 제외)</h2>
+        <h2 id="schedule" style="scroll-margin-top: 20vh;">휴관일</h2>
+        <ul>
+        	<li>정기휴관일: 매주 월요일 및 법정 공휴일 휴관(일요일 제외)</li>
+        	<li>공사일정 : 2024/08/20 ~ 2024/08/25</li>
+        </ul>
 	 </div>
 	 </section>
+	 
 	 <section>
-	<div class="notice-box">
-        <h2 id="notice">공지사항</h2> <c:if test="${user.admin == '1' }"><button id="noticebutton" onclick="location.href='/board/write'">+</button></c:if>
+		<div>
+			<table border="1">
+            <thead>
+                <tr>
+                  <th>층별</th>
+                  <th>구분</th>
+                  <th>이용시간</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1층</td>
+                    <td>아동/청소년 자료실</td>
+                    <td>09:00~18:00</td>      
+              
+                </tr>
+                <tr>
+                	<td rowspan="2">2층</td>
+                	<td>휴게실</td>
+                	<td>09:00~18:00</td>
+                	
+   
+                </tr>
+                <tr>
+                	<td>종합 자료실</td>
+                	<td>09:00~20:00</td>
+                	
+       
+                </tr>
+                <tr>
+                	<td>3층</td>
+                	<td>외국어 자료실</td>
+                	<td>09:00~20:00</td>
+   
+                </tr>
+            </tbody>
+        </table>
+		</div>
+	</section>
+	
+	 <section>
+	<div class="notice-box" >
+        <h2 id="notice" style="scroll-margin-top: 20vh;">공지사항</h2> <c:if test="${user.admin == '1' }"><button id="noticebutton" onclick="location.href='/board/write'">+</button></c:if>
         <div>
-       <c:forEach var="notice" items="${notice}">
-            <a href="/board/no/${notice.boardno}">${notice.title}</a><br>
-        </c:forEach>
+        <ul>
+	       <c:forEach var="notice" items="${notice}">
+	           <li style="; list-style: inside;">
+	           	<div style="display: inline-flex;">
+				    <a href="/board/no/${notice.boardno}" style=" flex-shrink: 0; margin-right: 10px;">${notice.title}</a>
+				
+				    <p style=" color: gray; font-size: 14px">
+				        (<fmt:formatDate value="${notice.write_date}" pattern="yyyy-MM-dd" />)
+				    </p>
+				 </div>
+				</li>
+	        </c:forEach>
+        </ul>
         </div>
 	</div>
 	</section>
 	<section>
 	<div>
-        <h2 id="quantity">소장 도서 수</h2>
+        <h2 id="quantity" style="scroll-margin-top: 20vh;" >소장 도서 수</h2>
         <table border="1">
             <thead>
                 <tr>
@@ -192,6 +321,24 @@
                     <td>${unbook}</td>
                     <td>${munbook}</td>
                     <td>${yeokbook}</td>
+                    <td>${allbook}</td>
+                </tr>
+            </tbody>
+        </table>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>아동/청소년 자료실</th>
+                    <th>종합 자료실</th>
+                    <th>외국어 자료실</th>
+                    <th>전체</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>${childbook}</td>
+                    <td>${commonbook}</td>
+                    <td>${foreignbook}</td>
                     <td>${allbook}</td>
                 </tr>
             </tbody>

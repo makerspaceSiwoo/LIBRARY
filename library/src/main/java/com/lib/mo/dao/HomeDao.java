@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import com.lib.dto.BoardDto;
+import com.lib.dto.BookDto;
 
 @Mapper
 public interface HomeDao {
@@ -44,6 +45,19 @@ public interface HomeDao {
 	@Select("select count(*) from book where category like concat ('역사','%')")
 	int yeokcount();
 	
-	@Select("select title, boardno from board where type='announcement' order by boardno desc limit 3")
+	@Select("select * from board where type='announcement' order by boardno desc limit 5")
 	List<BoardDto> notice();
+	
+	@Select("select * from book order by bookno desc limit 3")
+	List<BookDto> newBook();
+	
+	@Select("select count(*) from book where loc= '아동/청소년 자료실'")
+	int childBook();
+	
+	@Select("select count(*) from book where loc='외국어 자료실'")
+	int foreignBook();
+	
+	@Select("select count(*) from book where loc='종합자료실'")
+	int commonBook();
+	
 }
