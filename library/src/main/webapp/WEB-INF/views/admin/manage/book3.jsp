@@ -164,14 +164,14 @@ input[readonly] {
 				<input id="pubyear" type="number" name="pubyear" value="<c:out value='${book.pubyear}'/>">
 			</td>
 			<td>
-				<input id="bookno" name="img" value="<c:out value='${book.img}'/>">
+				<input id="img" name="img" value="<c:out value='${book.img}'/>">
 			</td>
 		</tr>
 		<tr>
 		<td colspan="7">
 			<div class="button-container2">
-            	<button type="submit" onclick="return mod();">수정</button>
-            	<button type="button" onclick="return del();">삭제</button>
+            	<button type="button" onclick="modify2();">수정</button>
+            	<button type="button" onclick="return del1();">삭제</button>
             	<button type="button" onclick="return history.back();">목록으로 돌아가기</button>
         	</div>
         </td>
@@ -184,7 +184,7 @@ input[readonly] {
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
 
-function del() {
+function del1() {
 	let result = confirm("DB에서 삭제하시겠습니까?");
 	if(result){
 		 $.ajax({
@@ -200,18 +200,29 @@ function del() {
 	}
 };
 
-function mod(){
-	let book = "${book}";
+function modify2(){
+	let updatedBookDTO = {
+			bookno: $('#bookno').val(), // 기존 객체를 복사
+		    booktitle: $('#booktitle').val(),
+		    author: $('#author').val(),
+		    callno: $('#callno').val(),
+		    publisher: $('#publisher').val(),
+		    pubyear: $('#pubyear').val(),
+		    img: $('#img').val(),
+		    
+		};
+	
 	$.ajax({
         url: "/book/mod",
         method: "post",
-        data: JSON.stringify(book),
+        data: JSON.stringify(updatedBookDTO),
         contentType: 'application/json; charset=utf-8'
     }).done(function (data) {
 	    	alert("수정되었습니다.");
 	    	location.replace("/book/mod?bookno="+${book.bookno});
     	
     });
+	
 }
 
 
