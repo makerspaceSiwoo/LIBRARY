@@ -32,6 +32,5 @@
         </table>
         <a href="/book/record" class="back-link">관리 페이지 되돌아가기</a>
     </div>
-<script></script>
 </body>
 </html>

@@ -146,6 +146,7 @@
     </table>
     <button type="submit" name="lastjoin" class="primary" onclick="finish()">가입완료</button>
 </form>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
@@ -274,6 +275,9 @@ $(document).ready(function() {
 
   
 </script>
+<footer>
+<p>© 2024. Soldesk도서관. all rights reserved.</p>
+</footer>
 </body>
 </html>
 

@@ -206,3 +206,15 @@ div[style*="color: red;"] {
     vertical-align: middle; /* 설명 문구를 입력 필드와 수직으로 가운데 정렬 */
     margin-left: 5px; /* 인풋 필드와 설명 문구 사이에 여백 추가 */
 }
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+footer {
+    margin-top: auto; /* 이 속성을 사용하면 footer가 항상 페이지 하단에 위치하게 됩니다 */
+    text-align: center;
+    width: 100%;
+}
