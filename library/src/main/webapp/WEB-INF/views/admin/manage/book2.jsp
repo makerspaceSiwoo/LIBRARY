@@ -76,8 +76,8 @@
 						<td>${book.booktitle }</td>
 						<td>${book.author }</td>
 						<td>${book.callno }</td>
-						<td>${book.booktitle }</td>
-						<td>${book.booktitle }</td>
+						<td>${book.publisher }</td>
+						<td>${book.pubyear}</td>
 						<td>
 							<button onclick="location.href='/book/mod?bookno=${book.bookno}'">수정/삭제</button>
 						</td>
