@@ -62,7 +62,7 @@ public class AddBookExcelService {
 	public byte[] uploadExcel(MultipartFile file) { // 임시 경로에 업로드 된 파일에 접근 가능
 		int done= 0;
 //		, fail = 0;
-		int max = 10000; // 최대 저장 가능 행 개수
+		int max = 1000; // 최대 저장 가능 행 개수
 		System.out.println(file.getOriginalFilename());
 		String extension = FilenameUtils.getExtension(file.getOriginalFilename());
 
