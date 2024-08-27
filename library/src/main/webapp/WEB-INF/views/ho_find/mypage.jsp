@@ -30,28 +30,12 @@ function withdrawUser() {
     }
 }
 </script>
-
+<link rel="stylesheet" type="text/css" href="/css/header.css">
 <link rel="stylesheet" type="text/css" href="/css/ho/mypage.css">
 </head>
 <body>
-<nav>
-<hr>
-   <c:choose>
-      <c:when test="${user.admin == 1 }">
-         <div id="adminmenu" class="menu">
-            <a href="/home"><img src="/logo/logo.png"></a>
-            <div class="menulist">
-	            <a href="/home">도서관 홈</a>
-	            <a href="/book/record">대출/반납</a>
-	            <a href="/book/add">도서 추가</a>
-	            <a href="/book/manage">도서 수정/삭제</a>
-	            <a href="/board/search">게시판</a>
-	            <a href="/admin/mypage">마이 페이지</a>
-	            <a href="/admin/blacklist">유저 관리</a>
-            </div>
-            </div>
-      </c:when>
-      <c:otherwise>
+	<nav>
+
          <div id="usermenu" class="menu">
             <a href="/home"><img src="/logo/logo.png"></a>
             <div class="menulist">
@@ -67,11 +51,16 @@ function withdrawUser() {
 	                  <button id="joinbutton" onclick="location.href='/join';">회원 가입</button>
 	                  <button id="loginbutton" onclick="location.href='/login';">로그인</button>
 	               </c:when>
+	               <c:otherwise>
+	                  <p>${user.userID }님</p>
+	                  <form action="/logout" method="post">
+	                     <button style="margin-top: 15px;" id="logoutbutton">로그아웃</button>
+	                  </form>
+	               </c:otherwise>
 	            </c:choose>
 	        </div>
          </div>
-      </c:otherwise>
-   </c:choose>
+
    <hr>
 </nav>
 	
@@ -129,10 +118,12 @@ function withdrawUser() {
                 <tbody>
                     <c:forEach items="${recode}" var="code">
                         <tr>
-                            <td>${code.booktitle}</td>
+                            <td onclick="location.href='/search/no=${code.callno}'" style="cursor:pointer; font-weight: bold;">
+  							${code.booktitle}
+							</td>
                             <td>${code.author}</td>
                             <td>${code.publisher}</td>
-                            <td>${code.category}</td>
+                            <td style="white-space: nowrap;">${code.category}</td>
                         </tr>
                     </c:forEach>
                 </tbody>
@@ -141,11 +132,14 @@ function withdrawUser() {
     </c:choose>
 </div>
         
-       <div class="button-container">
+       <div class="button-containers">
     <form action="/user/mod" method="get">
         <button class="change" >회원정보 수정</button>
     </form>
     	<button class="deldel" onclick="withdrawUser()">회원 탈퇴</button>
 	</div>
+	<footer>
+<p>© 2024. Soldesk도서관. all rights reserved.</p>
+</footer>
 </body>
 </html>

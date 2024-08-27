@@ -52,7 +52,7 @@ public interface UserDao {
             "WHERE u.userno = #{userno}")
     List<UnretDto> unretbook(@Param("userno") int userno);
     
-    @Select("SELECT b.booktitle, b.publisher, b.author, MAX(r.end) AS end_date, b.bookno, b.category "
+    @Select("SELECT b.booktitle, b.publisher, b.author, b.callno, MAX(r.end) AS end_date, b.bookno, b.category "
     		+ "FROM book b "
     		+ "JOIN record r ON b.bookno = r.bookno "
     		+ "WHERE r.userno = #{userno} AND r.type = '반납' "

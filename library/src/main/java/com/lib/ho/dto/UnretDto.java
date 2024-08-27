@@ -13,4 +13,5 @@ public class UnretDto {
 	private String end;
 	private int borrowno;
 	private int bookno;
+	private String callno;
 }
