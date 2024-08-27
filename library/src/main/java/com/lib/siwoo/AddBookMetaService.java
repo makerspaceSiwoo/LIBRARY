@@ -1,6 +1,7 @@
 package com.lib.siwoo;
 
-import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,6 +53,7 @@ public class AddBookMetaService {
 				dto.setLoc("디지털 자료실");
 				break;
 			}
+			case 'C':
 			case '외': {
 				dto.setLoc("외국어 자료실");
 				break;
@@ -67,7 +69,7 @@ public class AddBookMetaService {
 				break;
 			}
 		}
-		done = dao.addBookLocOne(dto);
+		done += 1;
 		return done;
 	}
 		
@@ -76,12 +78,13 @@ public class AddBookMetaService {
 		String category = "";
 		String callno = dto.getCallno();
 		int sub = 0;
+        String pattern = "([가-힣a-zA-Z]*)(\\d{1,3})(\\.\\d+)?";  // 앞의 문자들을 제외하고 숫자 1~3자리를 추출하는 패턴
+        Pattern r = Pattern.compile(pattern);
+        Matcher m = r.matcher(callno);
 		try {
-			if(Character.isDigit(callno.charAt(0))) { // 시작이 숫자
-				sub = Integer.parseInt(callno.substring(0,3)); // 청구기호 세자리 추출
-			}else {
-				sub = Integer.parseInt(callno.substring(1,4));
-			}
+			if (m.find()) {
+	            sub = Integer.parseInt(m.group(2));  // 첫 번째 매칭된 숫자 부분을 추출
+	        }
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -89,7 +92,7 @@ public class AddBookMetaService {
 		int b = (sub%100)/10; // 소분류 x_x
 		category = allcategory[a][0]+"/"+allcategory[a][b];
 		dto.setCategory(category);
-		done = dao.addCategoryOne(dto);
+		done +=1;
 		return done;
 	}
 

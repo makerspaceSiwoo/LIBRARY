@@ -4,25 +4,40 @@
 <html>
 <head>
     <title>도서 추천 페이지</title>
+    <link rel="stylesheet" type="text/css" href="/css/header.css">
     <link rel="stylesheet" type="text/css" href="/css/mo/recomm.css">
 </head>
 <body>
-
 	<nav>
-    	<div id="usermenu">
+
+         <div id="usermenu" class="menu">
             <a href="/home"><img src="/logo/logo.png"></a>
-            <a href="/home">도서관 홈</a>
-            <a href="/search">도서 검색</a>
-            <a href="/recomm">추천 도서</a>
-            <a href="/board/search">게시판</a>
-            <a href="/mypage">마이 페이지</a>
-            <p>${user.userID }님</p>
-            <form action="/logout" method="post">
-            <button id="logoutbutton">로그아웃</button>
-            </form>
+            <div class="menulist">
+	            <a href="/home">도서관 홈</a>
+	            <a href="/search">도서 검색</a>
+	            <a href="/recomm">추천 도서</a>
+	            <a href="/board/search">게시판</a>
+	            <a href="/mypage">마이 페이지</a>
+            </div>
+            <div class="button-container">
+	            <c:choose>
+	               <c:when test="${empty user or empty user.userID}">
+	                  <button id="joinbutton" onclick="location.href='/join';">회원 가입</button>
+	                  <button id="loginbutton" onclick="location.href='/login';">로그인</button>
+	               </c:when>
+	               <c:otherwise>
+	                  <p>${user.userID }님</p>
+	                  <form action="/logout" method="post">
+	                     <button id="logoutbutton">로그아웃</button>
+	                  </form>
+	               </c:otherwise>
+	            </c:choose>
+	        </div>
          </div>
-	</nav>
-	<hr id= "grandline">
+
+   <hr>
+</nav>
+
 	<aside>
 		<nav>
 			<div class="navbar">
@@ -37,7 +52,7 @@
 	</aside>
 
 	
-	<h2 class="title">${user.userID}님 추천 도서</h2>
+	<h3 class="title">${user.userID}님 추천 도서</h3>
 	
 	<div class="section">
 	    <h3 class= "tit" id="all">전체</h3>
@@ -116,6 +131,10 @@
 	        </c:forEach>
 	    </div>
 	</div>
+<br><br><br><br>
+<footer>
+<p>© 2024. Soldesk도서관. all rights reserved.</p>
+</footer>
 
 </body>
 </html>

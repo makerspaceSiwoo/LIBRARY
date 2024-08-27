@@ -34,7 +34,7 @@ public class LoginIntercepter implements HandlerInterceptor {
 //		}
 		System.out.println(url);
 		if(dto != null && dto.getUserID() != null) {// 일단 로그인 되어있는지.
-			if(dto.getState().equals("탈퇴")) {
+			if(dto.getState() !=null && dto.getState().equals("탈퇴")) {
 				response.sendRedirect("/join"); // join 페이지에 alert 로 탈퇴한 계정입니다 한 번 띄우기
 				return false;
 			}else if(dto.getAdmin().equals("1")) { // admin

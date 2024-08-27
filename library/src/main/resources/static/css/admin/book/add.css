@@ -354,6 +354,16 @@ h3 {
     background-color: #45a049; /* 버튼에 마우스를 올렸을 때 배경색 변경 */
 }
 
+#excel #file-upload-button {
+	 background-color: #007bff;
+}
+
+
+#excel #file-upload-button:hover {
+    background-color: #0056b3; /* 버튼에 마우스를 올렸을 때 배경색 변경 */
+}
+
+
 .custom-file-upload {
     display: inline-block;
     padding: 1vw 2vw; /* 업로드 버튼의 안쪽 여백 설정 */
@@ -369,6 +379,3 @@ h3 {
     background-color: #0056b3; /* 버튼에 마우스를 올렸을 때 배경색 변경 */
 }
 
-#file-upload {
-    display: none; /* 실제 파일 입력 요소는 숨김 */
-}

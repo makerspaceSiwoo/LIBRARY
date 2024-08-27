@@ -7,7 +7,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-${errorMessage }
+
+<script>
+alert("벤처리된 유저입니다.");
+location.href="/home";
+</script>
 
 </body>
+
 </html>
