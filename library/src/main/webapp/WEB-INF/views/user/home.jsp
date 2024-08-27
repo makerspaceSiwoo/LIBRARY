@@ -133,7 +133,7 @@
 	            <a href="/search">도서 검색</a>
 	            <a href="/recomm">추천 도서</a>
 	            <a href="/board/search">게시판</a>
-	            <a href="/user/mypage">마이 페이지</a>
+	            <a href="/mypage">마이 페이지</a>
             </div>
             <div class="button-container">
 	            <c:choose>
