@@ -181,6 +181,10 @@ input[readonly] {
 </form>
 </div>
 
+<footer>
+<p>© 2024. Soldesk도서관. all rights reserved.</p>
+</footer>
+
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
