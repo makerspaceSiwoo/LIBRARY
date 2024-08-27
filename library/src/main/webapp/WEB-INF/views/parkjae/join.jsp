@@ -14,7 +14,7 @@
 
 .center-subtitle {
     text-align: left; /* 왼쪽 정렬 */
-    margin-left: 20%; /* 테이블과 일치하는 위치로 이동 */
+    margin-left: 26.5vw; /* 테이블과 일치하는 위치로 이동 */
     margin-bottom: 5px; /* 아래쪽 여백 추가 */
 }
 
@@ -134,7 +134,7 @@ form table td:not(:has(input)) {
 
 /* 버튼 스타일 */
 form button {
-    background-color: #695FC2;
+    background-color:  #3C33A4;
     color: white;
     padding: 10px 40px; /* 세로 패딩을 10px로 늘려서 버튼의 세로 길이를 늘림 */
     border: none;
@@ -148,7 +148,7 @@ form button {
 
 /* 버튼 호버 효과 */
 form button:hover {
-    background-color: #3C33A4;
+    background-color:  #3C33A4;
 }
 
 /* 입력 그룹 스타일 */
@@ -435,15 +435,26 @@ $(document).ready(function() {
         return true; // 폼 제출 허용
     }
     function requestVerificationCode() {
-        var email = document.querySelector('input[name="email_user"]').value + "@" +
-                    document.querySelector('select[name="email_domain"]').value;
-
+        // 이메일 입력 필드와 도메인 선택 필드의 값을 가져옴
+        var emailUser = document.querySelector('input[name="email_user"]').value.trim();
+        var emailDomain = document.querySelector('select[name="email_domain"]').value.trim();
+        
+        // 이메일 주소를 결합
+        var email = emailUser + "@" + emailDomain;
+        
+        // 이메일 입력 필드와 도메인 선택 필드에 공백이 있거나 비어있는 경우
+        if (emailUser === "" || emailDomain === "") {
+            alert("이메일 주소를 올바르게 입력해 주세요.");
+            return; // 입력이 잘못된 경우 함수 실행을 멈춤
+        }
+        
+        // AJAX 요청을 통해 인증 코드를 발송
         $.ajax({
             url: '/send',
             type: 'POST',
             data: { "emailAddress": email },
             success: function(response) {
-            	num = response[0];
+                num = response[0];
                 alert("인증 코드가 발송되었습니다.");
             },
             error: function() {
@@ -451,6 +462,7 @@ $(document).ready(function() {
             }
         });
     }
+
     function memcheck(){
     	let numnum = document.querySelector("#numnum").value;
     	
@@ -461,6 +473,8 @@ $(document).ready(function() {
     	else if(num==numnum){
     		alert("인증 코드가 일치합니다.");
     		isMemcheck = true;
+    		 // 입력 필드를 수정할 수 없도록 비활성화
+            document.querySelector("#numnum").disabled = true;
     	}else if(num!=numnum) {
     		alert("인증코드를 다시 확인해 주세요.");
     	}else{

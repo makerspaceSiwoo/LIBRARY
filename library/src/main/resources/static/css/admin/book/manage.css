@@ -183,7 +183,7 @@ form input[type="text"] {
 }
 
 form button {
-    background-color: #5E5DF0;
+    background-color: #3C33A4;
     color: white;
     border: none;
     padding: 1% 2%;
@@ -255,7 +255,7 @@ table td[colspan="7"], table td[colspan="7"] {
 }
 
 table td button {
-    background-color: #5E5DF0;
+    background-color: #3C33A4;
     color: white;
     border: none;
     padding: 0.5vw 1vw;
