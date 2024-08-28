@@ -11,6 +11,7 @@
 	<link rel="stylesheet" type="text/css" href="/css/admin/book/manage.css">
 	<link rel="stylesheet" type="text/css" href="/css/admin/book/add.css">
 	<link rel="stylesheet" type="text/css" href="/css/pjh/borrow.css">
+	
 </head>
 <body>
 <nav>
@@ -64,16 +65,16 @@
     	 <td style="font-weight: bold;">반납예정</td>
     	 <td style="font-weight: bold;">반납/대출</td>
 	</tr>
-	<tr> 
+
 	 	<c:if test="${count == 0 }">
 			<tr><td colspan="5" align="center">검색 결과가 없습니다.</td></tr>
 		</c:if>
 		
-		<c:if test="${count != 0 }">	
+<c:if test="${count != 0 }">	
 		<c:forEach items="${unreturned}" var="borrow">
-			<tr><td>${fn:substring(borrow.booktitle, 0, 10)}</td>
-            <td>${fn:substring(borrow.author, 0, 10)}</td>
-            <td>${fn:substring(borrow.callno, 0, 10)}</td>
+			<tr><td>${fn:substring(borrow.booktitle, 0, 20)}</td>
+            <td>${fn:substring(borrow.author, 0, 20)}</td>
+            <td>${fn:substring(borrow.callno, 0, 20)}</td>
             <%-- 검색결과 책이름, 저자, 주문번호 출력 --%>
 			<c:if test="${borrow.userno != 0 }">
 				<%----------------------------------------------------------------%>
@@ -112,14 +113,14 @@
 			<%-- 대출버튼 클릭시 컨트롤러 lent호출 (유저번호 입력페이지 생성 예정) --%>
 			</tr>
 		</c:forEach>
-		</tr>
+</c:if>
 </table>
-	
+
  <!-- 페이지 네비게이션 -->
  <div id="page">
   <nav aria-label="Page navigation">
         <!-- 이전 5개 페이지로 이동 -->
-        <c:if test='${startPage != 1}'>
+        <c:if test='${startPage != 1 && count!=0}'>
 
         	<a class="page-link" href="?booktitle=${param.booktitle}&page=${startPage - 10 > 0 ? startPage - 10 : 1}&size=${pageSize}" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
@@ -136,6 +137,7 @@
                  <a href="?booktitle=${param.booktitle}&page=${i}&size=${pageSize}">${i}</a>
             </c:otherwise>
         </c:choose>
+        
         </c:forEach>
 
         <!-- 다음 5개 페이지로 이동 -->
@@ -147,15 +149,16 @@
 
         </c:if>
 
-</nav>
-
+	</nav>
 </div>
-</c:if>
+
 </section>
 </main>
+
 <footer>
 <p>© 2024. Soldesk도서관. all rights reserved.</p>
 </footer>
+
 </body>
 </html>
 
