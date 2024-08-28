@@ -25,7 +25,7 @@
                 <td>
                     <form id="lentform" action="" method="POST">
                         <input id="userID" type="text" name="userID" placeholder="유저ID를 입력하세요">
-                        <button id="returnbutton" type="submit">대출</button>
+                        <button id="returnbutton" type="submit" onclick="alert('대출되었습니다.')">대출</button>
                     </form>
                 </td>
             </tr>

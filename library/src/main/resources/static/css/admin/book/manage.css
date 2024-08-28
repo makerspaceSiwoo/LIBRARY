@@ -7,11 +7,7 @@ html {
 }
 
 
-main {
-    width: 90%; /* 화면의 90%만 차지하도록 설정 */
-    margin: 0 auto; /* 중앙 정렬 */
-    padding: 2vh 0; /* 위아래 여백 설정 */
-}
+
 
 section {
     margin-bottom: 4vh; /* 각 섹션 간의 여백 설정 */
