@@ -7,6 +7,28 @@
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="/css/admin/book/manage.css">
 <link rel="stylesheet" type="text/css" href="/css/header.css">
+<style>
+html {
+   height: 100%;
+}
+
+body {
+   min-height:100%;
+   height: auto;
+   position: relative;
+}
+
+main {
+	height: 90%;
+    margin-left: 0vw;
+
+}
+
+footer {
+   height: 10%;
+   bottom: 0;
+}
+</style>
 </head>
 <body>
 <nav>
@@ -44,8 +66,8 @@
 </nav>
 <main>
 <section>
-<div>
-		<div>
+
+		<div style="margin-left: 2.1vw;">
 			<h1>도서 정보 수정/삭제</h1>
 		</div>
 		<div>
@@ -54,8 +76,8 @@
 				<button>검색</button>
 			</form>
 		</div>
-		<div>
-		<table id="targetlist" border="1" >
+</section>
+<table id="targetlist" border="1"  style="width: 90%; margin: 0 auto; ">
 			<tr>
 				<td colspan="6" align="center">검색한 책 목록</td>
 			</tr>
@@ -85,7 +107,7 @@
 				</c:forEach>
 			</c:if>
 		</table>
-		</div>
+
 	 <div id="page">
 				<c:if test="${begin > pageNum }">
 					<a href="/book/manage?booktitle=${booktitle }&p=${begin-1 }" class="page prv">&lt;</a>
@@ -105,9 +127,8 @@
 				<c:if test="${end < totalPages }">
 					<a href="/book/manage?callno=${callno }&p=${end+1}" class="page next">&gt;</a>
 				</c:if>
-			</div>
-    </div>	
-</section>
+	</div>
+
 </main>
 <footer>
 <p>© 2024. Soldesk도서관. all rights reserved.</p>

@@ -173,3 +173,17 @@ table td button:hover {
 #page .active{
    	background-color: #ccccff;
 }
+
+html {
+   height: 100vh;
+}
+
+body {
+   height: 100%;
+   position: relative;
+}
+
+footer {
+   position : relative;
+   bottom: 0;
+}
