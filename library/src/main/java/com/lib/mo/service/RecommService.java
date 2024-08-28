@@ -34,7 +34,11 @@ public class RecommService {
 //	연령대
 	public List<RecommDto> agercbook(Date birth){
 		System.out.println(birth);
-		return dao.agercbook(birth);
+		// birth 가공 -> 10대인지, 20대인지,... -> 1 , 2 , ...
+		int year = new Date().getYear();
+		int group = (year-birth.getYear()) / 10;
+		System.out.println(group);
+		return dao.agercbook(group);
 	}
 	
 }

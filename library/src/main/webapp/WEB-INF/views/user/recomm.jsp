@@ -46,7 +46,7 @@
 			    <a href="#gender">
 			        <c:if test="${user.gender == 'M'}">남성 추천 도서</c:if>
 			        <c:if test="${user.gender == 'F'}">여성 추천 도서</c:if></a>
-			    <a href="#agegroup">${agerc[0].agegroup} 추천 도서</a>
+			    <a href="#agegroup">${agerc[0].agegroup}대 추천 도서</a>
 			</div>
 		</nav>
 	</aside>
@@ -115,7 +115,7 @@
 	</div>
 	
 	<div class="section">
-	    <h3 class= "tit" id="agegroup">${agerc[0].agegroup} 추천 도서</h3>
+	    <h3 class= "tit" id="agegroup">${agerc[0].agegroup}대 추천 도서</h3>
 	    <hr id= "smallline">
 	    <div class="book-list">
 	        <c:forEach var="age" items="${agerc}" varStatus="status">

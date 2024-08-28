@@ -52,11 +52,11 @@ public interface UserDao {
             "WHERE u.userno = #{userno}")
     List<UnretDto> unretbook(@Param("userno") int userno);
     
-    @Select("SELECT b.booktitle, b.publisher, b.author, b.callno, MAX(r.end) AS end_date, b.bookno, b.category "
-    		+ "FROM book b "
-    		+ "JOIN record r ON b.bookno = r.bookno "
-    		+ "WHERE r.userno = #{userno} AND r.type = '반납' "
-    		+ "GROUP BY b.booktitle, b.publisher, b.author, b.bookno "
+    @Select("SELECT min(b.booktitle) as booktitle, min(b.publisher) as publisher, min(b.author) as author, "
+    		+ "min(b.callno) as callno, MAX(r.end) AS end_date, min(b.bookno) as bookno, min(b.category) as category, "
+    		+ "left(b.callno, LOCATE('=', b.callno) - 1) as callno_prefix "
+    		+ "FROM book b JOIN record r ON b.bookno = r.bookno "
+    		+ "WHERE r.userno = 15 AND r.type = '반납' GROUP BY callno_prefix "
     		+ "HAVING MAX(r.end) IS NOT NULL "
     		+ "ORDER BY end_date DESC limit 10")
     List<UnretDto> recodbook(@Param("userno") int userno);
