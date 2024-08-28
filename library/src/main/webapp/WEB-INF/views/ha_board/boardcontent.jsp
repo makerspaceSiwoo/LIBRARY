@@ -441,6 +441,8 @@ a:hover {
         <a href="/board/search" class="back-button">게시글로 돌아가기</a>
     </div>
 </div>
-
+<footer>
+<p>© 2024. Soldesk도서관. all rights reserved.</p>
+</footer>
 </body>
 </html>

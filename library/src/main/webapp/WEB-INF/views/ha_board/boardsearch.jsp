@@ -284,73 +284,76 @@
     </form>
 
     <div class="results">
-        <c:choose>
-            <c:when test="${not empty searchResults}">
-                <h2>검색 결과</h2>
-                <div class="table-wrapper">
-                    <table class="table">
-                        <thead>
+    <c:choose>
+        <c:when test="${totalCount > 0}">
+            <h2>검색 결과</h2>
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>분류</th>
+                            <th>제목</th>
+                            <th>작성자</th>
+                            <th>작성일</th>
+                            <th>조회</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${searchResults}" var="result">
                             <tr>
-                                <th>분류</th>
-                                <th>제목</th>
-                                <th>작성자</th>
-                                <th>작성일</th>
-                                <th>조회</th>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${result.type == 'announcement'}">공지사항</c:when>
+                                        <c:when test="${result.type == 'free'}">자유</c:when>
+                                        <c:when test="${result.type == 'recommend'}">추천</c:when>
+                                        <c:when test="${result.type == 'review'}">리뷰</c:when>
+                                        <c:otherwise>기타</c:otherwise> 
+                                    </c:choose>
+                                </td>
+                                <td><a href="/board/no/${result.boardno}">${result.title}</a></td>
+                                <td>${result.userID}</td>
+                                <td><fmt:formatDate value="${result.write_date}" pattern="yyyy-MM-dd HH:mm" /></td>
+                                <td>${result.view}</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach items="${searchResults}" var="result">
-                                <tr>
-                                    <td>
-                                        <c:choose>
-                                            <c:when test="${result.type == 'announcement'}">공지사항</c:when>
-                                            <c:when test="${result.type == 'free'}">자유</c:when>
-                                            <c:when test="${result.type == 'recommend'}">추천</c:when>
-                                            <c:when test="${result.type == 'review'}">리뷰</c:when>
-                                            <c:otherwise>기타</c:otherwise> 
-                                        </c:choose>
-                                    </td>
-                                    <td><a href="/board/no/${result.boardno}">${result.title}</a></td>
-                                    <td>${result.userID}</td>
-                                    <td><fmt:formatDate value="${result.write_date}" pattern="yyyy-MM-dd HH:mm" /></td>
-                                    <td>${result.view}</td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                </div>
-                <ul class="pagination">
-                    <li class="${currentPage <= 1 ? 'disabled' : ''}">
-                        <a href="/board/search?type=${type}&title=${title}&p=${currentPage - 1}" onclick="return prepage(event)">이전</a>
-                    </li>
-                    <c:forEach var="i" begin="${startPage}" end="${endPage}">
-                        <c:choose>
-                            <c:when test="${i == currentPage}">
-                                <li class="active"><strong>${i}</strong></li>
-                            </c:when>
-                            <c:otherwise>
-                                <li><a href="/board/search?type=${type}&title=${title}&p=${i}">${i}</a></li>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-                    <li class="${currentPage >= totalPages ? 'disabled' : ''}">
-                        <a href="/board/search?type=${type}&title=${title}&p=${currentPage + 1}" onclick="return postpage(event)">다음</a>
-                    </li>
-                </ul>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <ul class="pagination">
+                <li class="${currentPage <= 1 ? 'disabled' : ''}">
+                    <a href="/board/search?type=${type}&title=${title}&p=${currentPage - 1}" onclick="return prepage(event)">이전</a>
+                </li>
+                <c:forEach var="i" begin="${startPage}" end="${endPage}">
+                    <c:choose>
+                        <c:when test="${i == currentPage}">
+                            <li class="active"><strong>${i}</strong></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li><a href="/board/search?type=${type}&title=${title}&p=${i}">${i}</a></li>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+                <li class="${currentPage >= totalPages ? 'disabled' : ''}">
+                    <a href="/board/search?type=${type}&title=${title}&p=${currentPage + 1}" onclick="return postpage(event)">다음</a>
+                </li>
+            </ul>
 
-                <!-- 글작성 버튼을 이전/다음 버튼 아래로 이동 -->
-                <form action="/board/write" method="get" style="text-align: center;">
-                    <button type="submit" class="write-button">글작성</button>
-                </form>
+            <!-- 글작성 버튼을 이전/다음 버튼 아래로 이동 -->
+            <form action="/board/write" method="get" style="text-align: center;">
+                <button type="submit" class="write-button">글작성</button>
+            </form>
 
-            </c:when>
-            <c:otherwise>
-                <h2>검색 결과가 없습니다.</h2>
-            </c:otherwise>
-        </c:choose>
-    </div>
+        </c:when>
+        <c:otherwise>
+            <h2>검색 결과가 없습니다.</h2>
+        </c:otherwise>
+    </c:choose>
 </div>
 
+</div>
+<footer>
+<p>© 2024. Soldesk도서관. all rights reserved.</p>
+</footer>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
     $(function(){

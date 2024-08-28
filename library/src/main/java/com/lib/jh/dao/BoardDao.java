@@ -67,17 +67,23 @@ public interface BoardDao {
 	String userID(int userno);
 	
 	
-	// getSearchTotalCount 타입에 따른 글 갯수
-	@Select("SELECT COUNT(*) FROM board WHERE (type = #{type} OR #{type} IS NULL) AND (title LIKE CONCAT('%', #{title}, '%') OR #{title} IS NULL)")
+	// getSearchTotalCount 타입에 따른 글 갯수 , 조건에 따른 게시글의 총 개수 반환 
+	@Select("""
+		    SELECT COUNT(*)
+		    FROM board
+		    WHERE (#{type} IS NULL OR #{type} = '' OR type = #{type})
+		    AND (#{title} IS NULL OR title LIKE CONCAT('%', #{title}, '%'))
+		""")
 	int getSearchTotalCount(@Param("type") String type, @Param("title") String title);
+
 	
-	// BoardSearch 게시판 검색기능 
+	// BoardSearch 게시판 검색기능 조건에 따른 게시글 검색 후 리스트로 반환 
 	@Select("""
 		    SELECT b.*, u.*
 		    FROM board b
 		    INNER JOIN user u ON b.userno = u.userno
-		    WHERE (b.type = #{type} OR #{type} IS NULL)
-		    AND (b.title LIKE CONCAT('%', #{title}, '%') OR #{title} IS NULL)
+		    WHERE (#{type} IS NULL OR #{type} = '' OR b.type = #{type})
+		    AND (#{title} IS NULL OR b.title LIKE CONCAT('%', #{title}, '%'))
 		    ORDER BY b.write_date DESC
 		    LIMIT #{offset}, #{limit}
 		""")

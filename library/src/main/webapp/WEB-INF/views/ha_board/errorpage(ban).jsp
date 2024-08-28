@@ -8,8 +8,9 @@
 </head>
 <body>
 
+
 <script>
-alert("벤처리된 유저입니다.");
+alert("벤처리된 유저입니다.(벤기한:${bandate})");
 location.href="/home";
 </script>
 

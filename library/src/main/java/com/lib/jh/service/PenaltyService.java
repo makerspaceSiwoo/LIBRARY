@@ -94,22 +94,30 @@ public class PenaltyService {
       
         blacklistService.updateBlacklistForbid_end_minus(blacklistno); //
         
-        if (currentBanEnd == null) {  //기존 벤이 없는경우 
-            
-        	userdao.updateUserBan(userno, forbid_end);
-        	
-            
-        }
-        else { //기존 벤이 있으면
-            long additionalBanTime = forbid_end.getTime() - now.getTime();
+        if (currentBanEnd != null) {
+        	long additionalBanTime = forbid_end.getTime() - now.getTime();
             Date newBanEnd = new Date(currentBanEnd.getTime() + additionalBanTime);
             System.out.println("currentBanEnd"+currentBanEnd);
             System.out.println(newBanEnd);
             userdao.updateUserBan(userno, newBanEnd); // 사용자 ban 업데이트
-            
-            
         }
         
+//        if (currentBanEnd == null) {  //기존 벤이 없는경우 
+//            
+//        	userdao.updateUserBan(userno, forbid_end);
+//        	
+//            
+//        }
+//        else { //기존 벤이 있으면
+//            long additionalBanTime = forbid_end.getTime() - now.getTime();
+//            Date newBanEnd = new Date(currentBanEnd.getTime() + additionalBanTime);
+//            System.out.println("currentBanEnd"+currentBanEnd);
+//            System.out.println(newBanEnd);
+//            userdao.updateUserBan(userno, newBanEnd); // 사용자 ban 업데이트
+//            
+//            
+//        }
+//        
        }
     
 

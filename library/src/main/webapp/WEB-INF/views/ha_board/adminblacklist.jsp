@@ -257,7 +257,7 @@
                                 <input type="hidden" name="boardno" value="${black.boardno}"/>
                                 <input type="hidden" name="deadline" value="+3"/>
                                 <input type="hidden" name="forbid_end" value="${black.forbid_end}"/>
-                                <button type="submit" class="forbid-btn">forbid_end(3일추가)</button>
+                                <button type="submit" class="forbid-btn">벤(+3일)</button>
                             </form>
                              <form action="/admin/ban/forbid_end" method="post" onsubmit="return confirmForbid2()">
                                 <input type="hidden" name="blacklistno" value="${black.blacklistno}"/>
@@ -265,7 +265,7 @@
                                 <input type="hidden" name="boardno" value="${black.boardno}"/>
                                 <input type="hidden" name="deadline" value="-3"/>
                                 <input type="hidden" name="forbid_end" value="${black.forbid_end}"/>
-                                <button type="submit" class="forbid-btn">forbid_end(-3일추가)</button>
+                                <button type="submit" class="forbid-btn">밴(-3일)</button>
                              </form>
                              <form action="/admin/ban/delete" method="post" onsubmit="return confirmDelete()">
                                 <input type="hidden" name="blacklistno" value="${black.blacklistno}"/>
@@ -317,7 +317,7 @@
                                 <input type="hidden" name="boardno" value="${black.boardno}"/>
                                 <input type="hidden" name="deadline" value="+3"/>
                                 <input type="hidden" name="forbid_end" value="${black.forbid_end}"/>
-                                <button type="submit" class="forbid-btn">forbid_end(3일추가)</button>
+                                <button type="submit" class="forbid-btn">밴(+3일)</button>
                             </form>
                              <form action="/admin/ban/forbid_end" method="post" onsubmit="return confirmForbid2()">
                                 <input type="hidden" name="blacklistno" value="${black.blacklistno}"/>
@@ -325,7 +325,7 @@
                                 <input type="hidden" name="boardno" value="${black.boardno}"/>
                                 <input type="hidden" name="deadline" value="-3"/>
                                 <input type="hidden" name="forbid_end" value="${black.forbid_end}"/>
-                                <button type="submit" class="forbid-btn">forbid_end(-3일추가)</button>
+                                <button type="submit" class="forbid-btn">밴(-3일)</button>
                              </form>
                              <form action="/admin/ban/delete" method="post" onsubmit="return confirmDelete()">
                                 <input type="hidden" name="blacklistno" value="${black.blacklistno}"/>
@@ -337,5 +337,8 @@
             </c:forEach>
         </div>
     </div>
+<footer>
+<p>© 2024. Soldesk도서관. all rights reserved.</p>
+</footer>
 </body>
 </html>
