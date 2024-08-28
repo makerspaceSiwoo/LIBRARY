@@ -13,21 +13,18 @@ html {
 }
 
 body {
-   min-height:100%;
+   min-height:100vh;
    height: auto;
    position: relative;
 }
 
 main {
-	height: 90%;
-    margin-left: 0vw;
-
+    flex: 1; /* 남은 공간을 차지하도록 설정 */
+    display: flex;
+    flex-direction: column;
 }
 
-footer {
-   height: 10%;
-   bottom: 0;
-}
+
 </style>
 </head>
 <body>
