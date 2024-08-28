@@ -12,49 +12,53 @@ import com.lib.mo.dto.RecommDto;
 public interface RecommDao {
 
 //	전체
-	@Select({"select b.booktitle, b.author, b.publisher ,b.category, b.img, b.callno, count(r.bookno) as ct "
-			+ "from book b join record r on b.bookno = r.bookno "
-			+ "where r.type = '대출' "
-			+ "AND r.start BETWEEN DATE_SUB(NOW(), INTERVAL 6 MONTH) AND NOW() "
-			+ "group by b.bookno, b. booktitle, b.category "
-			+ "order by ct desc limit 10"})
+	@Select({"SELECT LEFT(b.callno, LOCATE('=', b.callno) - 1) AS callno_prefix, COUNT(r.bookno) AS ct, MIN(b.booktitle) AS booktitle, "
+			+ "MIN(b.author) AS author, MIN(b.publisher) AS publisher, MIN(b.category) AS category, min(b.callno) as callno, MIN(b.img) AS img "
+			+ "FROM book b "
+			+ "JOIN record r ON b.bookno = r.bookno "
+			+ "WHERE r.type = '대출' AND r.start BETWEEN DATE_SUB(NOW(), INTERVAL 6 MONTH) AND NOW() "
+			+ "GROUP BY callno_prefix "
+			+ "ORDER BY ct DESC "
+			+ "LIMIT 10"})
 	List<RecommDto> allrcbook();
 
 //	카테고리
-	@Select({"select b.booktitle, b.author, b.publisher, b.category, b.img, b.callno, count(r.bookno) AS ct "
-			+ "from book b join record r ON b.bookno = r.bookno "
-			+ "join (select SUBSTRING_INDEX(b.category, '/', 1) AS category, count(r.bookno) as cnt "
-			+ "from book b join (select * from record where userno = #{userno} and type='대출') r on b.bookno = r.bookno "
-			+ "group by category order by cnt desc) as cat "
-			+ "on SUBSTRING_INDEX(b.category, '/', 1) = cat.category "
-			+ "where  r.type = '대출' and r.start BETWEEN DATE_SUB(NOW(), INTERVAL 6 MONTH) and NOW()"
-			+ "group by b.bookno order by ct desc limit 10"})
+	@Select({"SELECT left(b.callno, LOCATE('=', b.callno) - 1) as callno_prefix, min(b.booktitle) as booktitle, min(b.author) as author, "
+			+ "min(b.publisher) as publihser, min(b.category) as category, min(b.img) as img, min(b.callno) as callno, COUNT(r.bookno) AS ct "
+			+ "FROM book b "
+			+ "JOIN record r ON b.bookno = r.bookno "
+			+ "JOIN (SELECT SUBSTRING_INDEX(b.category, '/', 1) AS category, COUNT(r.bookno) AS cnt "
+			+ "      FROM book b \r\n"
+			+ "      JOIN (SELECT * FROM record WHERE userno = #{userno} AND type = '대출') r ON b.bookno = r.bookno "
+			+ "      GROUP BY category "
+			+ "      ORDER BY cnt DESC "
+			+ "      LIMIT 1) AS cat ON SUBSTRING_INDEX(b.category, '/', 1) = cat.category "
+			+ "WHERE r.type = '대출' "
+			+ "AND r.start BETWEEN DATE_SUB(NOW(), INTERVAL 6 MONTH) AND NOW() "
+			+ "GROUP BY callno_prefix "
+			+ "ORDER BY ct DESC "
+			+ "LIMIT 10"})
 	List<RecommDto> catercbook(@Param("userno") int userno);
 	
 //	성별
-	@Select({"select b.booktitle, b.author, b.publisher, b.category, b.img, b.callno, count(r.bookno) as ct "
+	@Select({"select left(b.callno, LOCATE('=', b.callno) - 1) as callno_prefix, min(b.booktitle) as booktitle, min(b.author) as author, min(b.publisher) as publisher, "
+			+ "min(b.category) as category, min(b.img) as img, min(b.callno) as callno, count(r.bookno) as ct "
 			+ "from book b join record r on b.bookno = r.bookno "
 			+ "join user u on r.userno = u.userno "
 			+ "where r.type = '대출' and u.gender = #{gender} "
 			+ "and r.start BETWEEN DATE_SUB(NOW(), INTERVAL 6 MONTH) AND NOW() "
-			+ "group by b.bookno order by ct desc limit 10"})
+			+ "group by callno_prefix order by ct desc limit 10"})
 	List<RecommDto> genrcbook(@Param("gender") String gender);
 	
 //	연령대
-	@Select({"select "
-			+ "    case "
-			+ "		   when (year(now()) - year(#{birth}) + 1) between 1 and 9 then '영유아' "
-			+ "        when (year(now()) - year(#{birth}) + 1) between 10 and 19 then '10대' "
-			+ "        when (year(NOW()) - year(#{birth}) + 1) between 20 and 29 then '20대' "
-			+ "        when (year(NOW()) - year(#{birth}) + 1) between 30 and 39 then '30대' "
-			+ "        when (year(NOW()) - year(#{birth}) + 1) between 40 and 49 then '40대' "
-			+ "        else '50대 이상' "
-			+ "    end as agegroup, b.booktitle, b.author, b.publisher, b.category, b.img, b.callno, count(r.bookno) as ct "
-			+ "from  book b join  record r on b.bookno = r.bookno "
-			+ "join  user u on r.userno = u.userno "
-			+ "where r.type = '대출' "
-			+ "AND r.start BETWEEN DATE_SUB(NOW(), INTERVAL 6 MONTH) AND NOW() "
-			+ "group by  agegroup, b.bookno order by agegroup, ct desc limit 10"})
-	List<RecommDto> agercbook(@Param("birth") Date birth);
+	@Select({"select \r\n"
+			+ "       min(b.booktitle) as booktitle, min(b.author) as author, min(b.publisher) as publisher, min(b.category) as category, \r\n"
+			+ "		min(b.img) as img, min(b.callno) as callno, COUNT(r.bookno) AS ct, left(b.callno, LOCATE('=', b.callno) - 1) as callno_prefix ,\r\n"
+			+ "       min(((YEAR(NOW()) - year(r.birth)) div 10)*10 )as agegroup\r\n"
+			+ "from book b join (select * from record r natural join user u where (YEAR(NOW()) - year(u.birth)) div 10 = #{group}) r on b.bookno = r.bookno\r\n"
+			+ "WHERE r.type = '대출' AND r.start BETWEEN DATE_SUB(NOW(), INTERVAL 6 MONTH) AND NOW() \r\n"
+			+ "GROUP BY callno_prefix\r\n"
+			+ "ORDER BY ct DESC limit 10"})
+	List<RecommDto> agercbook(@Param("group") int group);
 	
 }
