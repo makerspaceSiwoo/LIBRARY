@@ -24,6 +24,7 @@ public class SearchResultController {
 		List<UnreturnedBookDto> blist = bservice.searchResult(callno);
 		System.out.println(blist);
 		List<BookDto> otherbooks = bservice.sameAuthor(blist.get(0).getAuthor(),callno);
+		
 		m.addAttribute("blist",blist);
 		m.addAttribute("otherbooks", otherbooks);
 		return "user/searchResult";

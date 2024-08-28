@@ -48,7 +48,7 @@ public interface HomeDao {
 	@Select("select * from board where type='announcement' order by boardno desc limit 5")
 	List<BoardDto> notice();
 	
-	@Select("select * from book order by bookno desc limit 3")
+	@Select("select * from book where callno like '%=1' order by bookno desc limit 3")
 	List<BookDto> newBook();
 	
 	@Select("select count(*) from book where loc= '아동/청소년 자료실'")
