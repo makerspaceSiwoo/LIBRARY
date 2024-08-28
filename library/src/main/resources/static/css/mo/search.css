@@ -125,6 +125,7 @@ form input[type="submit"]:hover {
 }
 
 #noresult {
+	min-height: 25.2vh;
     text-align: center;
     color: #999;
     font-size: 1.5rem;
