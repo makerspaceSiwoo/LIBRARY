@@ -174,7 +174,6 @@
 	</div>
 </c:otherwise>
 </c:choose>
-
 <footer>
 <p>© 2024. Soldesk도서관. all rights reserved.</p>
 </footer>

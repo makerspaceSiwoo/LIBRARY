@@ -5,11 +5,12 @@
 <head>
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="/css/admin/book/add.css">
+<link rel="stylesheet" type="text/css" href="/css/header.css">
 
 </head>
 <body>
 <nav>
-<hr>
+
    <c:choose>
       <c:when test="${user.admin == 1 }">
          <div id="adminmenu" class="menu">

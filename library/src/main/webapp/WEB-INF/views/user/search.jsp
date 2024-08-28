@@ -116,6 +116,11 @@
 				</c:if>
 			</div>
     </div>
+
+<footer>
+<p>© 2024. Soldesk도서관. all rights reserved.</p>
+</footer>
+
  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script>
         $(function(){

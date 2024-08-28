@@ -76,56 +76,70 @@ function withdrawUser() {
 </nav>
 	
     <h1>${user.userID}님의 대출 현황</h1>
-    
-    <div>
-    <h3> 현재 대출중인 도서</h3>
-    <table>
-            <thead>
-                <tr>
-                    <th>제목</th>
-                    <th>저자</th>
-                    <th>출판사</th>
-                    <th>분류</th>
-                    <th>반납예정일</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        <c:forEach items="${unretbook}" var="book">
-            <tr>
-                <td>${book.booktitle}</td>
-                <td>${book.author}</td>
-                <td>${book.publisher}</td>
-                <td>${book.category}</td>
-                <td>${book.end}</td>
-            </tr>
-        </c:forEach>
-        </table>
-        </div>       
-        <div>
-        
-        <h3>최근 대출 목록</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>제목</th>
-                    <th>저자</th>
-                    <th>출판사</th>
-                    <th>분류</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        <c:forEach items="${recode}" var="code">
-            <tr>
-                <td>${code.booktitle}</td>
-                <td>${code.author}</td>
-                <td>${code.publisher}</td>
-                <td>${code.category}</td>
-            </tr>
-        </c:forEach>
-        </table>
-        </div>
+
+<div>
+    <h3>현재 대출중인 도서</h3>
+    <c:choose>
+        <c:when test="${empty unretbook}">
+            <p style="text-align: center;">현재 대출중인 도서가 없습니다.</p>
+        </c:when>
+        <c:otherwise>
+            <table>
+                <thead>
+                    <tr>
+                        <th>제목</th>
+                        <th>저자</th>
+                        <th>출판사</th>
+                        <th>분류</th>
+                        <th>반납예정일</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${unretbook}" var="book">
+                        <tr>
+                            <td>${book.booktitle}</td>
+                            <td>${book.author}</td>
+                            <td>${book.publisher}</td>
+                            <td>${book.category}</td>
+                            <td>${book.end}</td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </c:otherwise>
+    </c:choose>
+</div>
+
+<div>
+    <h3>최근 대출 목록</h3>
+    <c:choose>
+        <c:when test="${empty recode}">
+             <p style="text-align: center;">최근 대출 내역이 없습니다.</p>
+        </c:when>
+        <c:otherwise>
+            <table>
+                <thead>
+                    <tr>
+                        <th>제목</th>
+                        <th>저자</th>
+                        <th>출판사</th>
+                        <th>분류</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${recode}" var="code">
+                        <tr>
+                            <td>${code.booktitle}</td>
+                            <td>${code.author}</td>
+                            <td>${code.publisher}</td>
+                            <td>${code.category}</td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </c:otherwise>
+    </c:choose>
+</div>
         
        <div class="button-container">
     <form action="/user/mod" method="get">

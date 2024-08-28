@@ -131,6 +131,10 @@
 	        </c:forEach>
 	    </div>
 	</div>
+<br><br><br><br>
+<footer>
+<p>© 2024. Soldesk도서관. all rights reserved.</p>
+</footer>
 
 </body>
 </html>

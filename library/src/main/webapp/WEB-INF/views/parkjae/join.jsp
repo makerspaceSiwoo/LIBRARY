@@ -1,10 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" type="text/css" href="/css/admin/book/add.css">
+<link rel="stylesheet" type="text/css" href="/css/header.css">
 <style>
 /* 회원가입 h1 태그 중앙 정렬 */
 .center-title {
@@ -14,7 +15,7 @@
 
 .center-subtitle {
     text-align: left; /* 왼쪽 정렬 */
-    margin-left: 20%; /* 테이블과 일치하는 위치로 이동 */
+    margin-left: 26.5vw; /* 테이블과 일치하는 위치로 이동 */
     margin-bottom: 5px; /* 아래쪽 여백 추가 */
 }
 
@@ -134,7 +135,7 @@ form table td:not(:has(input)) {
 
 /* 버튼 스타일 */
 form button {
-    background-color: #695FC2;
+    background-color:  #3C33A4;
     color: white;
     padding: 10px 40px; /* 세로 패딩을 10px로 늘려서 버튼의 세로 길이를 늘림 */
     border: none;
@@ -148,7 +149,7 @@ form button {
 
 /* 버튼 호버 효과 */
 form button:hover {
-    background-color: #3C33A4;
+    background-color:  #3C33A4;
 }
 
 /* 입력 그룹 스타일 */
@@ -220,19 +221,30 @@ div[style*="color: red;"] {
 </head>
 <body>
 <nav>
-   <c:choose>
-         <div id="adminmenu" class="menu">
+         <div id="usermenu" class="menu">
             <a href="/home"><img src="/logo/logo.png"></a>
             <div class="menulist">
-	            <a href="/home">도서관 홈</a>
-	            <a href="/search">도서 검색</a>
-	            <a href="/recomm">추천 도서</a>
-	            <a href="/board/search">게시판</a>
-	            <a href="/mypage">마이 페이지</a>
+               <a href="/home">도서관 홈</a>
+               <a href="/search">도서 검색</a>
+               <a href="/recomm">추천 도서</a>
+               <a href="/board/search">게시판</a>
+               <a href="/user/mypage">마이 페이지</a>
             </div>
-            
+            <div class="button-container">
+               <c:choose>
+                  <c:when test="${empty user or empty user.userID}">
+                     <button id="joinbutton" onclick="location.href='/join';">회원 가입</button>
+                     <button id="loginbutton" onclick="location.href='/login';">로그인</button>
+                  </c:when>
+                  <c:otherwise>
+                     <p>${user.userID }님</p>
+                     <form action="/logout" method="post">
+                        <button id="logoutbutton">로그아웃</button>
+                     </form>
+                  </c:otherwise>
+               </c:choose>
+           </div>
          </div>
-   </c:choose>
    <hr>
 </nav>
 <!-- 회원가입 h1 태그 -->
@@ -435,15 +447,26 @@ $(document).ready(function() {
         return true; // 폼 제출 허용
     }
     function requestVerificationCode() {
-        var email = document.querySelector('input[name="email_user"]').value + "@" +
-                    document.querySelector('select[name="email_domain"]').value;
-
+        // 이메일 입력 필드와 도메인 선택 필드의 값을 가져옴
+        var emailUser = document.querySelector('input[name="email_user"]').value.trim();
+        var emailDomain = document.querySelector('select[name="email_domain"]').value.trim();
+        
+        // 이메일 주소를 결합
+        var email = emailUser + "@" + emailDomain;
+        
+        // 이메일 입력 필드와 도메인 선택 필드에 공백이 있거나 비어있는 경우
+        if (emailUser === "" || emailDomain === "") {
+            alert("이메일 주소를 올바르게 입력해 주세요.");
+            return; // 입력이 잘못된 경우 함수 실행을 멈춤
+        }
+        
+        // AJAX 요청을 통해 인증 코드를 발송
         $.ajax({
             url: '/send',
             type: 'POST',
             data: { "emailAddress": email },
             success: function(response) {
-            	num = response[0];
+                num = response[0];
                 alert("인증 코드가 발송되었습니다.");
             },
             error: function() {
@@ -451,6 +474,7 @@ $(document).ready(function() {
             }
         });
     }
+
     function memcheck(){
     	let numnum = document.querySelector("#numnum").value;
     	
@@ -461,6 +485,8 @@ $(document).ready(function() {
     	else if(num==numnum){
     		alert("인증 코드가 일치합니다.");
     		isMemcheck = true;
+    		 // 입력 필드를 수정할 수 없도록 비활성화
+            document.querySelector("#numnum").disabled = true;
     	}else if(num!=numnum) {
     		alert("인증코드를 다시 확인해 주세요.");
     	}else{
