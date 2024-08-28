@@ -74,7 +74,7 @@ function withdrawUser() {
     <div class="book-list">
         <c:forEach var="all" items="${allrc}" varStatus="status">
             <div class="book-item">
-                <span class="rank">
+                <span class="rank" style="width:2%;">
                     <p>${status.index+1 }</p>
                 </span>
                 <img alt="표지사진" src="${all.img}" class="book-cover">
