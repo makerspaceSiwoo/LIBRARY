@@ -201,16 +201,19 @@
 	        
 	     </div>
      </section>
-     <section id="newbook" style="display: inline-block;vertical-align: top; width:50%; scroll-margin-top: 30vh;">
+     <section id="newbook" style="display: inline-block;vertical-align: top; width:50%;">
      	<div style="padding:0;">
 		<h2>신간 도서</h2>
      	<div class="book-list" style="padding:0; white-space:nowrap; width:100%;">
 	        <c:forEach var="gen" items="${newbook}">
-	            <div class="book-img" onclick="location.href='/search/no=${gen.callno}'" style="width:100%; padding:0;white-space:wrap;">
-	                <img alt="표지사진" src="${gen.img}">
-	                <div class="title">${gen.booktitle}</div><br>
-	                <div class="author">${gen.author}</div><br>
-	                <div class="publisher">${gen.publisher}</div>
+	            <div class="book-img" onclick="location.href='/search/no=${gen.callno}'" 
+	            style="width:100%; padding:0; white-space:wrap; overflow: hidden; justify-content: space-between; ">
+	                <img alt="표지사진" src="${gen.img}" style="border-radius: 0.3vw;">
+	                <div style="padding-bottom: 1vw">
+		                <div class="title">${gen.booktitle}</div><br>
+		                <div class="author">${gen.author}</div><br>
+		                <div class="publisher">${gen.publisher}</div>
+	                </div>
 	            </div>
 	        </c:forEach>
 	    </div>
