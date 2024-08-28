@@ -104,7 +104,7 @@
     
     <div id="searchresult">
     	<div id ="searchlist">
-    	<c:if test="${count == 0}"><h3 id ="noresult">검색 결과가 없습니다.</h3></c:if>
+    	<c:if test="${count == 0}"><div id ="noresult"><h3>검색 결과가 없습니다.</h3></div></c:if>
     	<c:if test="${count > 0}">
     		<table>
     			<c:forEach var="book" items="${bList }">
