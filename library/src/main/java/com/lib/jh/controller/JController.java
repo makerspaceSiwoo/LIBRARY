@@ -1,7 +1,7 @@
 package com.lib.jh.controller;
 
-import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -47,6 +47,10 @@ public class JController {
 		
 
 	   }
+		
+	
+	 
+	
 	
 	//BoardService 주입
 	@Autowired
@@ -138,6 +142,9 @@ public class JController {
         }
 		else if (user.getBan().after(new Date())) { // BAN날짜가 오늘 날짜보다 값이 많으면 벤당한것
             // 권한이 없는 경우, 접근 불가 메시지와 함께 다른 페이지로 리다이렉트
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분"); //벤기한 날짜 영문 -> 한국어
+	        String formattedBanDate = dateFormat.format(user.getBan());
+	        m.addAttribute("bandate",formattedBanDate);
             return "ha_board/errorpage(ban)"; // 403 접근 금지 페이지로 리다이렉트
         }
         else {
@@ -186,39 +193,40 @@ public class JController {
 	// 게시글 검색(페이징기능)
 	@GetMapping("/board/search")
 	public String boardSearch(
-	    @RequestParam(value="type", required=false) String type,
-	    @RequestParam(value="title", required=false) String title,
-	    @RequestParam(value="p", defaultValue = "1") int page, // 페이지 파라미터 추가
-	    @RequestParam(value="size", defaultValue = "10") int size, // 한 페이지에 보여줄 게시글 수 (기본값)
+	    @RequestParam(value="type", required=false) String type,   // 게시글의 분류 
+	    @RequestParam(value="title", required=false) String title, // 게시글의 제목
+	    @RequestParam(value="p", defaultValue = "1") int page,     // 페이지 번호 기본값은 1
+	    @RequestParam(value="size", defaultValue = "10") int size, // 한 페이지에 보여줄 게시글 수 기본값은 10
 	    Model m) {
 
-	    List<BoardJoinUserDto> searchResults;
-	    int totalCount;
+	    List<BoardJoinUserDto> searchResults; // 검색 결과를 저장할 리스트
+	    int totalCount;// 검색 결과의 총 개수
 
-	    // title로만 검색하는 경우
-	    if ((type == null || type.trim().isEmpty()) && title != null && !title.trim().isEmpty()) {
-	        int offset = (page - 1) * size;
-	        if (offset < 0) {
-	            offset = 0; // offset이 음수일 경우 0으로 설정 
-	        }
-	        searchResults = boardservice.BoardSearchByTitle(title, offset, size);
-	        totalCount = boardservice.getSearchTotalCountByTitle(title);
-	    } 
-	    // 검색 조건이 없을 경우 전체 게시글 가져오기
-	    else if (type == null && title == null || (type.trim().isEmpty() && title.trim().isEmpty())) {
-	        searchResults = boardservice.selectPage(page, size);
-	        totalCount = boardservice.selectTotalCount();
-	    } 
-	    // type과 title이 모두 있는 경우
-	    else {
-	        int offset = (page - 1) * size;
-	        if (offset < 0) {
-	            offset = 0; // offset이 음수일 경우 0으로 설정 
-	        }
-	        searchResults = boardservice.BoardSearch(type, title, offset, size);
-	        totalCount = boardservice.getSearchTotalCount(type, title);
+	    // 검색을 위해 파라미터 조정
+	    // type과 title이 null이거나 빈 값이면 검색에 사용하지 않도록 null로 설정
+	    String searchType = (type == null || type.trim().isEmpty()) ? null : type.trim();
+	    String searchTitle = (title == null || title.trim().isEmpty()) ? null : title.trim();
+
+	    int offset = (page - 1) * size;  // 페이지네이션을 위한 offset 계산
+	    if (offset < 0) {
+	        offset = 0; // offset이 음수일 경우 0으로 설정 
 	    }
 
+	    // 검색 조건에 따라 검색 결과와 총 결과 수를 계산
+	    if (searchTitle != null) {  // 제목이 주어졌을 때
+	        if (searchType == null) {  // 분류가 주어지지 않았을 때
+	            searchResults = boardservice.BoardSearchByTitle(searchTitle, offset, size);  // 제목만으로 검색
+	            totalCount = boardservice.getSearchTotalCountByTitle(searchTitle);  // 제목만으로 검색된 결과의 총 개수
+	        } else {  // 분류와 제목이 모두 주어졌을 때
+	            searchResults = boardservice.BoardSearch(searchType, searchTitle, offset, size);  // 분류와 제목 모두를 이용해 검색
+	            totalCount = boardservice.getSearchTotalCount(searchType, searchTitle);  // 분류와 제목으로 검색된 결과의 총 개수
+	        }
+	    } else {  // 제목이 주어지지 않았을 때 (전체 게시글 조회)
+	        searchResults = boardservice.selectPage(page, size);  // 페이징된 전체 게시글 조회
+	        totalCount = boardservice.selectTotalCount();  // 전체 게시글의 총 개수
+	    }
+
+	    // 검색 결과와 기타 정보를 모델에 추가
 	    m.addAttribute("searchResults", searchResults);
 	    m.addAttribute("type", type);
 	    m.addAttribute("title", title);
@@ -228,22 +236,26 @@ public class JController {
 	    m.addAttribute("currentPage", page);
 	    m.addAttribute("totalPages", totalPages);
 
-	    // 페이지 범위 계산
-	    int startPage = Math.max(1, page - 2); // 현재 페이지 기준 시작 페이지
-	    int endPage = Math.min(totalPages, startPage + 4); // 시작 페이지에서 5페이지까지
+	    // 페이지 범위 계산 (시작 페이지와 끝 페이지)
+	    int startPage = Math.max(1, page - 2); // 현재 페이지를 기준으로 시작 페이지 계산
+	    int endPage = Math.min(totalPages, startPage + 4); // 시작 페이지에서 최대 5페이지까지 표시
 	    m.addAttribute("startPage", startPage);
 	    m.addAttribute("endPage", endPage);
 
-	    // 페이지 유효성 검사
+	    // 페이지 유효성 검사 및 리다이렉트
 	    if (page < 1) {    
-	        return "redirect:/board/search?p=1"; // 1페이지로 리다이렉트
+	        return "redirect:/board/search?p=1"; // 페이지가 1보다 작으면 1페이지로 리다이렉트
 	    }
-	    if(page > totalPages)
-	    {
-	        return "redirect:/board/search?p="+totalPages;
+	    if(page > totalPages && totalPages > 0) {
+	        return "redirect:/board/search?p=" + totalPages; // 페이지가 총 페이지 수보다 크면 마지막 페이지로 리다이렉트
 	    }
+
+	    
+	    m.addAttribute("totalCount", totalCount);
 	    return "ha_board/boardsearch"; // JSP 파일로 이동
 	}
+
+
 
 	
 	// 댓글 작성 기능
@@ -256,6 +268,9 @@ public class JController {
         }
 		else if (user.getBan().after(new Date())) {
             // 권한이 없는 경우, 접근 불가 메시지와 함께 다른 페이지로 리다이렉트
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분"); //벤기한 날짜 영문 -> 한국어
+	        String formattedBanDate = dateFormat.format(user.getBan());
+	        m.addAttribute("bandate",formattedBanDate);
             return "ha_board/errorpage(ban)"; // 403 접근 금지 페이지로 리다이렉트
         }
         else {
