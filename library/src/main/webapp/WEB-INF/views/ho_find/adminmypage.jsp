@@ -7,27 +7,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>
 function withdrawUser() {
-    if (confirm("정말로 탈퇴하시겠습니까?")) {
-        fetch('<c:url value="/user/del" />', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: new URLSearchParams({
-                userno: ${user.userno}
-            })
-        }).then(response => {
-            if (response.ok) {
-                alert('회원 탈퇴가 완료되었습니다.');
-                window.location.href = '<c:url value="/login" />'; // 로그인 페이지로 리다이렉트
-            } else {
-                alert('회원 탈퇴에 실패했습니다. 상태 코드: ' + response.status);
-            }
-        }).catch(error => {
-            alert('오류가 발생했습니다.');
-            console.error('Error:', error);
-        });
-    }
+	if(${user.userno == 1}){
+		alert("해당 계정은 마스터 계정이므로 탈퇴가 불가합니다.");
+	}else{
+	    if (confirm("정말로 탈퇴하시겠습니까?")) {
+	        fetch('<c:url value="/user/del" />', {
+	            method: 'POST',
+	            headers: {
+	                'Content-Type': 'application/x-www-form-urlencoded'
+	            },
+	            body: new URLSearchParams({
+	                userno: ${user.userno}
+	            })
+	        }).then(response => {
+	            if (response.ok) {
+	                alert('회원 탈퇴가 완료되었습니다.');
+	                window.location.href = '<c:url value="/login" />'; // 로그인 페이지로 리다이렉트
+	            } else {
+	                alert('회원 탈퇴에 실패했습니다. 상태 코드: ' + response.status);
+	            }
+	        }).catch(error => {
+	            alert('오류가 발생했습니다.');
+	            console.error('Error:', error);
+	        });
+	    }
+	}
 }
 </script>
 <title>사서 페이지</title>
