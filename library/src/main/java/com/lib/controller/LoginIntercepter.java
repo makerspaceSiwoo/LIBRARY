@@ -26,12 +26,6 @@ public class LoginIntercepter implements HandlerInterceptor {
 		UserDto dto = (UserDto) request.getSession().getAttribute("user"); // user라는 이름의 세션 어트리뷰트 - 로그인 정보
 	
 		String url = request.getRequestURI(); // 해당 url 권한 확인
-//		if (dto != null && dto.getUserID() != null) { // 요청 처리 순서 묻기 - 일반적인 코드
-//			return true;
-//		} else {
-//			response.sendRedirect("/login");
-//			return false;
-//		}
 		System.out.println(url);
 		if(dto != null && dto.getUserID() != null) {// 일단 로그인 되어있는지.
 			if(dto.getState() !=null && dto.getState().equals("탈퇴")) {

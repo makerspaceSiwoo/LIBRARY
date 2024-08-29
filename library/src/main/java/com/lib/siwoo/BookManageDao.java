@@ -16,7 +16,7 @@ import com.lib.dto.BookDto;
 public interface BookManageDao {
 
 	// db에 책 입력
-	@Insert("insert into book values(default, #{callno}, #{booktitle}, #{author}, #{publisher}, #{pubyear}, #{loc},#{category},#{img}, null)")
+	@Insert("insert into book values(default, #{callno}, #{booktitle}, #{author}, #{publisher}, #{pubyear}, #{loc},#{category},#{img})")
 	@Options(useGeneratedKeys = true, keyProperty = "bookno")
 	public int insertBook(BookDto dto);
 	
