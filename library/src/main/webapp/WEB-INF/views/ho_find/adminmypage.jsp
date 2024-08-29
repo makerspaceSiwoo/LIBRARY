@@ -37,8 +37,16 @@ function withdrawUser() {
 <title>사서 페이지</title>
 <link rel="stylesheet" type="text/css" href="/css/header.css">
 <link rel="stylesheet" type="text/css" href="/css/ho/adminpage.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+ <c:if test="${not empty message}">
+        <script>
+            $(document).ready(function() {
+                alert("${message}");
+            });
+        </script>
+    </c:if>
 	<nav>
 
       <c:choose>
