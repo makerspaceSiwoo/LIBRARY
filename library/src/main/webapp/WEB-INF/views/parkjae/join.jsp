@@ -144,7 +144,7 @@
 </tr>
         
     </table>
-    <button type="submit" name="lastjoin" class="primary" onclick="finish()">가입완료</button>
+    <button type="submit" name="lastjoin" class="primary" onclick="finish()">가입완료</button><br><br>
 </form>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

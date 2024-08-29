@@ -136,7 +136,7 @@ div[style*="color: red;"] {
                 <td>
                 <div class="input-group">
                     <input type="text" name="userID" id="userID" value="${user.userID}">
-                    <button type="button" id="checkUserID"> 중복 체크</button>
+                    <button type="button" id="checkUserID" style="display: none;">중복 체크</button>
                 </div>
                     <span id="userIDCheckResult"></span>
                 </td>
@@ -197,6 +197,11 @@ div[style*="color: red;"] {
         $(document).ready(function() {
             // admin 값을 JSP에서 가져옴
             let admin = ${user.admin};  // 서버에서 전달된 admin 값 사용
+            
+            // admin이 0이 아닐 경우에만 중복 체크 버튼을 보이도록 설정
+            if (admin !== 0) {
+                $("#checkUserID").show();
+            }
 
             // admin이 0이면 아이디와 비밀번호 필드를 비활성화
             if (admin === 0) {
@@ -279,6 +284,7 @@ div[style*="color: red;"] {
 
             // 폼 제출 시 유효성 검사
             $("#editForm").submit(function(event) {
+            	
                 // 아이디가 변경되었으면 중복 체크를 통과해야 함
                 if ($("#userID").val() !== originalUserID && !isUserIDChecked) {
                     alert("아이디 중복 체크를 완료해주세요.");
