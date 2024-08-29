@@ -17,7 +17,7 @@
 
         <button type="submit">인증 코드 발송</button>
     </form>
-    <a href="/login">이전 페이지로 이동</a>
+    <a href="/login">로그인 페이지로 이동</a>
 
     <c:if test="${not empty message}">
         <p style="color:red;">${message}</p>

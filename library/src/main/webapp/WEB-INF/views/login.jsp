@@ -19,6 +19,11 @@
     
 </head>
 <body>
+<c:if test="${not empty popupMessage}">
+        <script>
+            alert("${popupMessage}");
+        </script>
+    </c:if>
     <div class="container">
         <h2>로그인</h2>
         
@@ -41,23 +46,12 @@
                 <button type="submit">로그인</button>
             </div>
         </form>
-
+        
     <div class="link-container">
     <a id="searchid" href="/find/search/id">아이디 찾기</a>
     <a id="searchpw" href="/find/search/pw">비밀번호 찾기</a>
     <a id="join" href="/join">회원가입</a>
 	</div>
 	</div>
-    
-    
-    <!--  my페이지 아직 안만들어서 임시로 넣어놓음, -->
-    
-    <!-- <h3>이메일 발송(임시)</h3>
-    <form action="/admin/new" method="post">
-        <label for="email">이메일을 입력하세요</label>
-        <input type="email" id="email" name="email" required>
-        <button type="submit">발송</button>
-    </form>
-    </div> !-->
 </body>
 </html>

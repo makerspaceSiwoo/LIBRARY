@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lib.dto.UserDto;
 import com.lib.ho.service.EmailService;
@@ -104,7 +105,8 @@ public class FindController {
     @PostMapping("/find/pw")
     public String resetPassword(@RequestParam("newPassword") String newPassword,
                                 HttpSession session,
-                                Model model) {
+                                Model model,
+                                RedirectAttributes redirectAttributes) {
 
     	String userID = (String) session.getAttribute("userID");
         String email = (String) session.getAttribute("email");
@@ -118,12 +120,20 @@ public class FindController {
         UserDto user = userservice.findUserByIdAndEmail(userID, email);
         if (user == null) {
             model.addAttribute("message", "사용자를 찾을 수 없습니다.");
-            return "ho_find/resetPassword";  // 비밀번호 변경 폼으로 돌아가기
+            return "ho_find/resetPassword";
+        }
+        
+     // 기존 비밀번호와 동일한지 확인
+        if (user.getUserPW().equals(newPassword)) {
+            model.addAttribute("message", "기존 비밀번호와 동일한 비밀번호로 변경할 수 없습니다.");
+            return "ho_find/resetPassword";
         }
 
         // 비밀번호 업데이트
         userservice.updateUserPassword(user.getUserno(), newPassword);
-        model.addAttribute("message", "비밀번호가 성공적으로 변경되었습니다.");
+        
+        // 변경완료 메세지
+        redirectAttributes.addFlashAttribute("popupMessage", "비밀번호가 성공적으로 변경되었습니다.");
         
         session.removeAttribute("userID");
         session.removeAttribute("email");
