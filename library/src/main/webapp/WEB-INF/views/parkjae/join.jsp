@@ -260,8 +260,8 @@ $(document).ready(function() {
     	else if(num==numnum){
     		alert("인증 코드가 일치합니다.");
     		isMemcheck = true;
-    		 // 입력 필드를 수정할 수 없도록 비활성화
             document.querySelector("#numnum").disabled = true;
+            // 입력 필드를 수정할 수 없도록 비활성화
     	}else if(num!=numnum) {
     		alert("인증코드를 다시 확인해 주세요.");
     	}else{
