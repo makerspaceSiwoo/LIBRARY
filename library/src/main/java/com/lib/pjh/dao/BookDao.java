@@ -41,9 +41,6 @@ public interface BookDao {
 	void latereturn(@Param("userno") int userno,@Param("u_end") Date u_end);
 	//연체 반납시 패널티 테이블 등록
 	
-//	@Select("select penalty_end from penalty where userno=#{userno}")
-//	Date penalty_end(int userno);
-	
 	@Update("update user set penalty=1 where userno=#{userno}")
 	void penalty(@Param("userno") int userno);
 	//연체 반납시 user 테이블 회원 penalty값=1로(패널티상태) 변경
