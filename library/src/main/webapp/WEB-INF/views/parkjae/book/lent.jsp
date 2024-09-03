@@ -14,6 +14,9 @@
         <c:if test="${not empty errorMessage}">
             <div class="error-message">${errorMessage}</div>
         </c:if>
+        <c:if test="${successMessage eq '도서가 성공적으로 대출되었습니다.'}">
+            
+        </c:if>
         <table>
             <tr>
                 <td class="label-cell with-border">도서 정보</td>
@@ -24,13 +27,16 @@
             <tr>
                 <td>
                     <form id="lentform" action="" method="POST">
-                        <input id="userID" type="text" name="userID" placeholder="유저ID를 입력하세요">
-                        <button id="returnbutton" type="submit" onclick="alert('대출되었습니다.')">대출</button>
+                        <input id="userID" type="text" name="userID" placeholder="유저ID를 입력하세요" required>
+                        <button id="returnbutton" type="submit">대출</button>
                     </form>
                 </td>
             </tr>
         </table>
         <a href="/book/record" class="back-link">관리 페이지 되돌아가기</a>
     </div>
+    
+   
+
 </body>
 </html>

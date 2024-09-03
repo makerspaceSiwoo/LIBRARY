@@ -158,7 +158,10 @@
 <footer>
 <p>© 2024. Soldesk도서관. all rights reserved.</p>
 </footer>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
 
+</script>
 </body>
 </html>
 

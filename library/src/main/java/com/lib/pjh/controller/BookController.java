@@ -55,7 +55,8 @@ public class BookController {
 	    	m.addAttribute("totalPages", totalPages);
 	    	m.addAttribute("startPage", startPage);
 	    	m.addAttribute("endPage", endPage);
-	
+	    	
+	    	
 	    	
 		return "parkjae/book/borrow";
 	}//검색 컨트롤러
@@ -81,7 +82,6 @@ public class BookController {
 		
 		m.addAttribute("bookno", bookno);
 		m.addAttribute("booktitle", booktitle);
-		
 		return "parkjae/book/lent";
 	}// 대출버튼 클릭시 유저아이디 입력페이지로 이동
 	
@@ -94,6 +94,7 @@ public class BookController {
 		int prohibit = bookservice.loan(userID);
 		int countbook = bookservice.treebook(userID);
 		
+		m.addAttribute("successMessage", "");
 		if(prohibit == 1) {
 			m.addAttribute("errorMessage","해당 유저는 대출 금지되었습니다. 사유 : 연체자");
 			m.addAttribute("bookno", bookno);
@@ -127,11 +128,16 @@ public class BookController {
 		
 		m.addAttribute("bookno", bookno);
 		m.addAttribute("booktitle", booktitle);
+		m.addAttribute("true",true);
+		
+		m.addAttribute("successMessage", "도서가 성공적으로 대출되었습니다.");
+
+		// 대출이 성공적으로 완료되었음을 알리는 메시지 추가
+		
 		return "redirect:/book/record";
 	    }// lent.jsp에서 유저번호 입력시 기존페이지로 이동
 	
-
-
+		
 	
 	
 	
