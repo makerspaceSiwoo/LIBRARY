@@ -10,6 +10,31 @@
     <title>게시판 검색</title>
     <style>
         /* 전체 페이지 스타일 */
+        
+html {
+   height: 100vh;
+}
+
+body {
+   min-height:100vh;
+   height: auto;
+   position: relative;
+}
+
+footer {
+
+   bottom: 0;
+}
+main {
+	min-height:68vh;
+    flex: 1; /* 남은 공간을 차지하도록 설정 */
+    display: flex;
+    flex-direction: column;
+    margin-left: 0;
+}
+        
+        
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #ffffff;
@@ -265,7 +290,8 @@
    </c:choose>
    <hr>
 </nav>
-
+<main>
+<section>
 <div id="menu">
     <h1>게시판 검색</h1>
 
@@ -351,6 +377,8 @@
 </div>
 
 </div>
+</section>
+</main>
 <footer>
 <p>© 2024. Soldesk도서관. all rights reserved.</p>
 </footer>

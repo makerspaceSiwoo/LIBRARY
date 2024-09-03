@@ -327,10 +327,7 @@
                                 <input type="hidden" name="forbid_end" value="${black.forbid_end}"/>
                                 <button type="submit" class="forbid-btn">밴(-3일)</button>
                              </form>
-                             <form action="/admin/ban/delete" method="post" onsubmit="return confirmDelete()">
-                                <input type="hidden" name="blacklistno" value="${black.blacklistno}"/>
-                                <button type="submit" class="delete-btn">블랙리스트삭제</button>
-                            </form>
+                             
                         </div>
                     </div>
                 </c:if>

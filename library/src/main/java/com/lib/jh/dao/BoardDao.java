@@ -67,45 +67,44 @@ public interface BoardDao {
 	String userID(int userno);
 	
 	
-	// getSearchTotalCount 타입에 따른 글 갯수 , 조건에 따른 게시글의 총 개수 반환 
+	// getSearchTotalCount 타입에 따른 글 갯수, 조건에 따른 게시글의 총 개수 반환
 	@Select("""
 		    SELECT COUNT(*)
 		    FROM board
 		    WHERE (#{type} IS NULL OR #{type} = '' OR type = #{type})
-		    AND (#{title} IS NULL OR title LIKE CONCAT('%', #{title}, '%'))
-		""")
+		    AND (#{title} IS NULL OR #{title} = '' OR title LIKE CONCAT('%', #{title}, '%'))
+			""")
 	int getSearchTotalCount(@Param("type") String type, @Param("title") String title);
-
 	
-	// BoardSearch 게시판 검색기능 조건에 따른 게시글 검색 후 리스트로 반환 
+	// BoardSearch 게시판 검색기능 조건에 따른 게시글 검색 후 리스트로 반환
 	@Select("""
 		    SELECT b.*, u.*
 		    FROM board b
 		    INNER JOIN user u ON b.userno = u.userno
 		    WHERE (#{type} IS NULL OR #{type} = '' OR b.type = #{type})
-		    AND (#{title} IS NULL OR b.title LIKE CONCAT('%', #{title}, '%'))
+		    AND (#{title} IS NULL OR #{title} = '' OR b.title LIKE CONCAT('%', #{title}, '%'))
 		    ORDER BY b.write_date DESC
 		    LIMIT #{offset}, #{limit}
-		""")
+			""")
 	List<BoardJoinUserDto> BoardSearch(@Param("type") String type, @Param("title") String title, @Param("offset") int offset, @Param("limit") int limit);
-	
+
 	// title로 검색하는 쿼리
     @Select("""
-        SELECT b.*, u.*
-        FROM board b
-        INNER JOIN user u ON b.userno = u.userno
-        WHERE b.title LIKE CONCAT('%', #{title}, '%')
-        ORDER BY b.write_date DESC
-        LIMIT #{offset}, #{limit}
-    """)
+    		SELECT b.*, u.*
+    		FROM board b
+    		INNER JOIN user u ON b.userno = u.userno
+    		WHERE b.title LIKE CONCAT('%', #{title}, '%')
+    		ORDER BY b.write_date DESC
+    		LIMIT #{offset}, #{limit}
+    		""")
     List<BoardJoinUserDto> BoardSearchByTitle(@Param("title") String title, @Param("offset") int offset, @Param("limit") int limit);
 
     // title로 검색된 게시글 수를 가져오는 쿼리
     @Select("""
-        SELECT COUNT(*)
-        FROM board
-        WHERE title LIKE CONCAT('%', #{title}, '%')
-    """)
+    		SELECT COUNT(*)
+    		FROM board
+    		WHERE title LIKE CONCAT('%', #{title}, '%')
+    		""")
     int getSearchTotalCountByTitle(@Param("title") String title);
 
 }
