@@ -100,8 +100,8 @@ public class JController {
 	    // 현재 시간
 	    long currentTime = System.currentTimeMillis();
 
-	    // 1시간 동안 조회수 중복 증가 방지 (시간 단위: milliseconds)
-	    long timeLimit = 60 * 60 * 1000;
+	    // 12시간 동안 조회수 중복 증가 방지 (시간 단위: milliseconds)
+	    long timeLimit = 12 * 60 * 60 * 1000;
 
 	    if (lastViewedTime == null || (currentTime - lastViewedTime) > timeLimit) {
 	        // 조회수 증가
@@ -203,7 +203,6 @@ public class JController {
 	    int totalCount;// 검색 결과의 총 개수
 
 	    // 검색을 위해 파라미터 조정
-	    // type과 title이 null이거나 빈 값이면 검색에 사용하지 않도록 null로 설정
 	    String searchType = (type == null || type.trim().isEmpty()) ? null : type.trim();
 	    String searchTitle = (title == null || title.trim().isEmpty()) ? null : title.trim();
 
@@ -213,15 +212,13 @@ public class JController {
 	    }
 
 	    // 검색 조건에 따라 검색 결과와 총 결과 수를 계산
-	    if (searchTitle != null) {  // 제목이 주어졌을 때
-	        if (searchType == null) {  // 분류가 주어지지 않았을 때
-	            searchResults = boardservice.BoardSearchByTitle(searchTitle, offset, size);  // 제목만으로 검색
-	            totalCount = boardservice.getSearchTotalCountByTitle(searchTitle);  // 제목만으로 검색된 결과의 총 개수
-	        } else {  // 분류와 제목이 모두 주어졌을 때
-	            searchResults = boardservice.BoardSearch(searchType, searchTitle, offset, size);  // 분류와 제목 모두를 이용해 검색
-	            totalCount = boardservice.getSearchTotalCount(searchType, searchTitle);  // 분류와 제목으로 검색된 결과의 총 개수
-	        }
-	    } else {  // 제목이 주어지지 않았을 때 (전체 게시글 조회)
+	    if (searchType != null && searchTitle == null) {  // type만 주어졌을 때
+	        searchResults = boardservice.BoardSearch(searchType, null, offset, size);  // type만으로 검색
+	        totalCount = boardservice.getSearchTotalCount(searchType, null);  // type만으로 검색된 결과의 총 개수
+	    } else if (searchTitle != null) {  // 제목이 주어졌을 때
+	        searchResults = boardservice.BoardSearch(searchType, searchTitle, offset, size);  // type과 제목으로 검색
+	        totalCount = boardservice.getSearchTotalCount(searchType, searchTitle);  // type과 제목으로 검색된 결과의 총 개수
+	    } else {  // 모든 게시글 조회
 	        searchResults = boardservice.selectPage(page, size);  // 페이징된 전체 게시글 조회
 	        totalCount = boardservice.selectTotalCount();  // 전체 게시글의 총 개수
 	    }
@@ -254,6 +251,7 @@ public class JController {
 	    m.addAttribute("totalCount", totalCount);
 	    return "ha_board/boardsearch"; // JSP 파일로 이동
 	}
+
 
 
 
