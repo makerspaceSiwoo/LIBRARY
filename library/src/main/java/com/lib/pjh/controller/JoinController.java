@@ -36,7 +36,7 @@ public class JoinController {
     public String checkUserID(@RequestParam("userID") String userID) {
         boolean isAvailable = joinService.isUserIDAvailable(userID);
         return isAvailable ? "1" : "0"; // 1: 사용 가능, 0: 사용 불가
-    }
+    }//아이디중복체크
 	
 
 	@PostMapping("/user/register")
@@ -64,7 +64,7 @@ public class JoinController {
 		joinService.registerUser(user);
 
 		return "redirect:/login";
-	}
+	}//회원가입
 
 	@RequestMapping("/send")
 	@ResponseBody
@@ -83,6 +83,6 @@ public class JoinController {
 
 		return new String[] { number, result.toString() };
 
-	}
+	}//이메일인증 발송
 
 }
